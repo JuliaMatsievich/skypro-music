@@ -576,7 +576,7 @@ body {
   width: 100%;
   height: auto;
 }
-
+/* 
 .bar {
   position: absolute;
   bottom: 0;
@@ -640,8 +640,8 @@ body {
   -ms-flex-align: center;
   align-items: center;
   padding: 0 92px 0 0;
-}
-
+} */
+/* 
 .player__controls {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -733,8 +733,8 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
+} */
+/* 
 .track-play__contain {
   width: auto;
   display: -ms-grid;
@@ -840,8 +840,8 @@ body {
   height: 13px;
   fill: transparent;
   stroke: #696969;
-}
-
+} */
+/* 
 .volume__content {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -876,6 +876,6 @@ body {
 
 .volume__progress-line {
   width: 109px;
-}
+} */
 
 
