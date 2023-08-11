@@ -1,4 +1,5 @@
 import './sideBar.css';
+import { SideBarItem } from './sideBarItem';
 
 export function SideBar () {
 	return (
@@ -12,34 +13,30 @@ export function SideBar () {
 		  </div>
 		</div>
 		<div className="sidebar__block">
+			
 		  <div className="sidebar__list">
-			 <div className="sidebar__item">
-				<a className="sidebar__link" href="#">
-				  <img
-					 className="sidebar__img"
-					 src="img/playlist01.png"
-					 alt="day's playlist"
-				  />
-				</a>
-			 </div>
-			 <div className="sidebar__item">
-				<a className="sidebar__link" href="#">
-				  <img
-					 className="sidebar__img"
-					 src="img/playlist02.png"
-					 alt="day's playlist"
-				  />
-				</a>
-			 </div>
-			 <div className="sidebar__item">
-				<a className="sidebar__link" href="#">
-				  <img
-					 className="sidebar__img"
-					 src="img/playlist03.png"
-					 alt="day's playlist"
-				  />
-				</a>
-			 </div>
+			<SideBarItem 
+			sideBar ={{
+				link: '#',
+				img: 'img/playlist01.png',
+				name: "day's playlist"
+			}}
+			/>
+			<SideBarItem 
+			sideBar ={{
+				link: '#',
+				img: 'img/playlist02.png',
+				name: "100 танцевальных хитов"
+			}}
+			/>
+			<SideBarItem 
+			sideBar ={{
+				link: '#',
+				img: 'img/playlist03.png',
+				name: "инди-заряд"
+			}}
+			/>
+
 		  </div>
 		</div>
 	 </div>
