@@ -1,5 +1,5 @@
 import './sideBar.css';
-import { SideBarItem } from './sideBarItem';
+import { SideBarItem } from './sideBarItem/sideBarItem';
 
 export function SideBar () {
 	return (

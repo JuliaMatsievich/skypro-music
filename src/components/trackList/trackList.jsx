@@ -1,6 +1,6 @@
 import './trackList.css';
-import { TrackItem } from './track';
-import { Filter } from './filter';
+import { TrackItem } from './track/track';
+import { Filter } from './filter/filter';
 
 export function TrackList () {
 	return (
