@@ -17,7 +17,7 @@ export function NavMenu () {
 		  <span className="burger__line"></span>
 		  <span className="burger__line"></span>
 		</div>
-		<div className="nav__menu menu">
+		<div className="nav__menu menu hiddenNavMenu">
 		  <ul className="menu__list">
 			 <li className="menu__item">
 				<a href="#" className="menu__link">Главное</a>

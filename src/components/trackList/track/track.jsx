@@ -1,6 +1,11 @@
 import './track.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 
 export function TrackItem ({track}) {
+	const [isLoading, setLoading] = useState(false);
+
 	return (
 		<div className="playlist__item">
 		<div className="playlist__track track">
@@ -10,7 +15,7 @@ export function TrackItem ({track}) {
 				  <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
 				</svg>
 			 </div>
-			 <div className="track__title-text">
+			 <div className= 'track__title-text'>
 				<a className="track__title-link" href={track.titleLink}
 				  >{track.title} <span className="track__title-span">{track.titleSpan}</span
 				></a>
