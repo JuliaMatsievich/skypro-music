@@ -53,14 +53,14 @@ export function FilterCategory({ isOpen, onShow, author, year, ganr }) {
   )
 }
 
-export function FilterCat({ isOpen, onShow, title}) {
+export function FilterCat({ isOpen, onShow, title,author, year, ganr}) {
   return (
     <div onClick={onShow} className="filter__button button-genre _btn-text">
       {title}
       
-      {isOpen === 1 ? <FilterCategoryAuthor /> : null}
-      {isOpen === 2 ? <FilterCategoryYear /> : null}
-      {isOpen === 3 ? <FilterCategoryGanr /> : null}
+      {author || isOpen === 1 ? <FilterCategoryAuthor /> : null}
+      {year || isOpen === 2 ? <FilterCategoryYear /> : null}
+      {ganr || isOpen === 3 ? <FilterCategoryGanr /> : null}
 
     </div>
   )
