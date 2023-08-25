@@ -1,4 +1,3 @@
-import './App.css'
 import * as S from './App.styles'
 import { Player } from './components/audioPlayer/audioPlayer'
 import { NavMenu } from './components/navMenu/navMenu'
