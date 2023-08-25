@@ -1,61 +1,26 @@
+import styled, { keyframes } from 'styled-components'
 
-/* .playlist-title__col {
-	font-style: normal;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 24px;
-	letter-spacing: 2px;
-	color: #696969;
-	text-transform: uppercase;
- }
- 
- .playlist-title__svg {
-	width: 12px;
-	height: 12px;
-	fill: transparent;
-	stroke: #696969;
- }
- 
- .col01 {
-	width: 447px;
- }
- 
- .col02 {
-	width: 321px;
- }
- 
- .col03 {
-	width: 245px;
- }
- 
- .col04 {
-	width: 60px;
-	text-align: end;
- } */
- 
- /* .playlist__item {
-	width: 100%;
-	display: block;
-	margin-bottom: 12px;
- } */
- 
- /* .playlist__track {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
-	justify-content: space-between;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	align-items: center;
- } */
- 
- /* .track__title {
+export const PlayListItem = styled.div`
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+`
+export const PlayListTrack = styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+`
+export const TrackTiltle = styled.div`
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -67,9 +32,8 @@
 	-ms-flex-align: center;
 	align-items: center;
 	width: 447px;
- } */
- 
- /* .track__title-image {
+`
+export const TrackTiltleImage = styled.div`
 	width: 51px;
 	height: 51px;
 	padding: 16px;
@@ -84,32 +48,31 @@
 	-ms-flex-pack: center;
 	justify-content: center;
 	margin-right: 17px;
- } */
- 
- /* .track__title-svg {
+`
+export const TrackTiltleImageSvg = styled.svg`
 	width: 18px;
 	height: 17px;
 	fill: transparent;
 	stroke: #4e4e4e;
- } */
- 
- /* .track__title-link {
+`
+export const TrackTiltleText = styled.div`
+
+`
+export const TrackTiltleLink = styled.a`
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
 	color: #ffffff;
- } */
- 
- /* .track__title-span {
+`
+export const TrackTiltleSpan= styled.span`
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
 	color: #4e4e4e;
- } */
- 
- /* .track__author {
+`
+export const TrackTiltleAuthor= styled.div`
 	width: 321px;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -117,44 +80,40 @@
 	-webkit-box-pack: start;
 	-ms-flex-pack: start;
 	justify-content: flex-start;
- } */
- 
- /* .track__author-link {
+`
+export const TrackTiltleAuthorLink= styled.a`
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
 	color: #ffffff;
 	text-align: left;
- } */
- 
- /* .track__album {
+`
+export const TrackTiltleAlbum= styled.div`
 	width: 245px;
- }
-  */
- /* .track__album-link {
+`
+export const TrackTiltleAlbumLink= styled.a`
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
 	color: #696969;
- }
-  */
- /* .track__time-svg {
+`
+export const TrackTime= styled.div`
+
+`
+export const TrackTimeSvg= styled.svg`
 	width: 14px;
 	height: 12px;
 	margin-right: 17px;
 	fill: transparent;
 	stroke: #696969;
- }
- 
- .track__time-text {
+`
+export const TrackTimeText= styled.span`
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
 	text-align: right;
 	color: #696969;
- } */
-
-
+`
