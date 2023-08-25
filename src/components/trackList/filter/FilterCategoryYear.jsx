@@ -1,16 +1,16 @@
-import './filterCategory.css';
+import * as S from './filterCategory.styles'
 
 export function FilterCategoryYear() {
 	return (
-		<div className="filter__category">
-          <div className="filter__wrapper">
-            <ul className="filter__list">
-              <li className="filter__item">1992</li>
-              <li className="filter__item">1993</li>
-              <li className="filter__item">2000</li>
-              <li className="filter__item">2023</li>
-            </ul>
-          </div>
-        </div>
+		<S.FilterCategory>
+          <S.FilterWrapper >
+            <S.FilterList>
+              <S.FilterItem>1992</S.FilterItem>
+              <S.FilterItem>1993</S.FilterItem>
+              <S.FilterItem>2000</S.FilterItem>
+              <S.FilterItem>2023</S.FilterItem>
+            </S.FilterList>
+          </S.FilterWrapper>
+        </S.FilterCategory>
 	)
 }

@@ -1,6 +1,7 @@
 import './filter.css'
 import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
+import * as S from './filter.styles'
 
 export function Filter() {
   let [author, setAuthor] = useState(false)
@@ -8,8 +9,8 @@ export function Filter() {
   let [ganr, setGanr] = useState(false)
 
   return (
-    <div className="centerblock__filter filter">
-      <div className="filter__title">Искать по:</div>
+    <S.CenterblockFilter>
+      <S.FilterTitle>Искать по:</S.FilterTitle>
 
       <FilterCategory
         author={author}
@@ -38,6 +39,6 @@ export function Filter() {
         }}
         title="жанру"
       />
-    </div>
+    </S.CenterblockFilter>
   )
 }
