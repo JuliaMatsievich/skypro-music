@@ -6,8 +6,6 @@ import { SideBar } from './components/sideBar/sideBar';
 import { useState, useEffect } from 'react';
 
 import { SkeletonTrackList } from "./components/skeleton/skeletonTrackList";
-import { SkeletonAudioPlayer } from "./components/skeleton/skeletonAudioPlayer";
-import { SkeletonSideBar } from "./components/skeleton/skeletonSideBar";
 
 function App() {
   const [isLoading, setLoading] = useState(true);
@@ -24,7 +22,7 @@ function App() {
             <main className="main">
           <NavMenu />
           {isLoading ? <SkeletonTrackList/> : <TrackList />}
-          {isLoading ? <SkeletonSideBar/> : <SideBar/>}
+          <SideBar isLoading={isLoading}/>
             </main>
           <Player isLoading={isLoading}/>
             <footer className="footer"></footer>

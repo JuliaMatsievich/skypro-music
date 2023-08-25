@@ -1,10 +1,10 @@
-.main__sidebar {
+/* .main__sidebar {
 	max-width: 418px;
 	padding: 20px 90px 20px 78px;
- }
+ } */
 
  
-.sidebar__personal {
+/* .sidebar__personal {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -19,26 +19,26 @@
 	-ms-flex-pack: end;
 	justify-content: flex-end;
 	padding: 12px 0 15px 0;
- }
+ } */
  
- .sidebar__personal-name {
+ /* .sidebar__personal-name {
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
 	color: #ffffff;
 	margin-right: 16px;
- }
+ } */
  
- .sidebar__icon {
+ /* .sidebar__icon {
 	width: 43px;
 	height: 43px;
 	background-color: #313131;
 	border-radius: 50%;
 	cursor: pointer;
- }
+ } */
  
- .sidebar__block {
+ /* .sidebar__block {
 	height: 100%;
 	padding: 240px 0 0 0;
 	display: -webkit-box;
@@ -51,9 +51,9 @@
 	-webkit-box-pack: start;
 	-ms-flex-pack: start;
 	justify-content: flex-start;
- }
+ } */
  
- .sidebar__list {
+ /* .sidebar__list {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -64,6 +64,6 @@
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
- }
+ } */
 
  
