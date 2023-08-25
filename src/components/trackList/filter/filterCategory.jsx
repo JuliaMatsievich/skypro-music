@@ -1,4 +1,3 @@
-import './filterCategory.css'
 import * as S from './filterCategory.styles'
 import { FilterCategoryAuthor } from './filterCategoryAuthor'
 import { FilterCategoryYear } from './FilterCategoryYear'

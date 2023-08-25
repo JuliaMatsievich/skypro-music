@@ -1,4 +1,3 @@
-import './filter.css'
 import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
 import * as S from './filter.styles'
