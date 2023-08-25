@@ -26,7 +26,7 @@ function App() {
           {isLoading ? <SkeletonTrackList/> : <TrackList />}
           {isLoading ? <SkeletonSideBar/> : <SideBar/>}
             </main>
-          {isLoading ? <SkeletonAudioPlayer/> : <Player /> }
+          <Player isLoading={isLoading}/>
             <footer className="footer"></footer>
           </div>
         </div>

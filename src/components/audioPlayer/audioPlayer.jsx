@@ -1,7 +1,6 @@
-
 import * as S from './audioPlayer.styles'
 
-export function Player() {
+export function Player({isLoading}) {
   return (
     <S.Bar>
       <S.BarContent>
@@ -37,23 +36,38 @@ export function Player() {
             </S.PlayerControls>
 
             <S.TrackPlay>
+              {isLoading ?
+
+                <S.TrackPlayContain>
+                  <S.SkeletonTrackPlayImage></S.SkeletonTrackPlayImage>
+                  <S.SkeletonTrackPlayAuthor></S.SkeletonTrackPlayAuthor>
+                  <S.SkeletonTrackPlayAlbum></S.SkeletonTrackPlayAlbum>
+                </S.TrackPlayContain>
+
+              :
+
               <S.TrackPlayContain>
                 <S.TrackPlayImage>
                   <S.TrackPlaySvg alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                   </S.TrackPlaySvg>
                 </S.TrackPlayImage>
+
                 <S.TrackPlayAuthor>
                   <S.TrackPlayAuthorLink href="http://">
                     Ты та...
                   </S.TrackPlayAuthorLink>
                 </S.TrackPlayAuthor>
+
                 <S.TrackPlayAlbum className="track-play__album">
                   <S.TrackPlayAlbumLink href="http://">
                     Баста
                   </S.TrackPlayAlbumLink>
                 </S.TrackPlayAlbum>
+
               </S.TrackPlayContain>
+              }
+
 
               <S.TrackPlayLikeDis>
                 <S.TrackPlayLike className="_btn-icon">

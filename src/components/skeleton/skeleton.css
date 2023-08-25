@@ -24,7 +24,7 @@
  height: 19px;
 }
 
-.skeleton__track-play-image {
+/* .skeleton__track-play-image {
 	background-color: #313131;
 	width: 51px;
 	height: 51px;
@@ -35,14 +35,14 @@
 	background-color: #313131;
 	width: 59px;
 	height: 15px;
-}
+} */
 
 .skeleton__sidebar-item {
 	background-color: #313131;
 	
 }
 
-.blink {
+/* .blink {
 	animation-name: blinker;
 	animation-iteration-count: infinite;
 	animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
@@ -61,4 +61,21 @@
  @-webkit-keyframes blinker {
 	from { opacity: 1.0; }
 	to { opacity: 0.6; }
- }
+ } */
+
+/*
+const SkeletonTrackPlayImage = styled(TrackPlayImage) `
+	background-color: #313131;
+	width: 51px;
+	height: 51px;
+	animation: ${blinker} 5s cubic-bezier(1.0,2.0,0,1.0) infinite;
+`
+*/
+
+
+ /*
+ const blinker = keyframes `
+ 	from { opacity: 1.0; }
+	to { opacity: 0.6; }
+ `
+ */
