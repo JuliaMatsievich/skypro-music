@@ -1,4 +1,3 @@
-import './track.css';
 import * as S from './track.styles'
 
 export function TrackItem ({track}) {

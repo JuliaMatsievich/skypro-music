@@ -5,8 +5,6 @@ import { TrackList } from './components/trackList/trackList';
 import { SideBar } from './components/sideBar/sideBar';
 import { useState, useEffect } from 'react';
 
-import { SkeletonTrackList } from "./components/skeleton/skeletonTrackList";
-
 function App() {
   const [isLoading, setLoading] = useState(true);
 
@@ -21,7 +19,7 @@ function App() {
           <div className="container">
             <main className="main">
           <NavMenu />
-          {isLoading ? <SkeletonTrackList/> : <TrackList />}
+          <TrackList  isLoading={isLoading}/>
           <SideBar isLoading={isLoading}/>
             </main>
           <Player isLoading={isLoading}/>

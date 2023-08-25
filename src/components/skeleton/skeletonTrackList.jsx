@@ -1,6 +1,4 @@
-import '../trackList/trackList.css';
 import { Filter } from '../trackList/filter/filter';
-import './skeleton.css';
 import { SkeletonTrack } from './skeletonTrack';
 
 
