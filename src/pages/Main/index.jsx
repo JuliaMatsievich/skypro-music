@@ -4,6 +4,7 @@ import { NavMenu } from '../../components/navMenu/navMenu'
 import { TrackList } from '../../components/trackList/trackList'
 import { SideBar } from '../../components/sideBar/sideBar'
 import { useState, useEffect } from 'react'
+import { CATEGORIES } from '../../constants'
 
 export function MainPage() {
 	const [isLoading, setLoading] = useState(true)
@@ -19,7 +20,7 @@ export function MainPage() {
 		<S.Main>
 		  <NavMenu />
 		  <TrackList isLoading={isLoading} />
-		  <SideBar isLoading={isLoading} />
+		  <SideBar isLoading={isLoading} categories={CATEGORIES} />
 		</S.Main>
 		<Player isLoading={isLoading} />
 		<S.Footer></S.Footer>

@@ -1,4 +1,22 @@
 import styled, { keyframes }  from 'styled-components'
+import { Link } from 'react-router-dom'
+
+export const SidebarItem = styled.div`
+  width: 250px;
+  height: 150px;
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+`
+export const SidebarLink = styled.a`
+  width: 100%;
+  height: 100%;
+`
+export const SidebarImage = styled.img`
+	width: 100%;
+	height: auto;
+`
 
 export const MainSidebar = styled.div`
   max-width: 418px;
@@ -69,7 +87,7 @@ const blinker = keyframes`
   to { opacity: 0.6; }
 `
 
-export const SkeletinSidebarItem = styled.div`
+export const SkeletonSidebarItem = styled.div`
   width: 250px;
   height: 150px;
   background-color: #313131;
