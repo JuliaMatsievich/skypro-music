@@ -1,29 +1,24 @@
-import './skeleton.css';
-import '../trackList/track/track.css';
+import * as S from '../trackList/track/track.styles'
 
 export function SkeletonTrack () {
 
 	return (
-		<div className="playlist__item">
-		<div className="playlist__track track">
-		  <div className="track__title">
-			 <div className="track__title-image skeleton__title-image blink">
-			 </div>
-			 <div className= "skeleton__title-text  blink">	
-			 </div>
-		  </div>
-		  <div className="track__author skeleton__track-author blink">
-			</div>
-		  <div className="track__album skeleton__track-album blink">
-		  </div>
-		  <div className="track__time">
-			 <svg className="track__time-svg" alt="time">
+		<S.PlayListItem>
+		<S.PlayListTrack className="playlist__track track">
+		  <S.TrackTiltle className="track__title">
+			 <S.SkeletonTitleImage></S.SkeletonTitleImage>
+			 <S.SkeletonTitleText></S.SkeletonTitleText>
+		  </S.TrackTiltle>
+		  <S.SkeletonTitleAuthor></S.SkeletonTitleAuthor>
+		  <S.SkeletonTitleAlbum></S.SkeletonTitleAlbum>
+		  <S.TrackTime>
+			 <S.TrackTimeSvg className="track__time-svg" alt="time">
 				<use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-			 </svg>
-			 
-		  </div>
-		</div>
-	 </div>
+			 </S.TrackTimeSvg>
+			 <S.TrackTimeText>0.00</S.TrackTimeText>
+		  </S.TrackTime>
+		</S.PlayListTrack>
+	 </S.PlayListItem>
 	)
 
 }

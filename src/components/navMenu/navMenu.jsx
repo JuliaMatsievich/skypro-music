@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './navMenu.css'
+import * as S from './navMenu.styles'
 
 export function NavMenu() {
   const [isOpenMenu, setOpenMenu] = useState(false)
@@ -9,36 +9,36 @@ export function NavMenu() {
   }
 
   return (
-    <nav className="main__nav nav">
-      <div className="nav__logo logo">
-        <img className="logo__image" src="img/logo.png" alt="logo" />
-      </div>
-      <div onClick={handleClickMenu} className="nav__burger burger">
-        <span className="burger__line"></span>
-        <span className="burger__line"></span>
-        <span className="burger__line"></span>
-      </div>
+    <S.MainNav>
+      <S.NavLogo>
+        <S.LogoImage src="img/logo.png" alt="logo" />
+      </S.NavLogo>
+      <S.NavBurger onClick={handleClickMenu}>
+        <S.BurgerLine></S.BurgerLine>
+        <S.BurgerLine></S.BurgerLine>
+        <S.BurgerLine></S.BurgerLine>
+      </S.NavBurger>
       {isOpenMenu ? (
-        <div className="nav__menu menu">
-          <ul className="menu__list">
-            <li className="menu__item">
-              <a href="#" className="menu__link">
+        <S.NavMenu>
+          <S.MenuList>
+            <S.MenuItem>
+              <S.MenuLink href="#">
                 Главное
-              </a>
-            </li>
-            <li className="menu__item">
-              <a href="#" className="menu__link">
+              </S.MenuLink>
+            </S.MenuItem>
+            <S.MenuItem>
+              <S.MenuLink href="#">
                 Мой плейлист
-              </a>
-            </li>
-            <li className="menu__item">
-              <a href="../signin.html" className="menu__link">
+              </S.MenuLink>
+            </S.MenuItem>
+            <S.MenuItem>
+              <S.MenuLink href="../signin.html">
                 Войти
-              </a>
-            </li>
-          </ul>
-        </div>
+              </S.MenuLink>
+            </S.MenuItem>
+          </S.MenuList>
+        </S.NavMenu>
       ) : null}
-    </nav>
+    </S.MainNav>
   )
 }

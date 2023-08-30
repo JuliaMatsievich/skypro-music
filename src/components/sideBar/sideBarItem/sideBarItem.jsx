@@ -1,15 +1,14 @@
-import './sideBarItem.css';
+import * as S from './sideBarItem.styles';
 
 export function SideBarItem ({sideBar}) {
 	return (
-		<div className="sidebar__item">
-			<a className="sidebar__link" href={sideBar.link}>
-			<img
-				className="sidebar__img"
+		<S.SidebarItem>
+			<S.SidebarLink href={sideBar.link}>
+			<S.SidebarImage 
 				src={sideBar.img}
 				alt={sideBar.name}
 			/>
-			</a>
-		</div>
+			</S.SidebarLink>
+		</S.SidebarItem>
 	)
 }
