@@ -1,25 +1,14 @@
-// export const Profile = ({ user }) => {
-// 	const fullName = '${user.firstName} ${user.lastName}';
- 
-// 	return (
-// 	  <section>
-// 		 <img src={user.avatar} alt={fullName} />
-// 		 <h1>{fullName}</h1>
-// 		 <p>email: {user.email}</p>
-// 		 <p>gender: {user.gender}</p>
-// 	  </section>
-// 	);
-//  };
+import { useParams } from "react-router-dom";
+import { CATEGORIES } from "../../constants";
+import { WrapperPages } from '../../components/wrapperPages/wrapperPages'
 
- export const Category = ({ categories}) => {
-	const fullName = '${user.firstName} ${user.lastName}';
- 
-	return (
-	  <section>
-		 <img src={user.avatar} alt={fullName} />
-		 <h1>{fullName}</h1>
-		 <p>email: {user.email}</p>
-		 <p>gender: {user.gender}</p>
-	  </section>
-	);
- };
+export const Category = () => {
+	const params = useParams();
+	const category = CATEGORIES.find((category) => category.id === Number(params.id));
+
+  return (
+    <WrapperPages>
+      <h1>{category.title}</h1>
+    </WrapperPages>
+  )
+}
