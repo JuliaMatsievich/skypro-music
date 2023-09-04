@@ -12,7 +12,7 @@ export function Authorization() {
     setRegister(!isRegister)
   }
 
-  function handleClickRegisterPage() {
+ function handleClickRegisterPage() {
     window.localStorage.setItem('user', 'token')
   }
 

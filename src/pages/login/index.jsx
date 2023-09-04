@@ -1,7 +1,7 @@
 import { Authorization } from "../../components/authorization/authorization"
 
-export function Login ({user,setUser}) {
+export function Login () {
 	return (
-    <Authorization user={user} setUser={setUser}/>
+    <Authorization />
 	)
 }
