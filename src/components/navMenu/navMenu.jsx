@@ -8,6 +8,10 @@ export function NavMenu() {
     setOpenMenu(!isOpenMenu)
   }
 
+  function handleClickLoginOut() {
+    window.localStorage.removeItem("user");
+  }
+
   return (
     <S.MainNav>
       <S.NavLogo>
@@ -32,8 +36,8 @@ export function NavMenu() {
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="../signin.html">
-                Войти
+              <S.MenuLink to="/login" onClick={handleClickLoginOut}>
+                Выйти
               </S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
