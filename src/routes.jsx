@@ -5,6 +5,7 @@ import { Category } from './pages/category'
 import { Login } from './pages/login'
 import { ProtectedRoute } from './components/protedcted-route'
 import { Register } from './pages/register'
+import { NotFound } from './pages/notfound'
 
 export const AppRoutes = ({ user }) => {
   return (
@@ -17,6 +18,7 @@ export const AppRoutes = ({ user }) => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Category />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
