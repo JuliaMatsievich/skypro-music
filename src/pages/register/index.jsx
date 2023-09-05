@@ -1,6 +1,6 @@
 import { Authorization } from "../../components/authorization/authorization"
-export function Register() {
+export function Register({setToken}) {
 	return (
-    <Authorization/>
+    <Authorization setToken={setToken}/>
 	)
 }

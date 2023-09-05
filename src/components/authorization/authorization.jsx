@@ -1,11 +1,12 @@
 import * as S from './authorization.styles'
 import { useState } from 'react'
 
-export function Authorization() {
+export function Authorization({setToken}) {
   const [isRegister, setRegister] = useState(false)
 
   function handleClickEnter() {
-    window.localStorage.setItem('user', 'token')
+    localStorage.setItem('token', 'token');
+    setToken(true)
   }
 
   function handleClickRegister() {
@@ -13,7 +14,8 @@ export function Authorization() {
   }
 
  function handleClickRegisterPage() {
-    window.localStorage.setItem('user', 'token')
+    localStorage.setItem('token', 'token');
+    setToken(true)
   }
 
   return (
@@ -56,7 +58,7 @@ export function Authorization() {
                 <S.ModalBtnEnterLink to="/"  onClick={handleClickEnter}>Войти</S.ModalBtnEnterLink>
               </S.ModalBtnEnter>
               <S.ModalBtnSignUp>
-                <S.ModalBtnSignUpLink to="/register"  onClick={handleClickRegister}>
+                <S.ModalBtnSignUpLink onClick={handleClickRegister} to="/register"  >
                   Зарегистрироваться
                 </S.ModalBtnSignUpLink>
               </S.ModalBtnSignUp>

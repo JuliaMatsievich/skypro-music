@@ -5,9 +5,8 @@ import { TrackList } from '../../components/trackList/trackList'
 import { SideBar } from '../../components/sideBar/sideBar'
 import { useState, useEffect } from 'react'
 import { CATEGORIES } from '../../constants'
-import { Authorization } from '../../components/authorization/authorization'
 
-export function MainPage() {
+export function MainPage({ setToken }) {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export function MainPage() {
   return (
     <S.Container>
     <S.Main>
-      <NavMenu />
+      <NavMenu setToken={setToken}/>
       <TrackList isLoading={isLoading} />
       <SideBar isLoading={isLoading} categories={CATEGORIES} />
     </S.Main>
