@@ -1,6 +1,6 @@
 import * as S from './track.styles'
 
-export function TrackItem ({track}) {
+export const TrackItem = ({track}) => {
 
 	return (
 		<S.PlayListItem>

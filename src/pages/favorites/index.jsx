@@ -1,6 +1,6 @@
 import { WrapperPages } from '../../components/wrapperPages/wrapperPages'
 
-export function Favorites() {
+export const Favorites = () => {
   return (
     <WrapperPages>
       <h1>Мои треки</h1>

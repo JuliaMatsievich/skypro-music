@@ -1,19 +1,19 @@
 import * as S from './authorization.styles'
 import { useState } from 'react'
 
-export function Authorization({setToken}) {
+export const Authorization = ({setToken}) => {
   const [isRegister, setRegister] = useState(false)
 
-  function handleClickEnter() {
+  const handleClickEnter = () => {
     localStorage.setItem('token', 'token');
     setToken(true)
   }
 
-  function handleClickRegister() {
+  const handleClickRegister = () => {
     setRegister(!isRegister)
   }
 
- function handleClickRegisterPage() {
+ const handleClickRegisterPage = () => {
     localStorage.setItem('token', 'token');
     setToken(true)
   }

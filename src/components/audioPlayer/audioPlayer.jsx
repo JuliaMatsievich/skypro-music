@@ -1,6 +1,6 @@
 import * as S from './audioPlayer.styles'
 
-export function Player({isLoading}) {
+export const Player = ({isLoading}) => {
   return (
     <S.Bar>
       <S.BarContent>

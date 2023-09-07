@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { CATEGORIES } from '../../constants'
 import { WrapperPages } from '../../components/wrapperPages/wrapperPages'
 
-export function Category() {
+export const Category = () => {
   const params = useParams()
   const category = CATEGORIES.find(
     (category) => category.id === Number(params.id),

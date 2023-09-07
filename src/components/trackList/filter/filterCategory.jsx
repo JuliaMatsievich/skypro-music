@@ -3,7 +3,7 @@ import { FilterCategoryAuthor } from './filterCategoryAuthor'
 import { FilterCategoryYear } from './FilterCategoryYear'
 import { FilterCategoryGanr } from './FilterCategoryGanr'
 
-export function FilterCategory({ onShow, title,author, year, ganr}) {
+export const FilterCategory = ({ onShow, title,author, year, ganr}) => {
   return (
     <S.FilterButton onClick={onShow} className="_btn-text">
       {title}

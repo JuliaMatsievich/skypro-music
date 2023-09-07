@@ -2,7 +2,7 @@ import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
 import * as S from './filter.styles'
 
-export function Filter() {
+export const Filter = () => {
   let [author, setAuthor] = useState(false)
   let [year, setYear] = useState(false)
   let [ganr, setGanr] = useState(false)

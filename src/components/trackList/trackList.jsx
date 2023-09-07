@@ -3,7 +3,7 @@ import { Filter } from './filter/filter'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack';
 
-export function TrackList({ isLoading }) {
+export const TrackList = ({ isLoading }) => {
   return (
     <S.MainCenterBlock>
       <S.CenterBlockSearch>

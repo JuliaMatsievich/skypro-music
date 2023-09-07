@@ -1,6 +1,6 @@
 import * as S from './filterCategory.styles'
 
-export function FilterCategoryGanr() {
+export const FilterCategoryGanr = () => {
 	return (
 		<S.FilterCategory>
 		<S.FilterWrapper>

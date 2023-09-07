@@ -10,11 +10,10 @@ import { NotFound } from './pages/notfound'
 export const AppRoutes = ({ token, setToken }) => {
   return (
     <Routes>
-      <Route path="/login" element={<Login  setToken={setToken}/>} />
-      <Route path="/register" element={<Register  setToken={setToken}/>} />
-
+      <Route path="/login" element={<Login setToken={setToken} />} />
+      <Route path="/register" element={<Register setToken={setToken} />} />
       <Route element={<ProtectedRoute isAllowed={token} />}>
-        <Route path="/" element={<MainPage setToken={setToken}/>} />
+        <Route path="/" element={<MainPage setToken={setToken} />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Category />} />
       </Route>

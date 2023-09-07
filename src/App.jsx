@@ -1,10 +1,15 @@
 import * as S from './App.styles'
 import { AppRoutes } from './routes'
 import { useState } from 'react'
+import { getTracksAll } from './api'
 
-function App() {
+const App = () => {
   const initialToken = localStorage.getItem('token', '')
   const [token, setToken] = useState(initialToken)
+
+  // getTracksAll().then((tracks) => {
+  //   console.log(tracks);
+  // })
 
   return (
     <>

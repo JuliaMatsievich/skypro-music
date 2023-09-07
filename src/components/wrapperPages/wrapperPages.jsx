@@ -2,7 +2,7 @@ import * as S from './wrapperPages.styles'
 import { NavMenu } from '../../components/navMenu/navMenu'
 import * as SM from '../../pages/main/index.styles'
 
-export function WrapperPages({ children }) {
+export const WrapperPages = ({ children }) => {
   return (
     <SM.Container>
       <SM.Main>

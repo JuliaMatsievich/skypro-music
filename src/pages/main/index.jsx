@@ -6,7 +6,7 @@ import { SideBar } from '../../components/sideBar/sideBar'
 import { useState, useEffect } from 'react'
 import { CATEGORIES } from '../../constants'
 
-export function MainPage({ setToken }) {
+export const MainPage = ({ setToken }) => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
