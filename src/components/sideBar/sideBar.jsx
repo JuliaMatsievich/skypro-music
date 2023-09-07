@@ -1,7 +1,6 @@
-import { SideBarItem } from './sideBarItem/sideBarItem'
 import * as S from './sideBar.styles'
 
-export function SideBar({ isLoading }) {
+export function SideBar({ isLoading, categories }) {
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
@@ -15,36 +14,23 @@ export function SideBar({ isLoading }) {
       <S.SidebarBlock>
         {isLoading ? (
           <S.SidebarList>
-            <S.SkeletinSidebarItem></S.SkeletinSidebarItem>
-            <S.SkeletinSidebarItem></S.SkeletinSidebarItem>
-            <S.SkeletinSidebarItem></S.SkeletinSidebarItem>
+            <S.SkeletonSidebarItem></S.SkeletonSidebarItem>
+            <S.SkeletonSidebarItem></S.SkeletonSidebarItem>
+            <S.SkeletonSidebarItem></S.SkeletonSidebarItem>
           </S.SidebarList>
         ) : (
           <S.SidebarList>
-            <SideBarItem
-              sideBar={{
-                link: '#',
-                img: 'img/playlist01.png',
-                name: "day's playlist",
-              }}
-            />
-            <SideBarItem
-              sideBar={{
-                link: '#',
-                img: 'img/playlist02.png',
-                name: '100 танцевальных хитов',
-              }}
-            />
-            <SideBarItem
-              sideBar={{
-                link: '#',
-                img: 'img/playlist03.png',
-                name: 'инди-заряд',
-              }}
-            />
+            {categories.map((category) => {
+              return (
+                <S.SidebarItem key={category.id}>
+                  <S.SidebarLink to={`/category/${category.id}`}>
+                    <S.SidebarImage src={category.img} alt={category.title} />
+                  </S.SidebarLink>
+                </S.SidebarItem>
+              )
+            })}
           </S.SidebarList>
         )}
-
       </S.SidebarBlock>
     </S.MainSidebar>
   )

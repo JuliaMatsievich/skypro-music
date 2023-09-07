@@ -1,17 +1,22 @@
 import { useState } from 'react'
 import * as S from './navMenu.styles'
 
-export function NavMenu() {
+export function NavMenu({ setToken }) {
   const [isOpenMenu, setOpenMenu] = useState(false)
 
   function handleClickMenu() {
     setOpenMenu(!isOpenMenu)
   }
 
+  function handleClickLoginOut() {
+   localStorage.removeItem("token");
+   setToken(false)
+  }
+
   return (
     <S.MainNav>
       <S.NavLogo>
-        <S.LogoImage src="img/logo.png" alt="logo" />
+        <S.LogoImage src="../img/logo.png" alt="logo" />
       </S.NavLogo>
       <S.NavBurger onClick={handleClickMenu}>
         <S.BurgerLine></S.BurgerLine>
@@ -22,18 +27,18 @@ export function NavMenu() {
         <S.NavMenu>
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink href="#">
+              <S.MenuLink to='/'>
                 Главное
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="#">
+              <S.MenuLink to='/favorites'>
                 Мой плейлист
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="../signin.html">
-                Войти
+              <S.MenuLink to="/login" onClick={handleClickLoginOut}>
+                Выйти
               </S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
