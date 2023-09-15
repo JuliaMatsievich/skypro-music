@@ -1,7 +1,11 @@
 import * as S from './track.styles'
 
-export const TrackItem = ({track}) => {
-	
+export const TrackItem = ({track, setCurrentTrack}) => {
+
+	const handlePlayTrack = (track) => {
+		setCurrentTrack({name: track.name, author: track.author, track_file: track.track_file})
+	}
+
 	return (
 		<S.PlayListItem>
 		<S.PlayListTrack>
@@ -11,8 +15,8 @@ export const TrackItem = ({track}) => {
 				  <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
 				</S.TrackTiltleImageSvg>
 			 </S.TrackTiltleImage>
-			 <S.TrackTiltleText>
-				<S.TrackTiltleLink href={track.track_file}
+			 <S.TrackTiltleText onClick={() => handlePlayTrack(track)}>
+				<S.TrackTiltleLink 
 				  >{track.name} </S.TrackTiltleLink>
 			 </S.TrackTiltleText>
 		  </S.TrackTiltle>

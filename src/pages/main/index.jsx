@@ -6,8 +6,9 @@ import { SideBar } from '../../components/sideBar/sideBar'
 import { useState, useEffect } from 'react'
 import { CATEGORIES } from '../../constants'
 
-export const MainPage = ({ setToken }) => {
+export const MainPage = ({ setToken, tracks }) => {
   const [isLoading, setLoading] = useState(true)
+  const [currentTrack, setCurrentTrack] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -19,10 +20,10 @@ export const MainPage = ({ setToken }) => {
     <S.Container>
     <S.Main>
       <NavMenu setToken={setToken}/>
-      <TrackList isLoading={isLoading} />
+      <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} />
       <SideBar isLoading={isLoading} categories={CATEGORIES} />
     </S.Main>
-    <Player isLoading={isLoading} />
+    {currentTrack ? <Player isLoading={isLoading} track={currentTrack}/> : null}
     <S.Footer></S.Footer>
   </S.Container>
   )

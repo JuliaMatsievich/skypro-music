@@ -1,7 +1,11 @@
 import * as S from './audioPlayer.styles'
 
-export const Player = ({isLoading}) => {
+export const Player = ({isLoading, track}) => {
   return (
+    <>
+    <audio controls>
+    <source src={track.track_file} type="audio/mpeg" />
+    </audio>
     <S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress></S.BarPlayerProgress>
@@ -55,13 +59,13 @@ export const Player = ({isLoading}) => {
 
                 <S.TrackPlayAuthor>
                   <S.TrackPlayAuthorLink href="http://">
-                    Ты та...
+                    {track.name}
                   </S.TrackPlayAuthorLink>
                 </S.TrackPlayAuthor>
 
                 <S.TrackPlayAlbum className="track-play__album">
                   <S.TrackPlayAlbumLink href="http://">
-                    Баста
+                    {track.author}
                   </S.TrackPlayAlbumLink>
                 </S.TrackPlayAlbum>
 
@@ -102,5 +106,6 @@ export const Player = ({isLoading}) => {
         </S.BarPlayerBlock>
       </S.BarContent>
     </S.Bar>
+    </>
   )
 }

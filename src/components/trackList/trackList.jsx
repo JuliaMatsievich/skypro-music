@@ -3,17 +3,8 @@ import { Filter } from './filter/filter'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
 
-import { useEffect, useState } from 'react'
-import { getTracksAll } from '../../api'
 
-export const TrackList = ({ isLoading }) => {
-  const [tracks, setTracks] = useState([])
-
-  useEffect(() => {
-    getTracksAll().then((data) => {
-      setTracks(data)
-    })
-  }, [])
+export const TrackList = ({ isLoading, tracks, setCurrentTrack }) => {
 
   return (
     <S.MainCenterBlock>
@@ -50,7 +41,7 @@ export const TrackList = ({ isLoading }) => {
         ) : (
           <S.ContentPlaylist>
             {tracks.map((trackData) => {
-              return <TrackItem key={trackData.id} track={trackData} />
+              return <TrackItem key={trackData.id} track={trackData} setCurrentTrack={setCurrentTrack} />
             })}
           </S.ContentPlaylist>
         )}
