@@ -1,7 +1,7 @@
 import * as S from './track.styles'
 
 export const TrackItem = ({track}) => {
-
+	
 	return (
 		<S.PlayListItem>
 		<S.PlayListTrack>
@@ -12,8 +12,8 @@ export const TrackItem = ({track}) => {
 				</S.TrackTiltleImageSvg>
 			 </S.TrackTiltleImage>
 			 <S.TrackTiltleText>
-				<S.TrackTiltleLink href={track.titleLink}
-				  >{track.title} <S.TrackTiltleSpan>{track.titleSpan}</S.TrackTiltleSpan></S.TrackTiltleLink>
+				<S.TrackTiltleLink href={track.track_file}
+				  >{track.name} </S.TrackTiltleLink>
 			 </S.TrackTiltleText>
 		  </S.TrackTiltle>
 		  <S.TrackTiltleAuthor>
@@ -27,7 +27,7 @@ export const TrackItem = ({track}) => {
 			 <S.TrackTimeSvg alt="time">
 				<use xlinkHref="img/icon/sprite.svg#icon-like"></use>
 			 </S.TrackTimeSvg>
-			 <S.TrackTimeText>{track.time}</S.TrackTimeText>
+			 <S.TrackTimeText>{track.duration_in_seconds}</S.TrackTimeText>
 		  </S.TrackTime>
 		</S.PlayListTrack>
 	 </S.PlayListItem>
