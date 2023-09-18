@@ -3,9 +3,9 @@ import * as S from './audioPlayer.styles'
 export const Player = ({isLoading, track}) => {
   return (
     <>
-    <audio controls>
+    {/* <audio controls>
     <source src={track.track_file} type="audio/mpeg" />
-    </audio>
+    </audio> */}
     <S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress></S.BarPlayerProgress>

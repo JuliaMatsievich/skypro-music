@@ -2,19 +2,14 @@ import { TrackItem } from './track/track'
 import { Filter } from './filter/filter'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
+import { HeaderTrackList } from './headerTrackList'
 
 
 export const TrackList = ({ isLoading, tracks, setCurrentTrack }) => {
 
   return (
     <S.MainCenterBlock>
-      <S.CenterBlockSearch>
-        <S.SearchSvg>
-          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-        </S.SearchSvg>
-        <S.SearchText type="search" placeholder="Поиск" name="search" />
-      </S.CenterBlockSearch>
-      <S.CenterBlockTitle>Треки</S.CenterBlockTitle>
+      <HeaderTrackList />
       <Filter />
       <S.CenterBlockContent>
         <S.ContentTitle>

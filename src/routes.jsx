@@ -7,13 +7,13 @@ import { ProtectedRoute } from './components/protedcted-route'
 import { Register } from './pages/register'
 import { NotFound } from './pages/notfound'
 
-export const AppRoutes = ({ token, setToken, tracks }) => {
+export const AppRoutes = ({ token, setToken, tracks, allTracksError}) => {
   return (
     <Routes>
       <Route path="/login" element={<Login setToken={setToken} />} />
       <Route path="/register" element={<Register setToken={setToken} />} />
       <Route element={<ProtectedRoute isAllowed={token} />}>
-        <Route path="/" element={<MainPage setToken={setToken} tracks={tracks} />} />
+        <Route path="/" element={<MainPage setToken={setToken} tracks={tracks} allTracksError={allTracksError}/>} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Category />} />
       </Route>

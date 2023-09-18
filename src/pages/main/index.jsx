@@ -5,8 +5,9 @@ import { TrackList } from '../../components/trackList/trackList'
 import { SideBar } from '../../components/sideBar/sideBar'
 import { useState, useEffect } from 'react'
 import { CATEGORIES } from '../../constants'
+import { ErrorMessage } from '../../components/errors/error'
 
-export const MainPage = ({ setToken, tracks }) => {
+export const MainPage = ({ setToken, tracks, allTracksError }) => {
   const [isLoading, setLoading] = useState(true)
   const [currentTrack, setCurrentTrack] = useState(null);
 
@@ -20,7 +21,7 @@ export const MainPage = ({ setToken, tracks }) => {
     <S.Container>
     <S.Main>
       <NavMenu setToken={setToken}/>
-      <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} />
+      {allTracksError ? <ErrorMessage allTracksError={allTracksError}/> : <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} />}  
       <SideBar isLoading={isLoading} categories={CATEGORIES} />
     </S.Main>
     {currentTrack ? <Player isLoading={isLoading} track={currentTrack}/> : null}
