@@ -1,11 +1,37 @@
 import * as S from './audioPlayer.styles'
+import { useRef, useState, useEffect } from 'react'
 
-export const Player = ({isLoading, track}) => {
+export const Player = ({isLoading, track }) => {
+
+  console.log(track.track_file);
+
+  const[isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null)
+
+  const handleStart = () => {
+    audioRef.current.play();
+    setIsPlaying(true);
+  };
+
+  const handleStop = () => {
+    audioRef.current.pause();
+    setIsPlaying(false);
+  };
+
+  console.log(audioRef);
+
+ useEffect(() => {
+    console.log(audioRef.current.currentSrc)
+  }) 
+
+
+  const togglePlay = isPlaying ? handleStop : handleStart;
+
   return (
     <>
-    {/* <audio controls>
+    <audio controls ref={audioRef} >
     <source src={track.track_file} type="audio/mpeg" />
-    </audio> */}
+    </audio>
     <S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress></S.BarPlayerProgress>
@@ -18,7 +44,7 @@ export const Player = ({isLoading, track}) => {
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay>
-                <S.PlayerBtnPlaySvg alt="play">
+                <S.PlayerBtnPlaySvg alt="play" onClick={togglePlay}>
                   <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>

@@ -1,6 +1,7 @@
 import * as S from './track.styles'
 
 export const TrackItem = ({ track, setCurrentTrack }) => {
+  
   const handlePlayTrack = (track) => {
     setCurrentTrack({
       name: track.name,
