@@ -3,19 +3,12 @@ import { Player } from '../../components/audioPlayer/audioPlayer'
 import { NavMenu } from '../../components/navMenu/navMenu'
 import { TrackList } from '../../components/trackList/trackList'
 import { SideBar } from '../../components/sideBar/sideBar'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
 
-export const MainPage = ({ setToken, tracks, allTracksError }) => {
-  const [isLoading, setLoading] = useState(true)
+export const MainPage = ({ setToken, tracks, allTracksError, isLoading }) => {
   const [currentTrack, setCurrentTrack] = useState(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(!isLoading)
-    }, 5000)
-  }, [])
 
   return (
     <S.Container>
