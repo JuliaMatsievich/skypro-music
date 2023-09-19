@@ -45,7 +45,7 @@ export const Player = ({isLoading, track }) => {
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay>
                 <S.PlayerBtnPlaySvg alt="play" onClick={togglePlay}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+                  <use xlinkHref={isPlaying ? "img/icon/sprite.svg#icon-pause" : "img/icon/sprite.svg#icon-play"}></use>
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>

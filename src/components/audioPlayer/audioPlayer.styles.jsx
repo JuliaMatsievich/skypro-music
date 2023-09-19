@@ -92,7 +92,7 @@ export const PlayerBtnPlaySvg = styled.svg`
 `
 export const PlayerBtnNext = styled(PlayerBtn)`
   margin-right: 28px;
-  fill: #a53939;
+  fill: #d9d9d9;
 `
 export const PlayerBtnNextSvg = styled.svg`
   width: 15px;
