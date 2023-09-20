@@ -7,6 +7,7 @@ export const TrackItem = ({ track, setCurrentTrack }) => {
       name: track.name,
       author: track.author,
       track_file: track.track_file,
+      time: track.duration_in_seconds
     })
   }
 

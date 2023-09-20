@@ -17,7 +17,7 @@ export const MainPage = ({ setToken, tracks, allTracksError, isLoading }) => {
       {allTracksError ? <ErrorMessage allTracksError={allTracksError}/> : <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} />}  
       <SideBar isLoading={isLoading} categories={CATEGORIES} />
     </S.Main>
-    {currentTrack ? <Player isLoading={isLoading} track={currentTrack}/> : null}
+    {currentTrack ? <Player isLoading={isLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} /> : null}
     <S.Footer></S.Footer>
   </S.Container>
   )
