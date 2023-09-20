@@ -36,17 +36,15 @@ export const Player = ({ isLoading, currentTrack, setCurrentTrack }) => {
     } else {
       audioRef.current.pause()
     }
-    
-
   }, [currentTrack])
 
   const togglePlay = isPlaying ? handleStop : handleStart
 
   return (
     <>
-      <audio controls ref={audioRef}>
+      <S.AudioTag controls ref={audioRef}>
         <source src={currentTrack.track_file} type="audio/mpeg" />
-      </audio>
+      </S.AudioTag>
       <S.Bar>
         <S.BarContent>
           <ProgressBar time={currentTrack.duration_in_seconds}></ProgressBar>

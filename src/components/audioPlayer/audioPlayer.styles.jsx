@@ -1,5 +1,9 @@
 import styled, { keyframes } from 'styled-components'
 
+export const AudioTag = styled.audio `
+  visibility: hidden;
+`
+
 export const Bar = styled.div`
   position: sticky;
   bottom: 0;
