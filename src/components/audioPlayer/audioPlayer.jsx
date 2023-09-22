@@ -1,31 +1,19 @@
 import * as S from './audioPlayer.styles'
 import { useRef, useState, useEffect } from 'react'
 import { ProgressBar } from './progressBar'
-import { getTimeInMinutes } from '../../helpFunctions'
 
 export const Player = ({ isLoading, currentTrack }) => {
   let audioRef = useRef(new Audio(currentTrack.track_file))
 
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const intervalRef = useRef()
-
   const [duration, setDuration] = useState(0)
 
   const [currentTime, setCurrentTime] = useState(0)
 
-  const startTimer = () => {
-    clearInterval(intervalRef.current)
-
-    intervalRef.current = setInterval(() => {
-      setCurrentTime(audioRef.current.currentTime)
-    }, 1000)
-  }
-
   const handlePlay = () => {
     audioRef.current.play()
     setIsPlaying(true)
-    startTimer()
   }
 
   const handlePause = () => {
@@ -41,17 +29,9 @@ export const Player = ({ isLoading, currentTrack }) => {
     }
   }
 
-  function formatDuration(durationSeconds) {
-    const minutes = Math.floor(durationSeconds / 60)
-    const seconds = Math.floor(durationSeconds % 60)
-    const formattedSeconds = seconds.toString().padStart(2, '0')
-    return `${minutes}:${formattedSeconds}`
-  }
-
   useEffect(() => {
     return () => {
       audioRef.current.pause()
-      clearInterval(intervalRef.current)
     }
   }, [currentTrack])
 
@@ -59,7 +39,6 @@ export const Player = ({ isLoading, currentTrack }) => {
     audioRef.current = new Audio(currentTrack.track_file)
     if (isPlaying) {
       audioRef.current.play()
-      startTimer()
     } else {
       audioRef.current.pause()
     }
@@ -92,8 +71,6 @@ export const Player = ({ isLoading, currentTrack }) => {
             isPlaying={isPlaying}
             currentTime={currentTime}
             setCurrentTime={setCurrentTime}
-            intervalRef={intervalRef}
-            currentTrack={currentTrack}
             duration={duration}
           ></ProgressBar>
           <S.BarPlayerBlock>
