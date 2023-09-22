@@ -55,3 +55,10 @@ export const StyledProgressInput = styled.input`
     height: var(--progress-height);
   }
 `;
+
+export const TimeTrack = styled.div`
+  color: #4e4e4e;
+  align-self: flex-end;
+  margin-right: 25px;
+  margin-bottom: 10px;
+`

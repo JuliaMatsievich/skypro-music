@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 
-export const AudioTag = styled.audio `
+export const AudioTag = styled.audio`
   visibility: hidden;
 `
 
@@ -289,15 +289,16 @@ export const SkeletonTrackPlayImage = styled(TrackPlayImage)`
 `
 
 export const SkeletonTrackPlayAuthor = styled(TrackPlayAuthor)`
-	background-color: #313131;
-	width: 59px;
-	height: 15px;
+  background-color: #313131;
+  width: 59px;
+  height: 15px;
   animation: ${blinker} 1s cubic-bezier(1, 2, 0, 1) infinite;
 `
 
 export const SkeletonTrackPlayAlbum = styled(TrackPlayAlbum)`
-	background-color: #313131;
-	width: 59px;
-	height: 15px;
+  background-color: #313131;
+  width: 59px;
+  height: 15px;
   animation: ${blinker} 1s cubic-bezier(1, 2, 0, 1) infinite;
 `
+

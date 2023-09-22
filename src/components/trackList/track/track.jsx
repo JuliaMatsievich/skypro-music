@@ -1,21 +1,11 @@
-import * as S from './track.styles'
+import * as S from './track.styles';
+import { getTimeInMinutes } from '../../../helpFunctions'; 
 
-export const TrackItem = ({ track, setCurrentTrack }) => {
-  
-  const handlePlayTrack = (track) => {
-    setCurrentTrack({
-      name: track.name,
-      author: track.author,
-      track_file: track.track_file,
-      time: track.duration_in_seconds
-    })
+export const TrackItem = ({ currentTrack, setCurrentTrack, track }) => {
+
+  const handlePlayTrack = (currentTrack) => {
+    setCurrentTrack(currentTrack)
   }
-
-  const getTimeInMinutes = (seconds) => {
-    const timeInMinutes = (Number(seconds) / 60).toFixed(2)
- 	 return timeInMinutes
-  }
-
 
   return (
     <S.PlayListItem>

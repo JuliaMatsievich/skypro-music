@@ -1,44 +1,75 @@
 import * as S from './audioPlayer.styles'
 import { useRef, useState, useEffect } from 'react'
 import { ProgressBar } from './progressBar'
+import { getTimeInMinutes } from '../../helpFunctions'
 
-export const Player = ({ isLoading, currentTrack, setCurrentTrack }) => {
+export const Player = ({ isLoading, currentTrack }) => {
+
+  let audioRef = useRef(new Audio(currentTrack.track_file))
+
   const [isPlaying, setIsPlaying] = useState(false)
-  let audioRef = useRef(null)
 
-  const handleStart = () => {
-    setIsPlaying(true)
+  const intervalRef = useRef()
+
+  const [duration, setDuration] = useState(0);
+
+  const [currentTime, setCurrentTime] = useState(0)
+
+  const startTimer = () => {
+    clearInterval(intervalRef.current)
+
+    intervalRef.current = setInterval(() => {
+      setCurrentTime(audioRef.current.currentTime)
+    }, 1000)
   }
 
-  const handleStop = () => {
+  const handlePlay = () => {
+    audioRef.current.play()
+    setIsPlaying(true)
+    startTimer()
+  }
+
+  const handlePause = () => {
+    audioRef.current.pause()
     setIsPlaying(false)
   }
 
-  useEffect(() => {
+  const handlePlayPause = () => {
     if (isPlaying) {
-      audioRef.current.play()
+      handlePause()
     } else {
-      audioRef.current.pause()
+      handlePlay()
     }
-  }, [isPlaying])
+  }
+
+  useEffect(() => {
+    setDuration(audioRef.current.duration)
+    console.log('audioRef.current.duration');
+  },[currentTrack])
+
+  function formatDuration(durationSeconds) {
+    const minutes = Math.floor(durationSeconds / 60);
+    const seconds = Math.floor(durationSeconds % 60);
+    const formattedSeconds = seconds.toString().padStart(2, "0");
+    return `${minutes}:${formattedSeconds}`;
+  }
 
   useEffect(() => {
     return () => {
-      audioRef.current.pause();
-      // clearInterval(intervalRef.current);
+      audioRef.current.pause()
+      clearInterval(intervalRef.current);
     }
-  }, [currentTrack]);
+  }, [currentTrack])
 
   useEffect(() => {
-    audioRef.current = new Audio(currentTrack.track_file);
+    audioRef.current = new Audio(currentTrack.track_file)
     if (isPlaying) {
       audioRef.current.play()
+      startTimer()
     } else {
       audioRef.current.pause()
     }
   }, [currentTrack])
-
-  const togglePlay = isPlaying ? handleStop : handleStart
 
   return (
     <>
@@ -47,7 +78,15 @@ export const Player = ({ isLoading, currentTrack, setCurrentTrack }) => {
       </S.AudioTag>
       <S.Bar>
         <S.BarContent>
-          <ProgressBar time={currentTrack.duration_in_seconds}></ProgressBar>
+          <ProgressBar
+            audioRef={audioRef}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            setCurrentTime={setCurrentTime}
+            intervalRef={intervalRef}
+            currentTrack={currentTrack}
+            duration={duration}
+          ></ProgressBar>
           {/* <S.BarPlayerProgress></S.BarPlayerProgress> */}
           <S.BarPlayerBlock>
             <S.BarPlayer>
@@ -58,7 +97,7 @@ export const Player = ({ isLoading, currentTrack, setCurrentTrack }) => {
                   </S.PlayerBtnPrevSvg>
                 </S.PlayerBtnPrev>
                 <S.PlayerBtnPlay>
-                  <S.PlayerBtnPlaySvg alt="play" onClick={togglePlay}>
+                  <S.PlayerBtnPlaySvg alt="play" onClick={handlePlayPause}>
                     <use
                       xlinkHref={
                         isPlaying
