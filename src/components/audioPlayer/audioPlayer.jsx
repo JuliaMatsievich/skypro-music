@@ -4,14 +4,13 @@ import { ProgressBar } from './progressBar'
 import { getTimeInMinutes } from '../../helpFunctions'
 
 export const Player = ({ isLoading, currentTrack }) => {
-
   let audioRef = useRef(new Audio(currentTrack.track_file))
 
   const [isPlaying, setIsPlaying] = useState(false)
 
   const intervalRef = useRef()
 
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(0)
 
   const [currentTime, setCurrentTime] = useState(0)
 
@@ -42,22 +41,17 @@ export const Player = ({ isLoading, currentTrack }) => {
     }
   }
 
-  useEffect(() => {
-    setDuration(audioRef.current.duration)
-    console.log('audioRef.current.duration');
-  },[currentTrack])
-
   function formatDuration(durationSeconds) {
-    const minutes = Math.floor(durationSeconds / 60);
-    const seconds = Math.floor(durationSeconds % 60);
-    const formattedSeconds = seconds.toString().padStart(2, "0");
-    return `${minutes}:${formattedSeconds}`;
+    const minutes = Math.floor(durationSeconds / 60)
+    const seconds = Math.floor(durationSeconds % 60)
+    const formattedSeconds = seconds.toString().padStart(2, '0')
+    return `${minutes}:${formattedSeconds}`
   }
 
   useEffect(() => {
     return () => {
       audioRef.current.pause()
-      clearInterval(intervalRef.current);
+      clearInterval(intervalRef.current)
     }
   }, [currentTrack])
 
@@ -68,6 +62,21 @@ export const Player = ({ isLoading, currentTrack }) => {
       startTimer()
     } else {
       audioRef.current.pause()
+    }
+  }, [currentTrack])
+
+
+  const handleTimeUpdate = () => {
+    setCurrentTime(audioRef.current.currentTime)
+    setDuration(audioRef.current.duration)
+  }
+
+  useEffect(() => {
+    audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
+    audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
+    return () => {
+      audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
+      audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
     }
   }, [currentTrack])
 
@@ -87,7 +96,6 @@ export const Player = ({ isLoading, currentTrack }) => {
             currentTrack={currentTrack}
             duration={duration}
           ></ProgressBar>
-          {/* <S.BarPlayerProgress></S.BarPlayerProgress> */}
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <S.PlayerControls>
