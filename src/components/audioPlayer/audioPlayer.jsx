@@ -7,6 +7,8 @@ export const Player = ({ isLoading, currentTrack }) => {
 
   const [isPlaying, setIsPlaying] = useState(false)
 
+  const [isLoop, setIsLoop] = useState(false)
+
   const [duration, setDuration] = useState(0)
 
   const [currentTime, setCurrentTime] = useState(0)
@@ -28,6 +30,18 @@ export const Player = ({ isLoading, currentTrack }) => {
       handlePlay()
     }
   }
+
+  const handleLoop = () => {
+    audioRef.current.loop = true
+    setIsLoop(true);
+  }
+
+  const handleNotLoop = () => {
+    audioRef.current.loop = false
+    setIsLoop(false);
+  }
+
+  const toggleLoop = isLoop ? handleNotLoop : handleLoop
 
   useEffect(() => {
     return () => {
@@ -98,8 +112,12 @@ export const Player = ({ isLoading, currentTrack }) => {
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
                 <S.PlayerBtnRepeat className="_btn-icon">
-                  <S.PlayerBtnRepeatSvg alt="repeat">
-                    <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                  <S.PlayerBtnRepeatSvg alt="repeat" onClick={toggleLoop}>
+                    <use xlinkHref={
+                      isLoop
+                      ? "img/icon/sprite.svg#icon-repeatactive"
+                      : "img/icon/sprite.svg#icon-repeat"
+                    }></use>
                   </S.PlayerBtnRepeatSvg>
                 </S.PlayerBtnRepeat>
                 <S.PlayerBtnShuffle className="_btn-icon">
