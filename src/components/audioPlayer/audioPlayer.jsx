@@ -13,6 +13,8 @@ export const Player = ({ isLoading, currentTrack }) => {
 
   const [currentTime, setCurrentTime] = useState(0)
 
+  const [volume, setVolume] = useState(0)
+
   const handlePlay = () => {
     audioRef.current.play()
     setIsPlaying(true)
@@ -41,7 +43,26 @@ export const Player = ({ isLoading, currentTrack }) => {
     setIsLoop(false);
   }
 
-  const toggleLoop = isLoop ? handleNotLoop : handleLoop
+  const toggleLoop = isLoop ? handleNotLoop : handleLoop;
+
+  const handleBackward = () => {
+    alert('Ещё не реализовано')
+  }
+
+  const handleForward = () => {
+    alert('Ещё не реализовано')
+  }
+
+  const handleShuffle = () => {
+    alert('Ещё не реализовано')
+  }
+
+  const handleVolume =(e) => {
+    audioRef.current.volume = e.target.value;
+    setVolume(e.target.value)
+  }
+
+  
 
   useEffect(() => {
     return () => {
@@ -91,7 +112,7 @@ export const Player = ({ isLoading, currentTrack }) => {
             <S.BarPlayer>
               <S.PlayerControls>
                 <S.PlayerBtnPrev>
-                  <S.PlayerBtnPrevSvg alt="prev">
+                  <S.PlayerBtnPrevSvg alt="prev" onClick={handleBackward}>
                     <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerBtnPrevSvg>
                 </S.PlayerBtnPrev>
@@ -107,7 +128,7 @@ export const Player = ({ isLoading, currentTrack }) => {
                   </S.PlayerBtnPlaySvg>
                 </S.PlayerBtnPlay>
                 <S.PlayerBtnNext>
-                  <S.PlayerBtnNextSvg alt="next">
+                  <S.PlayerBtnNextSvg alt="next" onClick={handleForward}>
                     <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
@@ -121,7 +142,7 @@ export const Player = ({ isLoading, currentTrack }) => {
                   </S.PlayerBtnRepeatSvg>
                 </S.PlayerBtnRepeat>
                 <S.PlayerBtnShuffle className="_btn-icon">
-                  <S.PlayerBtnShuffleSvg alt="shuffle">
+                  <S.PlayerBtnShuffleSvg alt="shuffle" onClick={handleShuffle}>
                     <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
                   </S.PlayerBtnShuffleSvg>
                 </S.PlayerBtnShuffle>
@@ -185,6 +206,11 @@ export const Player = ({ isLoading, currentTrack }) => {
                     className="_btn"
                     type="range"
                     name="range"
+                    min={0}
+                    max={1}
+                    value={volume}
+                    step={0.01}
+                    onChange={(e) => handleVolume(e)}
                   />
                 </S.VolumeProgress>
               </S.VolumeContent>
