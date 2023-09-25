@@ -62,8 +62,6 @@ export const Player = ({ isLoading, currentTrack }) => {
     setVolume(e.target.value)
   }
 
-  
-
   useEffect(() => {
     return () => {
       audioRef.current.pause()
