@@ -1,6 +1,6 @@
 import * as S from '../trackList/track/track.styles'
 
-export function SkeletonTrack () {
+export const SkeletonTrack = () => {
 
 	return (
 		<S.PlayListItem>

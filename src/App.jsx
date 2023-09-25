@@ -1,16 +1,32 @@
 import * as S from './App.styles'
+import { getTracksAll } from './api'
 import { AppRoutes } from './routes'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-function App() {
-  const initialToken = localStorage.getItem('token', '')
-  const [token, setToken] = useState(initialToken)
+const App = () => {
+  const initialToken = localStorage.getItem('token', '');
+  const [token, setToken] = useState(initialToken);
+  const [tracks, setTracks] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [allTracksError, setAllTracksError] = useState(null);
+
+  useEffect(() => {
+    getTracksAll()
+      .then((data) => {
+        setLoading(false)
+        setTracks(data)
+      })
+      .catch((error) => {
+        setAllTracksError('Не удалось загрузить плейлист, попробуйте позже: ' + error.message)
+      })
+      
+  }, [])
 
   return (
     <>
       <S.GlobalStyle />
       <S.Wrapper>
-        <AppRoutes token={token} setToken={setToken} />
+        <AppRoutes token={token} setToken={setToken} tracks={tracks} allTracksError={allTracksError} isLoading={isLoading} />
       </S.Wrapper>
     </>
   )

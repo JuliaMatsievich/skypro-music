@@ -1,6 +1,6 @@
 import * as S from './filterCategory.styles'
 
-export function FilterCategoryYear() {
+export const FilterCategoryYear = () => {
 	return (
 		<S.FilterCategory>
           <S.FilterWrapper >

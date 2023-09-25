@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import * as S from './navMenu.styles'
 
-export function NavMenu({ setToken }) {
+export const NavMenu = ({ setToken }) => {
   const [isOpenMenu, setOpenMenu] = useState(false)
 
-  function handleClickMenu() {
+  const handleClickMenu = () => {
     setOpenMenu(!isOpenMenu)
   }
 
-  function handleClickLoginOut() {
+  const handleClickLoginOut = () => {
    localStorage.removeItem("token");
    setToken(false)
   }

@@ -1,5 +1,6 @@
 import { Authorization } from "../../components/authorization/authorization"
-export function Register({setToken}) {
+
+export const Register = ({setToken}) => {
 	return (
     <Authorization setToken={setToken}/>
 	)

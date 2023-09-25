@@ -1,6 +1,6 @@
 import * as S from './sideBar.styles'
 
-export function SideBar({ isLoading, categories }) {
+export const SideBar = ({ isLoading, categories }) => {
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>

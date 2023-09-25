@@ -1,6 +1,6 @@
 import * as S from './filterCategory.styles'
 
-export function FilterCategoryAuthor() {
+export const FilterCategoryAuthor = () => {
   return (
     <S.FilterCategory>
       <S.FilterWrapper>

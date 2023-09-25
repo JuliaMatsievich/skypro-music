@@ -2,7 +2,7 @@ import { Filter } from '../trackList/filter/filter';
 import { SkeletonTrack } from './skeletonTrack';
 
 
-export function SkeletonTrackList () {
+export const SkeletonTrackList = () => {
 	return (
 		<div className="main__centerblock centerblock">
 		<div className="centerblock__search search">
