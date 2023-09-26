@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import * as S from './navMenu.styles'
 
-export const NavMenu = ({ setToken }) => {
+export const NavMenu = ({ setIsUser }) => {
   const [isOpenMenu, setOpenMenu] = useState(false)
 
   const handleClickMenu = () => {
@@ -9,8 +9,8 @@ export const NavMenu = ({ setToken }) => {
   }
 
   const handleClickLoginOut = () => {
-   localStorage.removeItem("token");
-   setToken(false)
+   localStorage.removeItem("username");
+   setIsUser(false)
   }
 
   return (

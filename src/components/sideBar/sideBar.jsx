@@ -1,11 +1,16 @@
 import * as S from './sideBar.styles'
 
-export const SideBar = ({ isLoading, categories }) => {
+export const SideBar = ({ isLoading, categories, setIsUser }) => {
+  const handleClickLoginOut = () => {
+    localStorage.removeItem("username");
+    setIsUser(false)
+   }
+
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
-        <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
-        <S.SidebarIcon>
+        <S.SidebarPersonalName>{localStorage.getItem('username')}</S.SidebarPersonalName>
+        <S.SidebarIcon onClick={handleClickLoginOut}>
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout"></use>
           </svg>

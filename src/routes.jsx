@@ -7,8 +7,8 @@ import { NotFound } from './pages/notfound'
 import AuthPage from './pages/Auth/AuthPage'
 
 export const AppRoutes = ({
-  token,
-  setToken,
+  isUser,
+  setIsUser,
   tracks,
   allTracksError,
   isLoading,
@@ -17,18 +17,18 @@ export const AppRoutes = ({
     <Routes>
       <Route
         path="/login"
-        element={<AuthPage isLoginMode={true} setToken={setToken} token={token}></AuthPage>}
+        element={<AuthPage isLoginMode={true} setIsUser={setIsUser} isUser={isUser}></AuthPage>}
       ></Route>
       <Route
         path="/register"
-        element={<AuthPage isLoginMode={false} setToken={setToken} token={token}></AuthPage>}
+        element={<AuthPage isLoginMode={false} setIsUser={setIsUser} isUser={isUser}></AuthPage>}
       ></Route>
-      <Route element={<ProtectedRoute isAllowed={token} />}>
+      <Route element={<ProtectedRoute isAllowed={isUser} />}>
         <Route
           path="/"
           element={
             <MainPage
-              token={token}
+            setIsUser={setIsUser}
               tracks={tracks}
               allTracksError={allTracksError}
               isLoading={isLoading}

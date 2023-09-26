@@ -7,16 +7,16 @@ import { useState } from 'react'
 import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
 
-export const MainPage = ({ setToken, tracks, allTracksError, isLoading }) => {
+export const MainPage = ({ setIsUser, tracks, allTracksError, isLoading}) => {
   
   const [currentTrack, setCurrentTrack] = useState(null);
 
   return (
     <S.Container>
     <S.Main>
-      <NavMenu setToken={setToken}/>
+      <NavMenu setIsUser={setIsUser}/>
       {allTracksError ? <ErrorMessage allTracksError={allTracksError}/> : <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} currentTrack={currentTrack}/>}  
-      <SideBar isLoading={isLoading} categories={CATEGORIES} />
+      <SideBar isLoading={isLoading} categories={CATEGORIES} setIsUser={setIsUser}/>
     </S.Main>
     {currentTrack ? <Player isLoading={isLoading} currentTrack={currentTrack}/> : null}
     <S.Footer></S.Footer>

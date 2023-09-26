@@ -3,7 +3,7 @@ import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
 import { getLogin, getSignup } from "../../api";
 
-export default function AuthPage({ isLoginMode, setToken, token }) {
+export default function AuthPage({ isLoginMode, isUser, setIsUser }) {
   const [error, setError] = useState(null);
 
   const [email, setEmail] = useState("");
@@ -11,12 +11,12 @@ export default function AuthPage({ isLoginMode, setToken, token }) {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState('');
 
+
   const handleLogin = async ({ email, password }) => {
     getLogin({email,password})
     .then((data) => {
-      localStorage.setItem('token', 'token');
       localStorage.setItem('username', data.username)
-      setToken(true)
+      setIsUser(true)
       window.location.href = "/";
   })
 };
@@ -24,9 +24,8 @@ export default function AuthPage({ isLoginMode, setToken, token }) {
   const handleRegister = async () => {
 	getSignup({email,password,username})
 	.then((data) => {
-		localStorage.setItem('token', 'token');
     localStorage.setItem('username', data.username)
-		setToken(true)
+		setIsUser(true)
 		window.location.href = "/";
 	})
   };
