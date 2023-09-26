@@ -17,18 +17,18 @@ export const AppRoutes = ({
     <Routes>
       <Route
         path="/login"
-        element={<AuthPage isLoginMode={true} setToken={setToken}></AuthPage>}
+        element={<AuthPage isLoginMode={true} setToken={setToken} token={token}></AuthPage>}
       ></Route>
       <Route
         path="/register"
-        element={<AuthPage isLoginMode={false} setToken={setToken}></AuthPage>}
+        element={<AuthPage isLoginMode={false} setToken={setToken} token={token}></AuthPage>}
       ></Route>
       <Route element={<ProtectedRoute isAllowed={token} />}>
         <Route
           path="/"
           element={
             <MainPage
-              isLoginMode={true}
+              token={token}
               tracks={tracks}
               allTracksError={allTracksError}
               isLoading={isLoading}

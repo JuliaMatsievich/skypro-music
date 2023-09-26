@@ -18,7 +18,29 @@ export const getSignup = async ({email, password, username}) => {
       body: JSON.stringify({
         email: email,
         password: password,
-        username: email,
+        username: username,
+      }),
+      headers: {
+        'content-type': 'application/json',
+      },
+    },
+  )
+
+  if (!response.ok) {
+    throw new Error('Ошибка сервера')
+  }
+  const data = await response.json()
+  return data
+}
+
+export const getLogin = async ({email, password}) => {
+  const response = await fetch(
+    'https://skypro-music-api.skyeng.tech/user/login/',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email,
+        password: password,
       }),
       headers: {
         'content-type': 'application/json',

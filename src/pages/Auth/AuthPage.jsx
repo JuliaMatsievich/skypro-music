@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
-import { getSignup } from "../../api";
+import { getLogin, getSignup } from "../../api";
 
-export default function AuthPage({ isLoginMode, setToken }) {
+export default function AuthPage({ isLoginMode, setToken, token }) {
   const [error, setError] = useState(null);
 
   const [email, setEmail] = useState("");
@@ -12,19 +12,23 @@ export default function AuthPage({ isLoginMode, setToken }) {
   const [username, setUsername] = useState('');
 
   const handleLogin = async ({ email, password }) => {
-    alert(`Выполняется вход: ${email} ${password}`);
-    setError("Неизвестная ошибка входа");
-  };
+    getLogin({email,password})
+    .then((data) => {
+      localStorage.setItem('token', 'token');
+      localStorage.setItem('username', data.username)
+      setToken(true)
+      window.location.href = "/";
+  })
+};
 
   const handleRegister = async () => {
 	getSignup({email,password,username})
 	.then((data) => {
 		localStorage.setItem('token', 'token');
+    localStorage.setItem('username', data.username)
 		setToken(true)
-		console.log(data);
+		window.location.href = "/";
 	})
-   //  alert(`Выполняется регистрация: ${email} ${password}`);
-   //  setError("Неизвестная ошибка регистрации");
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
