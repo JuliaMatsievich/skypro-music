@@ -5,31 +5,33 @@ import { Category } from './pages/category'
 import { ProtectedRoute } from './components/protedcted-route'
 import { NotFound } from './pages/notfound'
 import AuthPage from './pages/Auth/AuthPage'
+import { useContext } from 'react'
+import { UserContext } from './App'
+
 
 export const AppRoutes = ({
-  isUser,
-  setIsUser,
   tracks,
   allTracksError,
   isLoading,
 }) => {
+  const {isUser, setIsUser} = useContext(UserContext) 
+
   return (
     <Routes>
       <Route
         path="/login"
-        element={<AuthPage isLoginMode={true} setIsUser={setIsUser} isUser={isUser}></AuthPage>}
+        element={<AuthPage isLoginMode={true}></AuthPage>}
       ></Route>
       <Route
         path="/register"
-        element={<AuthPage isLoginMode={false} setIsUser={setIsUser} isUser={isUser}></AuthPage>}
+        element={<AuthPage isLoginMode={false}></AuthPage>}
       ></Route>
       <Route element={<ProtectedRoute isAllowed={isUser} />}>
         <Route
           path="/"
           element={
             <MainPage
-            setIsUser={setIsUser}
-              tracks={tracks}
+                tracks={tracks}
               allTracksError={allTracksError}
               isLoading={isLoading}
             />

@@ -1,7 +1,10 @@
 import * as S from './App.styles'
 import { getTracksAll } from './api'
 import { AppRoutes } from './routes'
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
+
+
+export const UserContext = createContext(null)
 
 const App = () => {
   const [tracks, setTracks] = useState([]);
@@ -10,6 +13,9 @@ const App = () => {
   const initialUser = localStorage.getItem('username')
   const [isUser, setIsUser] = useState(initialUser);
 
+  const logIn = () => {
+    
+  }
 
   useEffect(() => {
     getTracksAll()
@@ -27,7 +33,9 @@ const App = () => {
     <>
       <S.GlobalStyle />
       <S.Wrapper>
-        <AppRoutes isUser={isUser} setIsUser={setIsUser} tracks={tracks} allTracksError={allTracksError} isLoading={isLoading} />
+        <UserContext.Provider value={{isUser, setIsUser}}>
+        <AppRoutes tracks={tracks} allTracksError={allTracksError} isLoading={isLoading} />
+        </UserContext.Provider>
       </S.Wrapper>
     </>
   )

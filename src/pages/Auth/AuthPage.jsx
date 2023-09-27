@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
 import * as S from './AuthPage.styles'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { getLogin, getSignup } from '../../api'
+import { UserContext } from '../../App'
 
-export default function AuthPage({ isLoginMode, isUser, setIsUser }) {
+
+export default function AuthPage({ isLoginMode}) {
+  const {isUser, setIsUser} = useContext(UserContext) 
+
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import * as S from './sideBar.styles'
+import { UserContext } from '../../App';
 
-export const SideBar = ({ isLoading, categories, setIsUser }) => {
+export const SideBar = ({ isLoading, categories}) => {
+  const {isUser, setIsUser} = useContext(UserContext) 
+
   const handleClickLoginOut = () => {
     localStorage.removeItem("username");
     setIsUser(false)
