@@ -13,7 +13,7 @@ export const ProgressBar = ({audioRef, isPlaying, currentTime, setCurrentTime, d
 		if(isPlaying) {
 			setInterval(() => {
 				setCurrentTime(audioRef.current.currentTime)
-			},[1000])
+			},100)
 		}
 	},[currentTime]) 
 
