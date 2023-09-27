@@ -26,9 +26,15 @@ export const getSignup = async ({email, password, username}) => {
     },
   )
 
-  if (!response.ok) {
+  if (response.status === 500) {
     throw new Error('Ошибка сервера')
   }
+
+  if (response.status === 400) {
+    const data = await response.json()
+    throw new Error(JSON.stringify(data))
+  }
+
   const data = await response.json()
   return data
 }
