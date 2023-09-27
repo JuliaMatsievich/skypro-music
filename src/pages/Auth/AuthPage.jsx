@@ -12,6 +12,8 @@ export default function AuthPage({ isLoginMode }) {
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
   const [username, setUsername] = useState('')
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+
 
   const emailRef = useRef(null)
   const usernameRef = useRef(null)
@@ -19,19 +21,24 @@ export default function AuthPage({ isLoginMode }) {
   const repeatPasswordRef = useRef(null)
 
   const handleLogin = async ({ email, password }) => {
+    setIsLoadingUser(true)
     getLogin({ email, password })
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data))
         logIn()
         setIsUser(true)
+        setIsLoadingUser(false)
         window.location.href = '/'
       })
       .catch((error) => {
         setError(error.message)
+        setIsLoadingUser(false)
       })
   }
 
   const handleRegister = async () => {
+    setIsLoadingUser(true)
+
     if (
       !usernameRef.current.value &&
       !emailRef.current.value &&
@@ -39,10 +46,12 @@ export default function AuthPage({ isLoginMode }) {
       !repeatPasswordRef.current.value
     ) {
       setError('Пожалуйста, заполните все поля')
+      setIsLoadingUser(false)
       return
     }
     if (passwordRef.current.value !== repeatPasswordRef.current.value) {
       setError('Пароли не совпадают')
+      setIsLoadingUser(false)
       return
     }
 
@@ -51,6 +60,7 @@ export default function AuthPage({ isLoginMode }) {
         localStorage.setItem('user', JSON.stringify(data))
         logIn()
         setIsUser(true)
+        setIsLoadingUser(false)
         window.location.href = '/'
       })
       .catch((error) => {
@@ -67,6 +77,7 @@ export default function AuthPage({ isLoginMode }) {
           setError(errorObject.password)
           return
         }
+        setIsLoadingUser(false)
       })
   }
 
@@ -107,11 +118,11 @@ export default function AuthPage({ isLoginMode }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
+              <S.PrimaryButton disabled={isLoadingUser} onClick={() => handleLogin({ email, password })}>
                 Войти
-              </S.PrimaryButton>
+              </S.PrimaryButton >
               <Link to="/register">
-                <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
+                <S.SecondaryButton  disabled={isLoadingUser}>Зарегистрироваться</S.SecondaryButton>
               </Link>
             </S.Buttons>
           </>
@@ -161,7 +172,7 @@ export default function AuthPage({ isLoginMode }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={handleRegister}>
+              <S.PrimaryButton disabled={isLoadingUser} onClick={handleRegister}>
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>
