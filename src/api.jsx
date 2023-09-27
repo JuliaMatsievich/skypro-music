@@ -51,9 +51,15 @@ export const getLogin = async ({email, password}) => {
   if (response.status === 500) {
     throw new Error('Ошибка сервера')
   }
+
   if (response.status === 400) {
-    throw new Error('ll')
+    throw new Error('Должны быть заполнены все поля')
   }
+
+  if (response.status === 401) {
+    throw new Error('Пользователь с таким email или паролем не найден')
+  }
+
   const data = await response.json()
   return data
 }

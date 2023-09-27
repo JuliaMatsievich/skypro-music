@@ -20,7 +20,6 @@ export default function AuthPage({ isLoginMode, isUser, setIsUser }) {
   })
   .catch((error) => {
     setError(error.message)
-    console.log(error);
   })
 };
 
