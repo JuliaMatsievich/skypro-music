@@ -48,8 +48,11 @@ export const getLogin = async ({email, password}) => {
     },
   )
 
-  if (!response.ok) {
+  if (response.status === 500) {
     throw new Error('Ошибка сервера')
+  }
+  if (response.status === 400) {
+    throw new Error('ll')
   }
   const data = await response.json()
   return data

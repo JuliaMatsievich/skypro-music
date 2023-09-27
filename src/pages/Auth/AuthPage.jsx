@@ -5,7 +5,6 @@ import { getLogin, getSignup } from "../../api";
 
 export default function AuthPage({ isLoginMode, isUser, setIsUser }) {
   const [error, setError] = useState(null);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -18,6 +17,10 @@ export default function AuthPage({ isLoginMode, isUser, setIsUser }) {
       localStorage.setItem('username', data.username)
       setIsUser(true)
       window.location.href = "/";
+  })
+  .catch((error) => {
+    setError(error.message)
+    console.log(error);
   })
 };
 
