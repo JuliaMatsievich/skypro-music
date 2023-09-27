@@ -10,11 +10,17 @@ const App = () => {
   const [tracks, setTracks] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [allTracksError, setAllTracksError] = useState(null);
-  const initialUser = localStorage.getItem('username')
+  const initialUser = localStorage.getItem('user')
   const [isUser, setIsUser] = useState(initialUser);
 
   const logIn = () => {
-    
+    // localStorage.setItem('user', JSON.stringify(data))
+    const user = JSON.parse (localStorage.getItem ("user"));
+    return user
+  }
+
+  const logOut = () => {
+    localStorage.removeItem('user')
   }
 
   useEffect(() => {
@@ -33,7 +39,7 @@ const App = () => {
     <>
       <S.GlobalStyle />
       <S.Wrapper>
-        <UserContext.Provider value={{isUser, setIsUser}}>
+        <UserContext.Provider value={{isUser, setIsUser, logIn, logOut}}>
         <AppRoutes tracks={tracks} allTracksError={allTracksError} isLoading={isLoading} />
         </UserContext.Provider>
       </S.Wrapper>

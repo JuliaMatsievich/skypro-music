@@ -4,9 +4,8 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { getLogin, getSignup } from '../../api'
 import { UserContext } from '../../App'
 
-
-export default function AuthPage({ isLoginMode}) {
-  const {isUser, setIsUser} = useContext(UserContext) 
+export default function AuthPage({ isLoginMode }) {
+  const { isUser, setIsUser, logIn, logOut } = useContext(UserContext)
 
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
@@ -22,7 +21,8 @@ export default function AuthPage({ isLoginMode}) {
   const handleLogin = async ({ email, password }) => {
     getLogin({ email, password })
       .then((data) => {
-        localStorage.setItem('username', data.username)
+        localStorage.setItem('user', JSON.stringify(data))
+        logIn()
         setIsUser(true)
         window.location.href = '/'
       })
@@ -32,7 +32,12 @@ export default function AuthPage({ isLoginMode}) {
   }
 
   const handleRegister = async () => {
-    if(!usernameRef.current.value && !emailRef.current.value && !passwordRef.current.value && !repeatPasswordRef.current.value) {
+    if (
+      !usernameRef.current.value &&
+      !emailRef.current.value &&
+      !passwordRef.current.value &&
+      !repeatPasswordRef.current.value
+    ) {
       setError('Пожалуйста, заполните все поля')
       return
     }
@@ -43,7 +48,8 @@ export default function AuthPage({ isLoginMode}) {
 
     getSignup({ email, password, username })
       .then((data) => {
-        localStorage.setItem('username', data.username)
+        localStorage.setItem('user', JSON.stringify(data))
+        logIn()
         setIsUser(true)
         window.location.href = '/'
       })

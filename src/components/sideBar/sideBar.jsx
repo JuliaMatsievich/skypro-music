@@ -3,17 +3,19 @@ import * as S from './sideBar.styles'
 import { UserContext } from '../../App';
 
 export const SideBar = ({ isLoading, categories}) => {
-  const {isUser, setIsUser} = useContext(UserContext) 
+  const {isUser, setIsUser, logIn, logOut} = useContext(UserContext) 
 
   const handleClickLoginOut = () => {
-    localStorage.removeItem("username");
+    logOut();
     setIsUser(false)
    }
+
+   const user = logIn()
 
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
-        <S.SidebarPersonalName>{localStorage.getItem('username')}</S.SidebarPersonalName>
+        <S.SidebarPersonalName>{user.username}</S.SidebarPersonalName>
         <S.SidebarIcon onClick={handleClickLoginOut}>
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout"></use>
