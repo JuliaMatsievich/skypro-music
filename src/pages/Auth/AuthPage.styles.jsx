@@ -65,6 +65,7 @@ const Button = styled.button`
 
   &:disabled {
     background-color: #303030;
+    cursor: default;
   }
 `
 
@@ -78,6 +79,11 @@ export const PrimaryButton = styled(Button)`
   &:active {
     background-color: #271a58;
   }
+  &:disabled {
+    background-color: #303030;
+    cursor: default;
+  }
+
 `
 export const SecondaryButton = styled(Button)`
   color: #000000;
@@ -90,6 +96,10 @@ export const SecondaryButton = styled(Button)`
 
   &:active {
     background-color: #d9d9d9;
+  }
+  &:disabled {
+    background-color: #303030;
+    cursor: default;
   }
 `
 
