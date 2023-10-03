@@ -14,17 +14,6 @@ export const Player = ({ isLoading, currentTrack }) => {
   const [currentTime, setCurrentTime] = useState(0)
 
   const [volume, setVolume] = useState(0.5)
-  // const isReady = useRef(false)
-  // const intervalRef = useRef();
-
-  function loadAudio(src) {
-    return new Promise((resolve, reject) => {
-      const audio = new Audio();
-      audio.src = src;
-      audio.addEventListener('canplaythrough', () => resolve(audio));
-      audio.addEventListener('error', reject);
-    });
-  }
 
   const handlePlay = () => {
     audioRef.current.play()
@@ -43,61 +32,6 @@ export const Player = ({ isLoading, currentTrack }) => {
       handlePlay()
     }
   }
-
-  // loadAudio('audio.mp3')
-  // .then(audio => {
-  //   try {
-  //     audio.play();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // })
-  // .catch(error => {
-  //   console.error(error);
-  //   audio.pause();
-  // });
-
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     audioRef.current.play();
-  //   } else {
-  //     audioRef.current.pause();
-  //   }
-  // }, [isPlaying]);
-
-  // useEffect(() => {
-  //   // Pause and clean up on unmount
-  //   return () => {
-  //     audioRef.current.pause();
-  //     clearInterval(intervalRef.current);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   audioRef.current.pause();
-
-  //   audioRef.current = new Audio(currentTrack.track_file);
-  //   // setTrackProgress(audioRef.current.currentTime);
-
-  //   if (isReady.current) {
-  //     audioRef.current.play();
-  //     setIsPlaying(true);
-  //     // startTimer();
-  //   } else {
-  //     // Set the isReady ref as true for the next pass
-  //     isReady.current = true;
-  //   }
-  // }, [currentTrack]);
-
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     audioRef.current.play();
-  //     // startTimer();
-  //   } else {
-  //     // clearInterval(intervalRef.current);
-  //     audioRef.current.pause();
-  //   }
-  // }, [isPlaying]);
 
   const handleLoop = () => {
     audioRef.current.loop = true
@@ -129,34 +63,18 @@ export const Player = ({ isLoading, currentTrack }) => {
   }
 
   useEffect(() => {
-    // audioRef.current.pause()
-    audioRef.current = new Audio(currentTrack.track_file)
-    audioRef.current.play()
-        .then((_) => {
-          audioRef.current.play()
-          setIsPlaying(true)
-        })
-        .catch(() => {
-          audioRef.current.pause()
-          setIsPlaying(false)
-        })
-
+    if (audioRef.current.currentTime > 0) {
+      audioRef.current = new Audio(currentTrack.track_file)
+    }
+      audioRef.current.play()
+      setIsPlaying(true)
+    return () => {
+      if (audioRef.current.currentTime > 0) {
+        audioRef.current.pause()
+        setIsPlaying(false)
+      }
+    }
   }, [currentTrack])
-
-  // useEffect(() => {
-  //   audioRef.current = new Audio(currentTrack.track_file)
-  //   if (isPlaying) {
-  //     audioRef.current.play()
-  //   } else {
-  //     audioRef.current.pause()
-  //   }
-  // }, [currentTrack])
-
-  // useEffect(() => {
-  //   return () => {
-  //     audioRef.current.pause()
-  //   }
-  // }, [currentTrack])
 
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime)
