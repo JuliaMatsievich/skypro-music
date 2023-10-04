@@ -1,5 +1,9 @@
 import styled, { keyframes } from 'styled-components'
 
+export const AudioTag = styled.audio`
+  visibility: hidden;
+`
+
 export const Bar = styled.div`
   position: sticky;
   bottom: 0;
@@ -92,7 +96,7 @@ export const PlayerBtnPlaySvg = styled.svg`
 `
 export const PlayerBtnNext = styled(PlayerBtn)`
   margin-right: 28px;
-  fill: #a53939;
+  fill: #d9d9d9;
 `
 export const PlayerBtnNextSvg = styled.svg`
   width: 15px;
@@ -285,15 +289,16 @@ export const SkeletonTrackPlayImage = styled(TrackPlayImage)`
 `
 
 export const SkeletonTrackPlayAuthor = styled(TrackPlayAuthor)`
-	background-color: #313131;
-	width: 59px;
-	height: 15px;
+  background-color: #313131;
+  width: 59px;
+  height: 15px;
   animation: ${blinker} 1s cubic-bezier(1, 2, 0, 1) infinite;
 `
 
 export const SkeletonTrackPlayAlbum = styled(TrackPlayAlbum)`
-	background-color: #313131;
-	width: 59px;
-	height: 15px;
+  background-color: #313131;
+  width: 59px;
+  height: 15px;
   animation: ${blinker} 1s cubic-bezier(1, 2, 0, 1) infinite;
 `
+

@@ -8,16 +8,17 @@ import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
 
 export const MainPage = ({ setToken, tracks, allTracksError, isLoading }) => {
+  
   const [currentTrack, setCurrentTrack] = useState(null);
 
   return (
     <S.Container>
     <S.Main>
       <NavMenu setToken={setToken}/>
-      {allTracksError ? <ErrorMessage allTracksError={allTracksError}/> : <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} />}  
+      {allTracksError ? <ErrorMessage allTracksError={allTracksError}/> : <TrackList isLoading={isLoading} tracks={tracks} setCurrentTrack={setCurrentTrack} currentTrack={currentTrack}/>}  
       <SideBar isLoading={isLoading} categories={CATEGORIES} />
     </S.Main>
-    {currentTrack ? <Player isLoading={isLoading} track={currentTrack}/> : null}
+    {currentTrack ? <Player isLoading={isLoading} currentTrack={currentTrack}/> : null}
     <S.Footer></S.Footer>
   </S.Container>
   )

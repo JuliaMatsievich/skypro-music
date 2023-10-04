@@ -5,7 +5,7 @@ import { SkeletonTrack } from '../skeleton/skeletonTrack'
 import { HeaderTrackList } from './headerTrackList'
 
 
-export const TrackList = ({ isLoading, tracks, setCurrentTrack }) => {
+export const TrackList = ({ isLoading, tracks, setCurrentTrack, currentTrack }) => {
 
   return (
     <S.MainCenterBlock>
@@ -35,8 +35,8 @@ export const TrackList = ({ isLoading, tracks, setCurrentTrack }) => {
           </S.ContentPlaylist>
         ) : (
           <S.ContentPlaylist>
-            {tracks.map((trackData) => {
-              return <TrackItem key={trackData.id} track={trackData} setCurrentTrack={setCurrentTrack} />
+            {tracks.map((track) => {
+              return <TrackItem key={track.id} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} track={track}/>
             })}
           </S.ContentPlaylist>
         )}
