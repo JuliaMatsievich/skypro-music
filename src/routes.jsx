@@ -8,8 +8,14 @@ import AuthPage from './pages/Auth/AuthPage'
 import { useContext } from 'react'
 import { UserContext } from './App'
 
-export const AppRoutes = ({ tracks, allTracksError, isLoading }) => {
-  const { isUser, setIsUser, logIn, logOut } = useContext(UserContext)
+export const AppRoutes = ({
+  tracks,
+  allTracksError,
+  isLoading,
+  currentTrack,
+  setCurrentTrack,
+}) => {
+  const { isUser } = useContext(UserContext)
 
   return (
     <Routes>
@@ -29,6 +35,8 @@ export const AppRoutes = ({ tracks, allTracksError, isLoading }) => {
               tracks={tracks}
               allTracksError={allTracksError}
               isLoading={isLoading}
+              currentTrack={currentTrack}
+              setCurrentTrack={setCurrentTrack}
             />
           }
         />

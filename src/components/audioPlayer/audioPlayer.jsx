@@ -1,6 +1,7 @@
 import * as S from './audioPlayer.styles'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
+import { UserContext } from '../../App'
 
 export const Player = ({ isLoading, currentTrack }) => {
   let audioRef = useRef(new Audio(currentTrack.track_file))
@@ -13,7 +14,9 @@ export const Player = ({ isLoading, currentTrack }) => {
 
   const [currentTime, setCurrentTime] = useState(0)
 
-  const [volume, setVolume] = useState(0)
+  const [volume, setVolume] = useState(0.5)
+
+  const intervalRef = useRef()
 
   const handlePlay = () => {
     audioRef.current.play()
@@ -35,15 +38,15 @@ export const Player = ({ isLoading, currentTrack }) => {
 
   const handleLoop = () => {
     audioRef.current.loop = true
-    setIsLoop(true);
+    setIsLoop(true)
   }
 
   const handleNotLoop = () => {
     audioRef.current.loop = false
-    setIsLoop(false);
+    setIsLoop(false)
   }
 
-  const toggleLoop = isLoop ? handleNotLoop : handleLoop;
+  const toggleLoop = isLoop ? handleNotLoop : handleLoop
 
   const handleBackward = () => {
     alert('Ещё не реализовано')
@@ -57,26 +60,23 @@ export const Player = ({ isLoading, currentTrack }) => {
     alert('Ещё не реализовано')
   }
 
-  const handleVolume =(e) => {
-    audioRef.current.volume = e.target.value;
+  const handleVolume = (e) => {
+    audioRef.current.volume = e.target.value
     setVolume(e.target.value)
   }
 
   useEffect(() => {
+    if (audioRef.current.currentTime > 0) {
+      audioRef.current = new Audio(currentTrack.track_file)
+    }
+    handlePlay()
     return () => {
-      audioRef.current.pause()
+      if (audioRef.current && audioRef.current.currentTime > 0) {
+        handlePause()
+        clearInterval(intervalRef.current)
+      }
     }
   }, [currentTrack])
-
-  useEffect(() => {
-    audioRef.current = new Audio(currentTrack.track_file)
-    if (isPlaying) {
-      audioRef.current.play()
-    } else {
-      audioRef.current.pause()
-    }
-  }, [currentTrack])
-
 
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime)
@@ -87,8 +87,10 @@ export const Player = ({ isLoading, currentTrack }) => {
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
     audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
     return () => {
-      audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
-      audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
+        audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
+      }
     }
   }, [currentTrack])
 
@@ -105,6 +107,7 @@ export const Player = ({ isLoading, currentTrack }) => {
             currentTime={currentTime}
             setCurrentTime={setCurrentTime}
             duration={duration}
+            intervalRef={intervalRef}
           ></ProgressBar>
           <S.BarPlayerBlock>
             <S.BarPlayer>
@@ -132,11 +135,13 @@ export const Player = ({ isLoading, currentTrack }) => {
                 </S.PlayerBtnNext>
                 <S.PlayerBtnRepeat className="_btn-icon">
                   <S.PlayerBtnRepeatSvg alt="repeat" onClick={toggleLoop}>
-                    <use xlinkHref={
-                      isLoop
-                      ? "img/icon/sprite.svg#icon-repeatactive"
-                      : "img/icon/sprite.svg#icon-repeat"
-                    }></use>
+                    <use
+                      xlinkHref={
+                        isLoop
+                          ? 'img/icon/sprite.svg#icon-repeatactive'
+                          : 'img/icon/sprite.svg#icon-repeat'
+                      }
+                    ></use>
                   </S.PlayerBtnRepeatSvg>
                 </S.PlayerBtnRepeat>
                 <S.PlayerBtnShuffle className="_btn-icon">

@@ -5,7 +5,7 @@ import { getLogin, getSignup } from '../../api'
 import { UserContext } from '../../App'
 
 export default function AuthPage({ isLoginMode }) {
-  const { isUser, setIsUser, logIn, logOut } = useContext(UserContext)
+  const { setIsUser, logIn } = useContext(UserContext)
 
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')

@@ -1,16 +1,15 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 import * as S from './sideBar.styles'
-import { UserContext } from '../../App';
+import { UserContext } from '../../App'
 
-export const SideBar = ({ isLoading, categories}) => {
-  const {isUser, setIsUser, logIn, logOut} = useContext(UserContext) 
+export const SideBar = ({ isLoading, categories }) => {
+  const { logIn, logOut } = useContext(UserContext)
 
   const handleClickLoginOut = () => {
-    logOut();
-    setIsUser(false)
-   }
+    logOut()
+  }
 
-   const user = logIn()
+  const user = logIn()
 
   return (
     <S.MainSidebar>
