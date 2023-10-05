@@ -1,14 +1,27 @@
 import * as S from './App.styles'
 import { getTracksAll } from './api'
 import { AppRoutes } from './routes'
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
+
+export const UserContext = createContext(null)
 
 const App = () => {
-  const initialToken = localStorage.getItem('token', '');
-  const [token, setToken] = useState(initialToken);
-  const [tracks, setTracks] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [allTracksError, setAllTracksError] = useState(null);
+  const [tracks, setTracks] = useState([])
+  const [isLoading, setLoading] = useState(true)
+  const [allTracksError, setAllTracksError] = useState(null)
+  const initialUser = localStorage.getItem('user')
+  const [isUser, setIsUser] = useState(initialUser)
+  const [currentTrack, setCurrentTrack] = useState(null)
+
+  const logIn = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    return user
+  }
+
+  const logOut = () => {
+    localStorage.removeItem('user')
+    setIsUser(false)
+  }
 
   useEffect(() => {
     getTracksAll()
@@ -17,16 +30,25 @@ const App = () => {
         setTracks(data)
       })
       .catch((error) => {
-        setAllTracksError('Не удалось загрузить плейлист, попробуйте позже: ' + error.message)
+        setAllTracksError(
+          'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
+        )
       })
-      
   }, [])
 
   return (
     <>
       <S.GlobalStyle />
       <S.Wrapper>
-        <AppRoutes token={token} setToken={setToken} tracks={tracks} allTracksError={allTracksError} isLoading={isLoading} />
+        <UserContext.Provider value={{ isUser, setIsUser, logIn, logOut }}>
+          <AppRoutes
+            tracks={tracks}
+            allTracksError={allTracksError}
+            isLoading={isLoading}
+            currentTrack={currentTrack}
+            setCurrentTrack={setCurrentTrack}
+          />
+        </UserContext.Provider>
       </S.Wrapper>
     </>
   )

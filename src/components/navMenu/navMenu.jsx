@@ -1,16 +1,19 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import * as S from './navMenu.styles'
+import { UserContext } from '../../App'
 
-export const NavMenu = ({ setToken }) => {
+export const NavMenu = () => {
   const [isOpenMenu, setOpenMenu] = useState(false)
+  const {isUser, setIsUser, logOut} = useContext(UserContext) 
+
 
   const handleClickMenu = () => {
     setOpenMenu(!isOpenMenu)
   }
 
   const handleClickLoginOut = () => {
-   localStorage.removeItem("token");
-   setToken(false)
+   logOut();
+   setIsUser(false)
   }
 
   return (

@@ -1,6 +1,7 @@
 import * as S from './audioPlayer.styles'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
+import { UserContext } from '../../App'
 
 export const Player = ({ isLoading, currentTrack }) => {
   let audioRef = useRef(null)
@@ -14,6 +15,8 @@ export const Player = ({ isLoading, currentTrack }) => {
   const [currentTime, setCurrentTime] = useState(0)
 
   const [volume, setVolume] = useState(0.5)
+
+  const intervalRef = useRef()
 
   const handlePlay = () => {
     audioRef.current.play()
@@ -62,16 +65,16 @@ export const Player = ({ isLoading, currentTrack }) => {
     setVolume(e.target.value)
   }
 
+
   useEffect(() => {
     if (audioRef.current.currentTime > 0) {
       audioRef.current = new Audio(currentTrack.track_file)
     }
-      audioRef.current.play()
-      setIsPlaying(true)
+    handlePlay()
     return () => {
-      if (audioRef.current.currentTime > 0) {
-        audioRef.current.pause()
-        setIsPlaying(false)
+      if (audioRef.current && audioRef.current.currentTime > 0) {
+        handlePause()
+        clearInterval(intervalRef.current)
       }
     }
   }, [currentTrack])
@@ -85,8 +88,10 @@ export const Player = ({ isLoading, currentTrack }) => {
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
     audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
     return () => {
-      audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
-      audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
+        audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
+      }
     }
   }, [currentTrack])
 
@@ -103,6 +108,7 @@ export const Player = ({ isLoading, currentTrack }) => {
             currentTime={currentTime}
             setCurrentTime={setCurrentTime}
             duration={duration}
+            intervalRef={intervalRef}
           ></ProgressBar>
           <S.BarPlayerBlock>
             <S.BarPlayer>
