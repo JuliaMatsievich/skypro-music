@@ -4,7 +4,7 @@ import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 
 export const Player = ({ isLoading, currentTrack }) => {
-  let audioRef = useRef(new Audio(currentTrack.track_file))
+  let audioRef = useRef(null)
 
   const [isPlaying, setIsPlaying] = useState(false)
 
@@ -64,6 +64,7 @@ export const Player = ({ isLoading, currentTrack }) => {
     audioRef.current.volume = e.target.value
     setVolume(e.target.value)
   }
+
 
   useEffect(() => {
     if (audioRef.current.currentTime > 0) {
