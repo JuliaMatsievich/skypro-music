@@ -1,6 +1,8 @@
+const baseURL = 'https://skypro-music-api.skyeng.tech';
+
 export const getTracksAll = async () => {
   const response = await fetch(
-    'https://skypro-music-api.skyeng.tech/catalog/track/all/',
+    baseURL + '/catalog/track/all/',
   )
 
   if (!response.ok) {
@@ -12,7 +14,7 @@ export const getTracksAll = async () => {
 
 export const getSignup = async ({email, password, username}) => {
   const response = await fetch(
-    'https://skypro-music-api.skyeng.tech/user/signup/',
+    baseURL + '/user/signup/',
     {
       method: 'POST',
       body: JSON.stringify({
@@ -41,7 +43,7 @@ export const getSignup = async ({email, password, username}) => {
 
 export const getLogin = async ({email, password}) => {
   const response = await fetch(
-    'https://skypro-music-api.skyeng.tech/user/login/',
+    baseURL + '/user/login/',
     {
       method: 'POST',
       body: JSON.stringify({
