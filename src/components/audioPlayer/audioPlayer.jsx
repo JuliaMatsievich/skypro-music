@@ -2,10 +2,16 @@ import * as S from './audioPlayer.styles'
 import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
+import { useSelector } from 'react-redux'
+import { currentTrackSelector } from '../../store/selectors/track'
 
-export const Player = ({ currentTrack }) => {
+export const Player = () => {
+  const currentTrack = useSelector(currentTrackSelector)
+  console.log(currentTrack);
+  
   let audioRef = useRef(new Audio(currentTrack.track_file))
-  const { isLoading, setLoading } = useContext(UserContext)
+
+  const { isLoading } = useContext(UserContext)
 
 
   const [isPlaying, setIsPlaying] = useState(false)

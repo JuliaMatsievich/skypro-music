@@ -16,6 +16,6 @@ export const setAllTracks = (tracks) => {
 export const setCurrentTrack = (track) => {
   return {
     type: SET_CURRENT_TRACK,
-    payload: { track },
+    payload: track,
   }
 }

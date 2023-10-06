@@ -11,26 +11,22 @@ import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
 
 
-export const TrackList = ({ setCurrentTrack, currentTrack}) => {
+export const TrackList = () => {
   let tracks = useSelector(allTracksSelector)
   const dispatch = useDispatch()
   
-  const { isLoading, setLoading, allTracksError, setAllTracksError } = useContext(UserContext)
+  const { isLoading, setLoading, setAllTracksError } = useContext(UserContext)
 
   useEffect(() => {
     getTracksAll()
       .then((data) => {
         setLoading(false)
-        // setTracks(data)
-        console.log('data --->', data);
         tracks = dispatch(setAllTracks(data))
-        console.log('tracks ---->>', tracks);
       })
       .catch((error) => {
         setAllTracksError(
           'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
         )
-        console.log(error.message);  
       })
   }, [])
 
@@ -63,7 +59,7 @@ export const TrackList = ({ setCurrentTrack, currentTrack}) => {
         ) : (
           <S.ContentPlaylist>
             {tracks.map((track) => {
-              return <TrackItem key={track.id} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} track={track}/>
+              return <TrackItem key={track.id} track={track}/>
             })}
           </S.ContentPlaylist>
         )}

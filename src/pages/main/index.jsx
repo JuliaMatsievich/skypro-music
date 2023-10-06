@@ -7,13 +7,15 @@ import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../App'
+import { useSelector } from 'react-redux'
+import { currentTrackSelector } from '../../store/selectors/track'
 
-export const MainPage = ({
-  currentTrack,
-  setCurrentTrack,
-}) => {
- const { allTracksError, setAllTracksError } = useContext(UserContext)
+export const MainPage = () => {
+ const { allTracksError } = useContext(UserContext)
 
+ const currentTrack = useSelector(currentTrackSelector)
+
+ console.log(currentTrack);
   return (
     <S.Container>
       <S.Main>
@@ -21,15 +23,12 @@ export const MainPage = ({
         {allTracksError ? (
           <ErrorMessage allTracksError={allTracksError} />
         ) : (
-          <TrackList
-            setCurrentTrack={setCurrentTrack}
-            currentTrack={currentTrack}
-          />
+          <TrackList />
         )}
         <SideBar categories={CATEGORIES} />
       </S.Main>
-      {currentTrack ? (
-        <Player currentTrack={currentTrack} />
+      {Object.keys(currentTrack).length ? (
+        <Player />
       ) : null}
       <S.Footer></S.Footer>
     </S.Container>

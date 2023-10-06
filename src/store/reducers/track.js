@@ -20,7 +20,7 @@ export const trackReducer = (state = initialState, action)  => {
 		case SET_CURRENT_TRACK: 
 			return {
 				...state,
-				currentTrack: action.payload.track
+				currentTrack: action.payload
 			}
 		
 		default: 
