@@ -1,10 +1,8 @@
 import { store } from "../store"
 
-const trackSelector = (store) => store.track;
+// const trackSelector = (store) => store.audioPlayer;
 
-export const allTracksSelector = (store) => {
-	console.log(trackSelector(store).allTracks);
-}
+export const allTracksSelector = (store) => store.audioPlayer.allTracks
 
-// const currentTrackSelector = (store) => store.currentTrack
+
 

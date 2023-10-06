@@ -5,16 +5,15 @@ import { TrackList } from '../../components/trackList/trackList'
 import { SideBar } from '../../components/sideBar/sideBar'
 import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { UserContext } from '../../App'
 
 export const MainPage = ({
-  tracks,
-  allTracksError,
-  isLoading,
   currentTrack,
   setCurrentTrack,
 }) => {
-  
+ const { allTracksError, setAllTracksError } = useContext(UserContext)
+
   return (
     <S.Container>
       <S.Main>
@@ -23,16 +22,14 @@ export const MainPage = ({
           <ErrorMessage allTracksError={allTracksError} />
         ) : (
           <TrackList
-            isLoading={isLoading}
-            tracks={tracks}
             setCurrentTrack={setCurrentTrack}
             currentTrack={currentTrack}
           />
         )}
-        <SideBar isLoading={isLoading} categories={CATEGORIES} />
+        <SideBar categories={CATEGORIES} />
       </S.Main>
       {currentTrack ? (
-        <Player isLoading={isLoading} currentTrack={currentTrack} />
+        <Player currentTrack={currentTrack} />
       ) : null}
       <S.Footer></S.Footer>
     </S.Container>

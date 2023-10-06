@@ -6,16 +6,16 @@ import {
   TOGGLE_SHUFFLED,
 } from '../types/types'
 
-export const getAllTracks = (tracks) => {
+export const setAllTracks = (tracks) => {
   return {
     type: ALL_TRACKS,
-    payload: { tracks },
+    payload: tracks ,
   }
 }
 
-// export const setCurrentTrack = (track) => {
-// 	return {
-// 		type: SET_CURRENT_TRACK,
-// 		payload: {track}
-// 	}
-// }
+export const setCurrentTrack = (track) => {
+  return {
+    type: SET_CURRENT_TRACK,
+    payload: { track },
+  }
+}

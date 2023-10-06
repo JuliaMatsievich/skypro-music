@@ -3,6 +3,6 @@ import { trackReducer } from './reducers/track'
 
 export const store = configureStore({
   reducer: {
-    track: trackReducer,
+    audioPlayer: trackReducer,
   },
 })

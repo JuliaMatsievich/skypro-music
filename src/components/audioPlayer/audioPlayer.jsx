@@ -3,8 +3,10 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 
-export const Player = ({ isLoading, currentTrack }) => {
+export const Player = ({ currentTrack }) => {
   let audioRef = useRef(new Audio(currentTrack.track_file))
+  const { isLoading, setLoading } = useContext(UserContext)
+
 
   const [isPlaying, setIsPlaying] = useState(false)
 

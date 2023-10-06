@@ -3,9 +3,36 @@ import { Filter } from './filter/filter'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
 import { HeaderTrackList } from './headerTrackList'
+import { getTracksAll } from '../../api/apiTrack'
+import { setAllTracks } from '../../store/actions/creators/track' 
+import { useDispatch, useSelector } from 'react-redux'
+import { allTracksSelector } from '../../store/selectors/track' 
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../App'
 
 
-export const TrackList = ({ isLoading, tracks, setCurrentTrack, currentTrack }) => {
+export const TrackList = ({ setCurrentTrack, currentTrack}) => {
+  let tracks = useSelector(allTracksSelector)
+  const dispatch = useDispatch()
+  
+  const { isLoading, setLoading, allTracksError, setAllTracksError } = useContext(UserContext)
+
+  useEffect(() => {
+    getTracksAll()
+      .then((data) => {
+        setLoading(false)
+        // setTracks(data)
+        console.log('data --->', data);
+        tracks = dispatch(setAllTracks(data))
+        console.log('tracks ---->>', tracks);
+      })
+      .catch((error) => {
+        setAllTracksError(
+          'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
+        )
+        console.log(error.message);  
+      })
+  }, [])
 
   return (
     <S.MainCenterBlock>

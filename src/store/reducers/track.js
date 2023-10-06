@@ -1,4 +1,4 @@
-import { ALL_TRACKS, SET_CURRENT_TRACK, NEXT_TRACK, PREV_TRACK, TOGGLE_SHUFFLED } from '../actions/types/types'
+import {ALL_TRACKS, SET_CURRENT_TRACK, NEXT_TRACK, PREV_TRACK, TOGGLE_SHUFFLED } from '../actions/types/types'
 
 const initialState = {
 	allTracks: [],
@@ -7,16 +7,22 @@ const initialState = {
 
 export const trackReducer = (state = initialState, action)  => {
 	console.log('trackReducer, state ---', state );
-	console.log('trackReducer, action ---', action );
+	console.log('trackReducer, action.payload ---', action.payload );
 
 	switch (action.type) {
+
 		case ALL_TRACKS: 
+		return {
+			...state,
+			allTracks: action.payload
+		}
+
+		case SET_CURRENT_TRACK: 
 			return {
 				...state,
-				allTracks: [...state.allTracks, action.payload.tracks]
+				currentTrack: action.payload.track
 			}
 		
-
 		default: 
 			return state		
 	}
