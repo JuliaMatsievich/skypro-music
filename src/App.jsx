@@ -1,5 +1,5 @@
 import * as S from './App.styles'
-import { getTracksAll } from './api'
+import { getTracksAll } from './api/apiTrack'
 import { AppRoutes } from './routes'
 import { createContext, useEffect, useState } from 'react'
 
