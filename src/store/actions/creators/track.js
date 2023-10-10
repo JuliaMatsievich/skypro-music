@@ -39,7 +39,7 @@ export const setNextTrack = (track, index) => {
     payload: {track, index}
   }
 }
-export const setPrevTrack = (track) => {
+export const setPrevTrack = (track, index) => {
   return {
     type: PREV_TRACK,
     payload: {track, index}

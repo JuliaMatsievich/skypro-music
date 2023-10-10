@@ -26,11 +26,11 @@ export const trackReducer = (state = initialState, action) => {
       }
 
     case SET_CURRENT_TRACK:
-		const {track,index} = action.payload
+      const { track, index } = action.payload
       return {
         ...state,
         currentTrack: track,
-		  currentIndex: index
+        currentIndex: index,
       }
 
     case PLAY_TRACK:
@@ -45,13 +45,21 @@ export const trackReducer = (state = initialState, action) => {
         isPlaying: false,
       }
 
-	case NEXT_TRACK:
-		const nextIndex = state.currentIndex + 1
-		return {
-			...state,
-			currentIndex: nextIndex,
-			currentTrack: state.allTracks[nextIndex]
-		}
+    case NEXT_TRACK:
+      const nextIndex = state.currentIndex + 1
+      return {
+        ...state,
+        currentIndex: nextIndex,
+        currentTrack: state.allTracks[nextIndex],
+      }
+
+    case PREV_TRACK:
+      const prevIndex = state.currentIndex - 1
+      return {
+        ...state,
+        currentIndex: prevIndex,
+        currentTrack: state.allTracks[prevIndex],
+      }
 
     default:
       return state

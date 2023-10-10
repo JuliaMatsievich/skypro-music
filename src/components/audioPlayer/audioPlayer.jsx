@@ -4,7 +4,7 @@ import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentTrackSelector, selectIsPlaying } from '../../store/selectors/track'
-import { setNextTrack, setPauseTrack, setPlayTrack } from '../../store/actions/creators/track'
+import { setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack } from '../../store/actions/creators/track'
 
 
 export const Player = () => {
@@ -35,6 +35,10 @@ export const Player = () => {
     dispatch(setNextTrack())
   }
 
+  const handlePrevTrack = () => {
+    dispatch(setPrevTrack())
+  }
+
   const handlePause = () => {
     audioRef.current.pause()
     dispatch(setPauseTrack())
@@ -59,14 +63,6 @@ export const Player = () => {
   }
 
   const toggleLoop = isLoop ? handleNotLoop : handleLoop
-
-  const handleBackward = () => {
-    alert('Ещё не реализовано')
-  }
-
-  // const handleForward = () => {
-  //   alert('Ещё не реализовано')
-  // }
 
   const handleShuffle = () => {
     alert('Ещё не реализовано')
@@ -125,7 +121,7 @@ export const Player = () => {
             <S.BarPlayer>
               <S.PlayerControls>
                 <S.PlayerBtnPrev>
-                  <S.PlayerBtnPrevSvg alt="prev" onClick={handleBackward}>
+                  <S.PlayerBtnPrevSvg alt="prev" onClick={handlePrevTrack}>
                     <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerBtnPrevSvg>
                 </S.PlayerBtnPrev>
@@ -141,7 +137,7 @@ export const Player = () => {
                   </S.PlayerBtnPlaySvg>
                 </S.PlayerBtnPlay>
                 <S.PlayerBtnNext>
-                  <S.PlayerBtnNextSvg alt="next" onClick={() => handleNextTrack(currentTrack)}>
+                  <S.PlayerBtnNextSvg alt="next" onClick={handleNextTrack}>
                     <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
