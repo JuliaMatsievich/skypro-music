@@ -5,7 +5,7 @@ import * as S from '../trackList/trackList.styles'
 import { UserContext } from '../../App'
 
 export const ErrorMessage = () => {
- const { allTracksError, setAllTracksError } = useContext(UserContext)
+ const { allTracksError} = useContext(UserContext)
 
   return (
     <>

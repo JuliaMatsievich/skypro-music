@@ -1,29 +1,49 @@
-import {ALL_TRACKS, SET_CURRENT_TRACK, NEXT_TRACK, PREV_TRACK, TOGGLE_SHUFFLED } from '../actions/types/types'
+import {
+  ALL_TRACKS,
+  SET_CURRENT_TRACK,
+  NEXT_TRACK,
+  PREV_TRACK,
+  TOGGLE_SHUFFLED,
+  PAUSE_TRACK,
+  PLAY_TRACK,
+} from '../actions/types/types'
 
 const initialState = {
-	allTracks: [],
-	currentTrack: {}
+  allTracks: [],
+  currentTrack: {},
+  isPlaying: false,
 }
 
-export const trackReducer = (state = initialState, action)  => {
-	console.log('trackReducer, state ---', state );
-	console.log('trackReducer, action.payload ---', action.payload );
+export const trackReducer = (state = initialState, action) => {
+  console.log('trackReducer, state ---', state)
+  console.log('trackReducer, action.payload ---', action.payload)
 
-	switch (action.type) {
+  switch (action.type) {
+    case ALL_TRACKS:
+      return {
+        ...state,
+        allTracks: action.payload,
+      }
 
-		case ALL_TRACKS: 
-		return {
-			...state,
-			allTracks: action.payload
-		}
+    case SET_CURRENT_TRACK:
+      return {
+        ...state,
+        currentTrack: action.payload,
+      }
 
-		case SET_CURRENT_TRACK: 
-			return {
-				...state,
-				currentTrack: action.payload
-			}
-		
-		default: 
-			return state		
-	}
+    case PLAY_TRACK:
+      return {
+        ...state,
+        isPlaying: true,
+      }
+
+    case PAUSE_TRACK:
+      return {
+        ...state,
+        isPlaying: false,
+      }
+
+    default:
+      return state
+  }
 }

@@ -15,8 +15,7 @@ export const MainPage = () => {
 
  const currentTrack = useSelector(currentTrackSelector)
 
- console.log(currentTrack);
-  return (
+ return (
     <S.Container>
       <S.Main>
         <NavMenu />

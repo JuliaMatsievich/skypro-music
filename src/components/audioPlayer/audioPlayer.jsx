@@ -2,19 +2,20 @@ import * as S from './audioPlayer.styles'
 import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
-import { useSelector } from 'react-redux'
-import { currentTrackSelector } from '../../store/selectors/track'
+import { useDispatch, useSelector } from 'react-redux'
+import { currentTrackSelector, selectIsPlaying } from '../../store/selectors/track'
+import { setPauseTrack, setPlayTrack } from '../../store/actions/creators/track'
+
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
-  console.log(currentTrack);
-  
+  const dispatch = useDispatch()
   let audioRef = useRef(new Audio(currentTrack.track_file))
 
   const { isLoading } = useContext(UserContext)
 
-
-  const [isPlaying, setIsPlaying] = useState(false)
+  const isPlaying = useSelector(selectIsPlaying)
+  // const [isPlaying, setIsPlaying] = useState(false)
 
   const [isLoop, setIsLoop] = useState(false)
 
@@ -28,12 +29,12 @@ export const Player = () => {
 
   const handlePlay = () => {
     audioRef.current.play()
-    setIsPlaying(true)
+    dispatch(setPlayTrack())
   }
 
   const handlePause = () => {
     audioRef.current.pause()
-    setIsPlaying(false)
+    dispatch(setPauseTrack())
   }
 
   const handlePlayPause = () => {

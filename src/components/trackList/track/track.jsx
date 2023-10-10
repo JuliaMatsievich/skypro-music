@@ -12,14 +12,18 @@ export const TrackItem = ({ track }) => {
     dispatch(setCurrentTrack(track))
   }
 
+
+
   return (
     <S.PlayListItem>
       <S.PlayListTrack>
         <S.TrackTiltle>
           <S.TrackTiltleImage>
             <S.TrackTiltleImageSvg alt="music">
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              <use xlinkHref="img/icon/sprite.svg#icon-note">
+              </use>              
             </S.TrackTiltleImageSvg>
+            <S.CurrentTrackIndicate></S.CurrentTrackIndicate>
           </S.TrackTiltleImage>
           <S.TrackTiltleText onClick={() => handlePlayTrack(track)}>
             <S.TrackTiltleLink>{track.name} </S.TrackTiltleLink>
