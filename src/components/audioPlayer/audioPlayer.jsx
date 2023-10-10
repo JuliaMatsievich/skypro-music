@@ -15,7 +15,6 @@ export const Player = () => {
   const { isLoading } = useContext(UserContext)
 
   const isPlaying = useSelector(selectIsPlaying)
-  // const [isPlaying, setIsPlaying] = useState(false)
 
   const [isLoop, setIsLoop] = useState(false)
 

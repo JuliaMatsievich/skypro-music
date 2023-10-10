@@ -1,17 +1,21 @@
 import * as S from './track.styles';
 import { getTimeInMinutes } from '../../../helpFunctions'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { currentTrackSelector } from '../../../store/selectors/track';
+import { currentTrackSelector, selectIsPlaying } from '../../../store/selectors/track';
 import { setCurrentTrack } from '../../../store/actions/creators/track';
+import { useState } from 'react';
 
-export const TrackItem = ({ track }) => {
+export const TrackItem = ({ track, id }) => {
 
   const dispatch = useDispatch()
 
-  const handlePlayTrack = (track) => {
+   const handlePlayTrack = (track) => {
     dispatch(setCurrentTrack(track))
   }
 
+  const isPlaying = useSelector(selectIsPlaying)
+  const currentTrack = useSelector(currentTrackSelector)
+ 
 
 
   return (
@@ -23,7 +27,7 @@ export const TrackItem = ({ track }) => {
               <use xlinkHref="img/icon/sprite.svg#icon-note">
               </use>              
             </S.TrackTiltleImageSvg>
-            <S.CurrentTrackIndicate></S.CurrentTrackIndicate>
+            {Object.keys(currentTrack).length && currentTrack.id === id && isPlaying ? <S.CurrentTrackIndicateAnimation /> : Object.keys(currentTrack).length && currentTrack.id === id ? <S.CurrentTrackIndicate /> : null}
           </S.TrackTiltleImage>
           <S.TrackTiltleText onClick={() => handlePlayTrack(track)}>
             <S.TrackTiltleLink>{track.name} </S.TrackTiltleLink>
