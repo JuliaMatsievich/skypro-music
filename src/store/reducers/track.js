@@ -45,6 +45,7 @@ export const trackReducer = (state = initialState, action) => {
         isPlaying: false,
       }
 
+// !ToDo Добавить обработку конца и начала списка if
     case NEXT_TRACK:
       const nextIndex = state.currentIndex + 1
       return {

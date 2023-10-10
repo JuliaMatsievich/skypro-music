@@ -104,7 +104,7 @@ export const Player = () => {
 
   return (
     <>
-      <S.AudioTag controls ref={audioRef}>
+      <S.AudioTag controls ref={audioRef} onEnded={handleNextTrack}>
         <source src={currentTrack.track_file} type="audio/mpeg" />
       </S.AudioTag>
       <S.Bar>
