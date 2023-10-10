@@ -58,8 +58,8 @@ export const TrackList = () => {
           </S.ContentPlaylist>
         ) : (
           <S.ContentPlaylist>
-            {tracks.map((track) => {
-              return <TrackItem key={track.id} track={track} id={track.id}/>
+            {tracks.map((track,index) => {
+              return <TrackItem key={track.id} track={track} id={track.id} index={index}/>
             })}
           </S.ContentPlaylist>
         )}

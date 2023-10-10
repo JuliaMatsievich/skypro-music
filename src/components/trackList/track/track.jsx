@@ -3,21 +3,18 @@ import { getTimeInMinutes } from '../../../helpFunctions';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentTrackSelector, selectIsPlaying } from '../../../store/selectors/track';
 import { setCurrentTrack } from '../../../store/actions/creators/track';
-import { useState } from 'react';
 
-export const TrackItem = ({ track, id }) => {
+export const TrackItem = ({ track, id, index }) => {
 
   const dispatch = useDispatch()
 
-   const handlePlayTrack = (track) => {
-    dispatch(setCurrentTrack(track))
+   const handlePlayTrack = (track, index) => {
+    dispatch(setCurrentTrack(track, index))
   }
 
   const isPlaying = useSelector(selectIsPlaying)
   const currentTrack = useSelector(currentTrackSelector)
  
-
-
   return (
     <S.PlayListItem>
       <S.PlayListTrack>
@@ -29,7 +26,7 @@ export const TrackItem = ({ track, id }) => {
             </S.TrackTiltleImageSvg>
             {Object.keys(currentTrack).length && currentTrack.id === id && isPlaying ? <S.CurrentTrackIndicateAnimation /> : Object.keys(currentTrack).length && currentTrack.id === id ? <S.CurrentTrackIndicate /> : null}
           </S.TrackTiltleImage>
-          <S.TrackTiltleText onClick={() => handlePlayTrack(track)}>
+          <S.TrackTiltleText onClick={() => handlePlayTrack(track, index)}>
             <S.TrackTiltleLink>{track.name} </S.TrackTiltleLink>
           </S.TrackTiltleText>
         </S.TrackTiltle>

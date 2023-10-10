@@ -5,20 +5,20 @@ import {
   PREV_TRACK,
   TOGGLE_SHUFFLED,
   PAUSE_TRACK,
-  PLAY_TRACK
+  PLAY_TRACK,
 } from '../types/types'
 
 export const setAllTracks = (tracks) => {
   return {
     type: ALL_TRACKS,
-    payload: tracks ,
+    payload: tracks,
   }
 }
 
-export const setCurrentTrack = (track) => {
+export const setCurrentTrack = (track, index) => {
   return {
     type: SET_CURRENT_TRACK,
-    payload: track,
+    payload: {track, index}
   }
 }
 
@@ -31,5 +31,17 @@ export const setPlayTrack = () => {
 export const setPauseTrack = () => {
   return {
     type: PAUSE_TRACK,
+  }
+}
+export const setNextTrack = (track, index) => {
+  return {
+    type: NEXT_TRACK,
+    payload: {track, index}
+  }
+}
+export const setPrevTrack = (track) => {
+  return {
+    type: PREV_TRACK,
+    payload: {track, index}
   }
 }
