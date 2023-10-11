@@ -55,9 +55,12 @@ export const trackReducer = (state = initialState, action) => {
         ...state,
         isLoop: !state.isLoop,
       }
-    // !ToDo Добавить обработку конца и начала списка if
+
     case NEXT_TRACK:
-      const nextIndex = state.currentIndex + 1
+      let nextIndex = state.currentIndex + 1
+      if(nextIndex > state.allTracks.length-1 && !state.isShuffled) {
+        nextIndex = 0
+      }
       if (state.isShuffled) {
         return {
           ...state,
@@ -73,7 +76,10 @@ export const trackReducer = (state = initialState, action) => {
       }
 
     case PREV_TRACK:
-      const prevIndex = state.currentIndex - 1
+      let prevIndex = state.currentIndex - 1
+      if (prevIndex < 0 && !state.isShuffled) {
+        prevIndex = state.allTracks.length-1
+      }
       if (state.isShuffled) {
         return {
           ...state,
