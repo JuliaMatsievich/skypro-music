@@ -15,7 +15,6 @@ export const MainPage = () => {
 
  const currentTrack = useSelector(currentTrackSelector)
 
-
  return (
     <S.Container>
       <S.Main>
