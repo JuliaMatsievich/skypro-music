@@ -68,3 +68,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Оценка времени
+
+### Домашнее задание 7. Добавление авторизации с помощью UseContext
+
+Расчетное время  - 24 часа \
+Фактическое время - 13 часов
+
+### Домашнее задание 8. Управление состоянием Redux
+
+Расчетное время  - 36 часа \
+Фактическое время - 16 часов
+
