@@ -4,10 +4,10 @@ import {
   SET_CURRENT_TRACK,
   NEXT_TRACK,
   PREV_TRACK,
-  TOGGLE_SHUFFLED,
   PAUSE_TRACK,
   PLAY_TRACK,
   SHUFFLED_TRACKS,
+  LOOP_TRACK,
 } from '../actions/types/types'
 
 const initialState = {
@@ -16,6 +16,7 @@ const initialState = {
   isPlaying: false,
   isShuffled: false,
   shuffledTracks: [],
+  isLoop: false,
 }
 
 export const trackReducer = (state = initialState, action) => {
@@ -49,6 +50,11 @@ export const trackReducer = (state = initialState, action) => {
         isPlaying: false,
       }
 
+    case LOOP_TRACK:
+      return {
+        ...state,
+        isLoop: !state.isLoop,
+      }
     // !ToDo Добавить обработку конца и начала списка if
     case NEXT_TRACK:
       const nextIndex = state.currentIndex + 1

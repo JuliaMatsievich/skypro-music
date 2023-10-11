@@ -3,8 +3,8 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/selectors/track'
-import { setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/actions/creators/track'
+import { currentTrackSelector, isLoopTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/selectors/track'
+import { setLoopTrack, setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/actions/creators/track'
 
 
 export const Player = () => {
@@ -16,7 +16,7 @@ export const Player = () => {
 
   const isPlaying = useSelector(selectIsPlaying)
 
-  const [isLoop, setIsLoop] = useState(false)
+  const isLoop = useSelector(isLoopTrackSelector)
 
   const isShuffled = useSelector(isShuffledTrackSelector)
 
@@ -55,16 +55,9 @@ export const Player = () => {
   }
 
   const handleLoop = () => {
-    audioRef.current.loop = true
-    setIsLoop(true)
+    audioRef.current.loop = !audioRef.current.loop;
+    dispatch(setLoopTrack())
   }
-
-  const handleNotLoop = () => {
-    audioRef.current.loop = false
-    setIsLoop(false)
-  }
-
-  const toggleLoop = isLoop ? handleNotLoop : handleLoop
 
   const handleShuffle = () => {
     dispatch(setShuffledTracks())
@@ -144,7 +137,7 @@ export const Player = () => {
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
                 <S.PlayerBtnRepeat className="_btn-icon">
-                  <S.PlayerBtnRepeatSvg alt="repeat" onClick={toggleLoop}>
+                  <S.PlayerBtnRepeatSvg alt="repeat" onClick={handleLoop}>
                     <use
                       xlinkHref={
                         isLoop

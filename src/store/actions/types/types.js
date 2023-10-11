@@ -5,5 +5,7 @@ export const PREV_TRACK = 'PREV_TRACK';
 export const PAUSE_TRACK = 'PAUSE_TRACK'
 export const PLAY_TRACK = 'PLAY_TRACK'
 export const SHUFFLED_TRACKS ='SHUFFLED_TRACKS'
+export const LOOP_TRACK = 'LOOP_TRACK'
+
 
 
