@@ -3,8 +3,8 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentTrackSelector, selectIsPlaying } from '../../store/selectors/track'
-import { setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack } from '../../store/actions/creators/track'
+import { currentTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/selectors/track'
+import { setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/actions/creators/track'
 
 
 export const Player = () => {
@@ -17,6 +17,8 @@ export const Player = () => {
   const isPlaying = useSelector(selectIsPlaying)
 
   const [isLoop, setIsLoop] = useState(false)
+
+  const isShuffled = useSelector(isShuffledTrackSelector)
 
   const [duration, setDuration] = useState(0)
 
@@ -65,7 +67,7 @@ export const Player = () => {
   const toggleLoop = isLoop ? handleNotLoop : handleLoop
 
   const handleShuffle = () => {
-    alert('Ещё не реализовано')
+    dispatch(setShuffledTracks())
   }
 
   const handleVolume = (e) => {
@@ -154,7 +156,12 @@ export const Player = () => {
                 </S.PlayerBtnRepeat>
                 <S.PlayerBtnShuffle className="_btn-icon">
                   <S.PlayerBtnShuffleSvg alt="shuffle" onClick={handleShuffle}>
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                    <use xlinkHref={
+                      isShuffled
+                      ? 'img/icon/sprite.svg#icon-shuffleactive'
+                      : 'img/icon/sprite.svg#icon-shuffle'
+                    }
+                    ></use>
                   </S.PlayerBtnShuffleSvg>
                 </S.PlayerBtnShuffle>
               </S.PlayerControls>

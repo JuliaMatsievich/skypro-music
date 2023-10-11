@@ -1,3 +1,4 @@
+import { sortArray } from '../../helpFunctions'
 import {
   ALL_TRACKS,
   SET_CURRENT_TRACK,
@@ -6,12 +7,15 @@ import {
   TOGGLE_SHUFFLED,
   PAUSE_TRACK,
   PLAY_TRACK,
+  SHUFFLED_TRACKS,
 } from '../actions/types/types'
 
 const initialState = {
   allTracks: [],
   currentTrack: {},
   isPlaying: false,
+  isShuffled: false,
+  shuffledTracks: [],
 }
 
 export const trackReducer = (state = initialState, action) => {
@@ -45,21 +49,53 @@ export const trackReducer = (state = initialState, action) => {
         isPlaying: false,
       }
 
-// !ToDo Добавить обработку конца и начала списка if
+    // !ToDo Добавить обработку конца и начала списка if
     case NEXT_TRACK:
       const nextIndex = state.currentIndex + 1
-      return {
-        ...state,
-        currentIndex: nextIndex,
-        currentTrack: state.allTracks[nextIndex],
+      if (state.isShuffled) {
+        return {
+          ...state,
+          currentIndex: nextIndex,
+          currentTrack: state.shuffledTracks[nextIndex],
+        }
+      } else {
+        return {
+          ...state,
+          currentIndex: nextIndex,
+          currentTrack: state.allTracks[nextIndex],
+        }
       }
 
     case PREV_TRACK:
       const prevIndex = state.currentIndex - 1
-      return {
-        ...state,
-        currentIndex: prevIndex,
-        currentTrack: state.allTracks[prevIndex],
+      if (state.isShuffled) {
+        return {
+          ...state,
+          currentIndex: prevIndex,
+          currentTrack: state.shuffledTracks[prevIndex],
+        }
+      } else {
+        return {
+          ...state,
+          currentIndex: prevIndex,
+          currentTrack: state.allTracks[prevIndex],
+        }
+      }
+
+    case SHUFFLED_TRACKS:
+      if (!state.isShuffled) {
+        const shuffledTracks = sortArray([...state.allTracks])
+        return {
+          ...state,
+          isShuffled: true,
+          shuffledTracks,
+        }
+      } else {
+        return {
+          ...state,
+          isShuffled: false,
+          allTracks: state.allTracks,
+        }
       }
 
     default:
