@@ -3,8 +3,8 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentTrackSelector, isLoopTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/selectors/track'
-import { setLoopTrack, setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/actions/creators/track'
+import { currentTrackSelector, isLoopTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/trackSlice'
+import { setLoopTrack, setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/trackSlice'
 
 
 export const Player = () => {
