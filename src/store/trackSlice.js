@@ -15,45 +15,50 @@ export const trackSlice = createSlice({
     setAllTracks: (state, action) => {
       state.allTracks = action.payload
     },
+
     setCurrentTrack: (state, action) => {
       const { track, index } = action.payload;
-		state.currentTrack = track;
+		state.currentTrack = track
 		state.currentIndex = index
     },
+
     setPlayTrack: (state) => {
 		state.isPlaying =  true
 	 },
+
     setPauseTrack: (state) => {
 		state.isPlaying = false
 	 },
+
     setNextTrack: (state) => {
-		let nextIndex = state.currentIndex + 1
+		const nextIndex = (state.isShuffled)
+		? state.shuffledTracks.findIndex(el => el.id === state.currentTrack.id) + 1
+		:  state.currentIndex + 1
       if(nextIndex > state.allTracks.length-1 && !state.isShuffled) {
       //   nextIndex = 0
 			return state
       }
-      if (state.isShuffled) {
-			state.currentIndex = nextIndex;
-			state.currentTrack = state.shuffledTracks[nextIndex]
-      } else {
-			state.currentIndex = nextIndex;
-			state.currentTrack = state.allTracks[nextIndex]        
-      }
+		state.currentIndex = nextIndex;
+		state.currentTrack = (state.isShuffled)
+		? state.shuffledTracks[nextIndex]
+		: state.allTracks[nextIndex]
 	 },
+
     setPrevTrack: (state) => {
-		let prevIndex = state.currentIndex - 1
+		const prevIndex = (state.isShuffled) 
+		? state.shuffledTracks.findIndex(el => el.id === state.currentTrack.id) - 1 
+		: state.currentIndex - 1
       if (prevIndex < 0 && !state.isShuffled) {
         // prevIndex = state.allTracks.length-1
         return state
       }
-      if (state.isShuffled) {
-			state.currentIndex = prevIndex;
-			state.currentTrack = state.shuffledTracks[prevIndex]
-      } else {
-			state.currentIndex = prevIndex;
-			state.currentTrack = state.allTracks[prevIndex]
-      }
+		state.currentIndex = prevIndex;
+		state.currentTrack = (state.isShuffled)
+		? state.shuffledTracks[prevIndex]
+		: state.allTracks[prevIndex]
+
 	 },
+
     setShuffledTracks: (state) => {
 		if (!state.isShuffled) {
 			const shuffledTracks = sortArray([...state.allTracks])
@@ -61,9 +66,11 @@ export const trackSlice = createSlice({
 			state.shuffledTracks = shuffledTracks
 		 } else {
 			state.isShuffled = false
-			state.allTracks = state.allTracks
+			state.shuffledTracks = []
+			state.currentIndex = state.allTracks.findIndex(el => el.id === state.currentTrack.id)
 		 }
 	 },
+
     setLoopTrack: (state) => {
 		state.isLoop = !state.isLoop
 	 },
