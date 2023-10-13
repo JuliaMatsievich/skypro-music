@@ -3,8 +3,22 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
-import { currentTrackSelector, isLoopTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/selectors/track'
-import { setLoopTrack, setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/actions/creators/track'
+
+import {
+  currentTrackSelector,
+  isLoopTrackSelector,
+  isShuffledTrackSelector,
+  selectIsPlaying,
+} from '../../store/trackSlice'
+import {
+  setLoopTrack,
+  setNextTrack,
+  setPauseTrack,
+  setPlayTrack,
+  setPrevTrack,
+  setShuffledTracks,
+} from '../../store/trackSlice'
+
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
@@ -54,7 +68,7 @@ export const Player = () => {
   }
 
   const handleLoop = () => {
-    audioRef.current.loop = !audioRef.current.loop;
+    audioRef.current.loop = !audioRef.current.loop
     dispatch(setLoopTrack())
   }
 
@@ -89,17 +103,20 @@ export const Player = () => {
   useEffect(() => {
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
     audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
+    audioRef.current.addEventListener('ended', handleNextTrack)
+
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
         audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
+        audioRef.current.removeEventListener('ended', handleNextTrack)
       }
     }
   }, [currentTrack])
 
   return (
     <>
-      <S.AudioTag controls ref={audioRef} onEnded={handleNextTrack}>
+      <S.AudioTag controls ref={audioRef}>
         <source src={currentTrack.track_file} type="audio/mpeg" />
       </S.AudioTag>
       <S.Bar>
@@ -149,11 +166,12 @@ export const Player = () => {
                 </S.PlayerBtnRepeat>
                 <S.PlayerBtnShuffle className="_btn-icon">
                   <S.PlayerBtnShuffleSvg alt="shuffle" onClick={handleShuffle}>
-                    <use xlinkHref={
-                      isShuffled
-                      ? 'img/icon/sprite.svg#icon-shuffleactive'
-                      : 'img/icon/sprite.svg#icon-shuffle'
-                    }
+                    <use
+                      xlinkHref={
+                        isShuffled
+                          ? 'img/icon/sprite.svg#icon-shuffleactive'
+                          : 'img/icon/sprite.svg#icon-shuffle'
+                      }
                     ></use>
                   </S.PlayerBtnShuffleSvg>
                 </S.PlayerBtnShuffle>

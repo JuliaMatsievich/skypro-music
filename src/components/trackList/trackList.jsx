@@ -4,9 +4,11 @@ import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
 import { HeaderTrackList } from './headerTrackList'
 import { getTracksAll } from '../../api/apiTrack'
-import { setAllTracks } from '../../store/actions/creators/track' 
+// import { setAllTracks } from '../../store/actions/creators/track'
+import { setAllTracks } from '../../store/trackSlice' 
 import { useDispatch, useSelector } from 'react-redux'
-import { allTracksSelector } from '../../store/selectors/track' 
+// import { allTracksSelector } from '../../store/selectors/track' 
+import { allTracksSelector } from '../../store/trackSlice' 
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
 
@@ -14,7 +16,6 @@ import { UserContext } from '../../App'
 export const TrackList = () => {
   let tracks = useSelector(allTracksSelector)
   const dispatch = useDispatch()
-  
   const { isLoading, setLoading, setAllTracksError } = useContext(UserContext)
 
   useEffect(() => {

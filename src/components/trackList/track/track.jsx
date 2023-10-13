@@ -1,15 +1,15 @@
 import * as S from './track.styles';
 import { getTimeInMinutes } from '../../../helpFunctions'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { currentTrackSelector, selectIsPlaying } from '../../../store/selectors/track';
-import { setCurrentTrack } from '../../../store/actions/creators/track';
+import { currentTrackSelector, selectIsPlaying } from '../../../store/trackSlice';
+import { setCurrentTrack } from '../../../store/trackSlice';
 
 export const TrackItem = ({ track, id, index }) => {
 
   const dispatch = useDispatch()
 
    const handlePlayTrack = (track, index) => {
-    dispatch(setCurrentTrack(track, index))
+    dispatch(setCurrentTrack({track, index}))
   }
 
   const isPlaying = useSelector(selectIsPlaying)
