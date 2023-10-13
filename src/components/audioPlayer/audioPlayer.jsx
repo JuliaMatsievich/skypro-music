@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { currentTrackSelector, isLoopTrackSelector, isShuffledTrackSelector, selectIsPlaying } from '../../store/selectors/track'
 import { setLoopTrack, setNextTrack, setPauseTrack, setPlayTrack, setPrevTrack, setShuffledTracks } from '../../store/actions/creators/track'
 
-
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
@@ -67,6 +66,7 @@ export const Player = () => {
     audioRef.current.volume = e.target.value
     setVolume(e.target.value)
   }
+
 
   useEffect(() => {
     if (audioRef.current.currentTime > 0) {

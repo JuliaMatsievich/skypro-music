@@ -76,6 +76,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Расчетное время  - 24 часа \
 Фактическое время - 13 часов
 
+
 ### Домашнее задание 8. Управление состоянием Redux
 
 Расчетное время  - 36 часов \
