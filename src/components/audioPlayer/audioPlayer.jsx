@@ -3,6 +3,7 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import { ProgressBar } from './progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
+
 import {
   currentTrackSelector,
   isLoopTrackSelector,
@@ -17,6 +18,7 @@ import {
   setPrevTrack,
   setShuffledTracks,
 } from '../../store/trackSlice'
+
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
@@ -78,6 +80,7 @@ export const Player = () => {
     audioRef.current.volume = e.target.value
     setVolume(e.target.value)
   }
+
 
   useEffect(() => {
     if (audioRef.current.currentTime > 0) {
