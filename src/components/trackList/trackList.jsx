@@ -7,25 +7,37 @@ import { useDispatch, useSelector } from 'react-redux'
 import { allTracksSelector } from '../../store/trackSlice' 
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
+import { useGetAllTracksQuery } from '../../services/trackApi'
 
 
 export const TrackList = () => {
-  let tracks = useSelector(allTracksSelector)
+  // let tracks = useSelector(allTracksSelector)
   const dispatch = useDispatch()
-  const { isLoading, setLoading, setAllTracksError } = useContext(UserContext)
+  const { setLoading, setAllTracksError } = useContext(UserContext)
 
-  useEffect(() => {
-    getTracksAll()
-      .then((data) => {
-        setLoading(false)
-        tracks = dispatch(setAllTracks(data))
-      })
-      .catch((error) => {
-        setAllTracksError(
-          'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
-        )
-      })
-  }, [])
+  const {
+    data: tracks,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetAllTracksQuery()
+
+  // useEffect(() => {
+  //   getTracksAll()
+  //     .then((data) => {
+  //       setLoading(false)
+  //       tracks = dispatch(setAllTracks(data))
+  //     })
+  //     .catch((error) => {
+  //       setAllTracksError(
+  //         'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
+  //       )
+  //     })
+  // }, [])
+
+ 
+
 
   return (
       <S.CenterBlockContent>
