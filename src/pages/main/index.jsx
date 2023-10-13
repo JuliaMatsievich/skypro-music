@@ -9,8 +9,6 @@ import { currentTrackSelector } from '../../store/trackSlice'
 export const MainPage = () => {
  const { allTracksError } = useContext(UserContext)
 
-//  const currentTrack = useSelector(currentTrackSelector)
-
  return (
   <>
         {allTracksError ? (
@@ -18,9 +16,6 @@ export const MainPage = () => {
         ) : (
           <TrackList />
         )}
-      {/* {Object.keys(currentTrack).length ? (
-        <Player />
-      ) : null} */}
     </>
   )
 }
