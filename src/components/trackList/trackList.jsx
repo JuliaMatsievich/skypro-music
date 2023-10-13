@@ -3,9 +3,32 @@ import { Filter } from './filter/filter'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
 import { HeaderTrackList } from './headerTrackList'
+import { getTracksAll } from '../../api/apiTrack'
+import { setAllTracks } from '../../store/actions/creators/track' 
+import { useDispatch, useSelector } from 'react-redux'
+import { allTracksSelector } from '../../store/selectors/track' 
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../App'
 
 
-export const TrackList = ({ isLoading, tracks, setCurrentTrack, currentTrack }) => {
+export const TrackList = () => {
+  let tracks = useSelector(allTracksSelector)
+  const dispatch = useDispatch()
+  
+  const { isLoading, setLoading, setAllTracksError } = useContext(UserContext)
+
+  useEffect(() => {
+    getTracksAll()
+      .then((data) => {
+        setLoading(false)
+        tracks = dispatch(setAllTracks(data))
+      })
+      .catch((error) => {
+        setAllTracksError(
+          'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
+        )
+      })
+  }, [])
 
   return (
     <S.MainCenterBlock>
@@ -35,8 +58,8 @@ export const TrackList = ({ isLoading, tracks, setCurrentTrack, currentTrack }) 
           </S.ContentPlaylist>
         ) : (
           <S.ContentPlaylist>
-            {tracks.map((track) => {
-              return <TrackItem key={track.id} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} track={track}/>
+            {tracks.map((track,index) => {
+              return <TrackItem key={track.id} track={track} id={track.id} index={index}/>
             })}
           </S.ContentPlaylist>
         )}

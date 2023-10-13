@@ -48,6 +48,8 @@ export const TrackTiltleImage = styled.div`
   -ms-flex-pack: center;
   justify-content: center;
   margin-right: 17px;
+  position: relative;
+  z-index: 0;
 `
 export const TrackTiltleImageSvg = styled.svg`
   width: 18px;
@@ -55,6 +57,27 @@ export const TrackTiltleImageSvg = styled.svg`
   fill: transparent;
   stroke: #4e4e4e;
 `
+
+const blinkIndicate = keyframes`
+0% { transform: scale(0.5) }
+50% {transform: scale(1)}
+100% { transform: scale(0.5) }
+` 
+export const CurrentTrackIndicate = styled.div`
+  position: absolute;
+  left: 16.5px;
+  top: 16.5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #AD61FF;
+  z-index: 1;
+`
+
+export const CurrentTrackIndicateAnimation = styled(CurrentTrackIndicate)`
+  animation: ${blinkIndicate} 1s cubic-bezier(1, 2, 0, 1) infinite;
+`
+
 export const TrackTiltleText = styled.div``
 export const TrackTiltleLink = styled.a`
   font-style: normal;

@@ -5,34 +5,30 @@ import { TrackList } from '../../components/trackList/trackList'
 import { SideBar } from '../../components/sideBar/sideBar'
 import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { UserContext } from '../../App'
+import { useSelector } from 'react-redux'
+import { currentTrackSelector } from '../../store/selectors/track'
 
-export const MainPage = ({
-  tracks,
-  allTracksError,
-  isLoading,
-  currentTrack,
-  setCurrentTrack,
-}) => {
-  
-  return (
+export const MainPage = () => {
+ const { allTracksError } = useContext(UserContext)
+
+ const currentTrack = useSelector(currentTrackSelector)
+
+
+ return (
     <S.Container>
       <S.Main>
         <NavMenu />
         {allTracksError ? (
           <ErrorMessage allTracksError={allTracksError} />
         ) : (
-          <TrackList
-            isLoading={isLoading}
-            tracks={tracks}
-            setCurrentTrack={setCurrentTrack}
-            currentTrack={currentTrack}
-          />
+          <TrackList />
         )}
-        <SideBar isLoading={isLoading} categories={CATEGORIES} />
+        <SideBar categories={CATEGORIES} />
       </S.Main>
-      {currentTrack ? (
-        <Player isLoading={isLoading} currentTrack={currentTrack} />
+      {Object.keys(currentTrack).length ? (
+        <Player />
       ) : null}
       <S.Footer></S.Footer>
     </S.Container>

@@ -9,13 +9,10 @@ import { useContext } from 'react'
 import { UserContext } from './App'
 
 export const AppRoutes = ({
-  tracks,
-  allTracksError,
-  isLoading,
   currentTrack,
   setCurrentTrack,
 }) => {
-  const { isUser } = useContext(UserContext)
+  const { isUser, isLoading, setLoading } = useContext(UserContext)
 
   return (
     <Routes>
@@ -32,9 +29,6 @@ export const AppRoutes = ({
           path="/"
           element={
             <MainPage
-              tracks={tracks}
-              allTracksError={allTracksError}
-              isLoading={isLoading}
               currentTrack={currentTrack}
               setCurrentTrack={setCurrentTrack}
             />
