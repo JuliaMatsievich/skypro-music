@@ -7,3 +7,9 @@ export const MainCenterBlock = styled.div`
   flex-grow: 3;
   padding: 20px 40px 20px 111px;
 `
+export const Wrapper = styled.div`
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: #383838;
+`

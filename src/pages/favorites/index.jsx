@@ -1,9 +1,5 @@
-import { WrapperPages } from '../../components/wrapperPages/wrapperPages'
+import { WrapperPages } from '../../components/Layout/Layout'
 
 export const Favorites = () => {
-  return (
-    <WrapperPages>
-      <h1>Мои треки</h1>
-    </WrapperPages>
-  )
+  return <h1>Мои треки</h1>
 }

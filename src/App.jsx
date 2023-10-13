@@ -13,7 +13,7 @@ const App = () => {
   const [allTracksError, setAllTracksError] = useState(null)
   const initialUser = localStorage.getItem('user')
   const [isUser, setIsUser] = useState(initialUser)
-  const [currentTrack, setCurrentTrack] = useState(null)
+  // const [currentTrack, setCurrentTrack] = useState(null)
 
   const dispatch = useDispatch()
 
@@ -34,10 +34,7 @@ const App = () => {
         <UserContext.Provider
           value={{ isUser, setIsUser, logIn, logOut, isLoading, setLoading,allTracksError, setAllTracksError}}
         >
-          <AppRoutes
-            currentTrack={currentTrack}
-            setCurrentTrack={setCurrentTrack}
-          />
+          <AppRoutes />
         </UserContext.Provider>
       </S.Wrapper>
     </>

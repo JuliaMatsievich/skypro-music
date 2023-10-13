@@ -1,13 +1,9 @@
 import { TrackItem } from './track/track'
-import { Filter } from './filter/filter'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
-import { HeaderTrackList } from './headerTrackList'
 import { getTracksAll } from '../../api/apiTrack'
-// import { setAllTracks } from '../../store/actions/creators/track'
 import { setAllTracks } from '../../store/trackSlice' 
 import { useDispatch, useSelector } from 'react-redux'
-// import { allTracksSelector } from '../../store/selectors/track' 
 import { allTracksSelector } from '../../store/trackSlice' 
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
@@ -32,9 +28,6 @@ export const TrackList = () => {
   }, [])
 
   return (
-    <S.MainCenterBlock>
-      <HeaderTrackList />
-      <Filter />
       <S.CenterBlockContent>
         <S.ContentTitle>
           <S.PlayListCol01>Трек</S.PlayListCol01>
@@ -65,6 +58,5 @@ export const TrackList = () => {
           </S.ContentPlaylist>
         )}
       </S.CenterBlockContent>
-    </S.MainCenterBlock>
   )
 }

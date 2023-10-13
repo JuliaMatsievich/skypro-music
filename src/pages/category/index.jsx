@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { CATEGORIES } from '../../constants'
-import { WrapperPages } from '../../components/wrapperPages/wrapperPages'
+import { WrapperPages } from '../../components/Layout/Layout'
 
 export const Category = () => {
   const params = useParams()
@@ -8,9 +8,5 @@ export const Category = () => {
     (category) => category.id === Number(params.id),
   )
 
-  return (
-    <WrapperPages>
-      <h1>{category.title}</h1>
-    </WrapperPages>
-  )
+  return <h1>{category.title}</h1>
 }
