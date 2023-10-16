@@ -1,5 +1,31 @@
-import { WrapperPages } from '../../components/Layout/Layout'
+import { useDispatch } from 'react-redux'
+import { setFavoritePlaylist} from '../../store/trackSlice'
+import { useEffect } from 'react'
+import { TrackList } from '../../components/trackList/trackList'
+import { useGetFavoriteTracksQuery } from '../../services/trackApi'
 
 export const Favorites = () => {
-  return <h1>Мои треки</h1>
+
+  const dispatch = useDispatch()
+
+  const { data,
+    isError,
+    error } =
+   useGetFavoriteTracksQuery()
+
+  useEffect(() => {
+    dispatch(setFavoritePlaylist(data))
+    if (isError) {
+      console.log('error', error.status)
+      localStorage.clear('accessToken')
+      window.location.href = '/login'
+    }
+  })
+
+
+  return (
+    <>
+      <TrackList tracks={data} />
+    </>
+  )
 }

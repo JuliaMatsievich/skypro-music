@@ -1,47 +1,12 @@
 import { TrackItem } from './track/track'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
-import { getTracksAll } from '../../api/apiTrack'
-import { setAllTracks } from '../../store/trackSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { allTracksSelector } from '../../store/trackSlice'
-import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../App'
-import { useGetAllTracksQuery } from '../../services/trackApi'
+import { useGetAllTracksQuery} from '../../services/trackApi'
 
-export const TrackList = () => {
-  const dispatch = useDispatch()
-  const { setAllTracksError } = useContext(UserContext)
+export const TrackList = ({tracks}) => {
 
-  const {
-    data: tracks,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetAllTracksQuery()
-
-  useEffect(() => {
-    dispatch(setAllTracks(tracks))
-  })
-  if (isError) {
-    setAllTracksError(
-      'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
-    )
-  }
-  // useEffect(() => {
-  //   getTracksAll()
-  //     .then((data) => {
-  //       setLoading(false)
-  //       tracks = dispatch(setAllTracks(data))
-  //     })
-  //     .catch((error) => {
-  //       setAllTracksError(
-  //         'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
-  //       )
-  //     })
-  // }, [])
-
+  const {isLoading} = useGetAllTracksQuery()
+  
   return (
     <S.CenterBlockContent>
       <S.ContentTitle>

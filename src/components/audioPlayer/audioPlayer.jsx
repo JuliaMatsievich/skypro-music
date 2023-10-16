@@ -18,6 +18,7 @@ import {
   setPrevTrack,
   setShuffledTracks,
 } from '../../store/trackSlice'
+import { useGetAllTracksQuery } from '../../services/trackApi'
 
 
 export const Player = () => {
@@ -25,7 +26,7 @@ export const Player = () => {
   const dispatch = useDispatch()
   let audioRef = useRef(new Audio(currentTrack.track_file))
 
-  const { isLoading } = useContext(UserContext)
+  const {isLoading} = useGetAllTracksQuery()
 
   const isPlaying = useSelector(selectIsPlaying)
 

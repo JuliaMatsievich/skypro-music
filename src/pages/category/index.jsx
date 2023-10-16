@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom'
 import { CATEGORIES } from '../../constants'
-import { WrapperPages } from '../../components/Layout/Layout'
 
 export const Category = () => {
   const params = useParams()

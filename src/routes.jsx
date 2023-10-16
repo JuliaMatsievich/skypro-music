@@ -10,7 +10,7 @@ import { UserContext } from './App'
 import { Layout} from './components/Layout/Layout'
 
 export const AppRoutes = () => {
-  const { isUser, isLoading, setLoading } = useContext(UserContext)
+  const { isUser } = useContext(UserContext)
 
   return (
     <Routes>

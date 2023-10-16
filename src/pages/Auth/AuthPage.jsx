@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom'
 import * as S from './AuthPage.styles'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { getLogin, getSignup } from '../../api/apiUser'
+import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
+import { useDispatch } from 'react-redux'
+import { setToken } from '../../store/tokenSlice'
 
 export default function AuthPage({ isLoginMode }) {
   const { setIsUser, logIn } = useContext(UserContext)
+  const dispatch = useDispatch()
 
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
   const [username, setUsername] = useState('')
-  const [isLoadingUser, setIsLoadingUser] = useState(false);
-
+  const [isLoadingUser, setIsLoadingUser] = useState(false)
 
   const emailRef = useRef(null)
   const usernameRef = useRef(null)
@@ -34,6 +36,11 @@ export default function AuthPage({ isLoginMode }) {
         setError(error.message)
         setIsLoadingUser(false)
       })
+    getToken({ email, password }).then((data) => {
+      dispatch(setToken(data))
+      localStorage.setItem('accessToken', JSON.stringify(data.access))
+      localStorage.setItem('refreshToken', JSON.stringify(data.refresh))
+    })
   }
 
   const handleRegister = async () => {
@@ -118,11 +125,16 @@ export default function AuthPage({ isLoginMode }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton disabled={isLoadingUser} onClick={() => handleLogin({ email, password })}>
+              <S.PrimaryButton
+                disabled={isLoadingUser}
+                onClick={() => handleLogin({ email, password })}
+              >
                 Войти
-              </S.PrimaryButton >
+              </S.PrimaryButton>
               <Link to="/register">
-                <S.SecondaryButton  disabled={isLoadingUser}>Зарегистрироваться</S.SecondaryButton>
+                <S.SecondaryButton disabled={isLoadingUser}>
+                  Зарегистрироваться
+                </S.SecondaryButton>
               </Link>
             </S.Buttons>
           </>
@@ -172,7 +184,10 @@ export default function AuthPage({ isLoginMode }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton disabled={isLoadingUser} onClick={handleRegister}>
+              <S.PrimaryButton
+                disabled={isLoadingUser}
+                onClick={handleRegister}
+              >
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>

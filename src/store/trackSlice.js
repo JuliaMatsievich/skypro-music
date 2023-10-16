@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { sortArray } from '../helpFunctions'
+import { favorite } from '../fakePlaylist';
+
 
 export const trackSlice = createSlice({
   name: 'track',
@@ -10,10 +12,13 @@ export const trackSlice = createSlice({
     isShuffled: false,
     shuffledTracks: [],
     isLoop: false,
+    currentPlaylist: [],
+    titlePlayList: 'Треки'
   },
   reducers: {
     setAllTracks: (state, action) => {
       state.allTracks = action.payload
+      state.titlePlayList = 'Треки'
     },
 
     setCurrentTrack: (state, action) => {
@@ -74,6 +79,11 @@ export const trackSlice = createSlice({
     setLoopTrack: (state) => {
 		state.isLoop = !state.isLoop
 	 },
+
+   setFavoritePlaylist: (state,action) => {
+    state.titlePlayList = 'Мои треки',
+    state.currentPlaylist = action.payload
+   }
   },
 })
 
@@ -86,6 +96,7 @@ export const {
   setPrevTrack,
   setShuffledTracks,
   setLoopTrack,
+  setFavoritePlaylist
 } = trackSlice.actions
 
 export default trackSlice.reducer
@@ -97,3 +108,5 @@ export const currentTrackIndexSelector = (state) =>
   state.audioPlayer.currentTrack.id
 export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
+export const titlePlayListSelector = (state) => state.audioPlayer.titlePlayList
+export const currentPlaylistSelector = (state) => state.audioPlayer.currentPlaylist
