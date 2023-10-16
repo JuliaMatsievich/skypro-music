@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {BASEURL} from './url'
-
+import { BASEURL } from './url'
 
 export const trackApi = createApi({
   reducerPath: 'trackApi',
@@ -33,16 +32,24 @@ export const trackApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Tracks', id })),
-              { type: 'Tracks', id: 'LIST' },
+              ...result.map(({ id }) => ({ type: 'FavTracks', id })),
+              { type: 'FavTracks', id: 'LIST' },
             ]
-          : [{ type: 'Tracks', id: 'LIST' }],
+          : [{ type: 'FavTracks', id: 'LIST' }],
     }),
-  }),
+	 addFavoriteTrack: builder.mutation({
+		query: (id) => ({
+			url: `/catalog/track/${id}/favorite/`,
+			method: 'POST'
+		}),
+		invalidatesTags: [{ type: 'Tracks', id: 'LIST' }, {type: 'FavTracks', id: 'LIST'}]
+	 })
+  })
 })
 
 export const {
   useGetAllTracksQuery,
   useGetFavoriteTracksQuery,
   useLazyGetFavoriteTracksQuery,
+  useAddFavoriteTrackMutation
 } = trackApi

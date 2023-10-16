@@ -13,12 +13,14 @@ export const trackSlice = createSlice({
     shuffledTracks: [],
     isLoop: false,
     currentPlaylist: [],
-    titlePlayList: 'Треки'
+    titlePlayList: 'Треки',
+    favoritePlaylist: []
   },
   reducers: {
     setAllTracks: (state, action) => {
       state.allTracks = action.payload
       state.titlePlayList = 'Треки'
+      state.currentPlaylist = action.payload
     },
 
     setCurrentTrack: (state, action) => {
@@ -39,14 +41,14 @@ export const trackSlice = createSlice({
 		const nextIndex = (state.isShuffled)
 		? state.shuffledTracks.findIndex(el => el.id === state.currentTrack.id) + 1
 		:  state.currentIndex + 1
-      if(nextIndex > state.allTracks.length-1 && !state.isShuffled) {
+      if(nextIndex > state.currentPlaylist.length-1 && !state.isShuffled) {
       //   nextIndex = 0
 			return state
       }
 		state.currentIndex = nextIndex;
 		state.currentTrack = (state.isShuffled)
 		? state.shuffledTracks[nextIndex]
-		: state.allTracks[nextIndex]
+		: state.currentPlaylist[nextIndex]
 	 },
 
     setPrevTrack: (state) => {
@@ -60,19 +62,19 @@ export const trackSlice = createSlice({
 		state.currentIndex = prevIndex;
 		state.currentTrack = (state.isShuffled)
 		? state.shuffledTracks[prevIndex]
-		: state.allTracks[prevIndex]
+		: state.currentPlaylist[prevIndex]
 
 	 },
 
     setShuffledTracks: (state) => {
 		if (!state.isShuffled) {
-			const shuffledTracks = sortArray([...state.allTracks])
+			const shuffledTracks = sortArray([...state.currentPlaylist])
 			state.isShuffled = true
 			state.shuffledTracks = shuffledTracks
 		 } else {
 			state.isShuffled = false
 			state.shuffledTracks = []
-			state.currentIndex = state.allTracks.findIndex(el => el.id === state.currentTrack.id)
+			state.currentIndex = state.currentPlaylist.findIndex(el => el.id === state.currentTrack.id)
 		 }
 	 },
 
@@ -81,8 +83,9 @@ export const trackSlice = createSlice({
 	 },
 
    setFavoritePlaylist: (state,action) => {
-    state.titlePlayList = 'Мои треки',
+    state.titlePlayList = 'Мои треки'
     state.currentPlaylist = action.payload
+    state.favoritePlaylist = action.payload
    }
   },
 })
