@@ -19,15 +19,15 @@ const App = () => {
 
   useEffect(() => {
     const tokens = {
-      accessToken: JSON.parse(localStorage.getItem('accessToken')),
-      refreshToken: JSON.parse(localStorage.getItem('refreshToken'))
+      access: JSON.parse(localStorage.getItem('access')),
+      refresh: JSON.parse(localStorage.getItem('refresh'))
     }
     dispatch(setToken(tokens))
   },[])
 
 
   const logOut = () => {
-    localStorage.removeItem('user')
+    localStorage.clear()
     setIsUser(false)
   }
 

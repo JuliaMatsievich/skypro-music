@@ -82,8 +82,7 @@ export const getToken = async ({ email, password }) => {
   return data
 }
 
-export const refreshToken = async () => {
-  const refresh = JSON.parse(localStorage.getItem('refreshToken'))
+export const refreshToken = async (refresh) => {
   const response = await fetch(BASEURL + '/user/token/refresh/', {
     method: 'POST',
     body: JSON.stringify({

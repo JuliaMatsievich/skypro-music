@@ -8,16 +8,13 @@ export const tokenSlice = createSlice({
   },
   reducers: {
     setToken: (state, action) => {
-		state.accessToken = action.payload.accessToken
-		state.refreshToken = action.payload.refreshToken
-	 },
-	 setNewToken: state => {
-		state.accessToken = action.payload
+		state.accessToken = action.payload.access
+		state.refreshToken = action.payload.refresh
 	 }
   },
 })
 
-export const { setToken, setNewToken } = tokenSlice.actions
+export const { setToken} = tokenSlice.actions
 
 export default tokenSlice.reducer;
 

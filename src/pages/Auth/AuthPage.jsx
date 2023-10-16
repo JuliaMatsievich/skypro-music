@@ -36,10 +36,10 @@ export default function AuthPage({ isLoginMode }) {
         setError(error.message)
         setIsLoadingUser(false)
       })
+      
     getToken({ email, password }).then((data) => {
-      dispatch(setToken(data))
-      localStorage.setItem('accessToken', JSON.stringify(data.access))
-      localStorage.setItem('refreshToken', JSON.stringify(data.refresh))
+      localStorage.setItem('access', JSON.stringify(data.access))
+      localStorage.setItem('refresh', JSON.stringify(data.refresh))
     })
   }
 
