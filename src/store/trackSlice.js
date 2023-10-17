@@ -14,7 +14,8 @@ export const trackSlice = createSlice({
     isLoop: false,
     currentPlaylist: [],
     titlePlayList: 'Треки',
-    favoritePlaylist: []
+    favoritePlaylist: [],
+    isLike: false
   },
   reducers: {
     setAllTracks: (state, action) => {
@@ -86,7 +87,11 @@ export const trackSlice = createSlice({
     state.titlePlayList = 'Мои треки'
     state.currentPlaylist = action.payload
     state.favoritePlaylist = action.payload
-   }
+   },
+
+  //  setFavoriteTrack: (state) => {
+  //   state.isLike = true
+  //  }
   },
 })
 
@@ -99,7 +104,8 @@ export const {
   setPrevTrack,
   setShuffledTracks,
   setLoopTrack,
-  setFavoritePlaylist
+  setFavoritePlaylist,
+  setFavoriteTrack
 } = trackSlice.actions
 
 export default trackSlice.reducer
@@ -113,3 +119,4 @@ export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
 export const titlePlayListSelector = (state) => state.audioPlayer.titlePlayList
 export const currentPlaylistSelector = (state) => state.audioPlayer.currentPlaylist
+export const favoriteTrackSelector = (state) => state.audioPlayer.isLike
