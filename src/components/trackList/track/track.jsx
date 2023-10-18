@@ -75,7 +75,7 @@ export const TrackItem = ({ track, id, index }) => {
         <S.TrackTiltle>
           <S.TrackTiltleImage>
             <S.TrackTiltleImageSvg alt="music">
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
             </S.TrackTiltleImageSvg>
             {Object.keys(currentTrack).length &&
             currentTrack.id === id &&
@@ -107,8 +107,8 @@ export const TrackItem = ({ track, id, index }) => {
             <use
               xlinkHref={
                 isLike
-                  ? 'img/icon/sprite.svg#icon-likeactive'
-                  : 'img/icon/sprite.svg#icon-like'
+                  ? '/img/icon/sprite.svg#icon-likeactive'
+                  : '/img/icon/sprite.svg#icon-like'
               }
             ></use>
           </S.TrackLikeSvg>
