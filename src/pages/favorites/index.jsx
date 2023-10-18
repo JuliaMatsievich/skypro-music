@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentPlaylistSelector,
+  favoritePlaylistSelector,
+  setCurrentPage,
   setFavoritePlaylist,
 } from '../../store/trackSlice'
 import { useEffect } from 'react'
@@ -15,18 +17,19 @@ import {
   setNewToken,
   setToken,
 } from '../../store/tokenSlice'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
   const [fetchFavTracks] = useLazyGetFavoriteTracksQuery()
-  const {isError, error} = useGetFavoriteTracksQuery()
+  const { isError, error } = useGetFavoriteTracksQuery()
+  const navigate = useNavigate()
 
   useEffect(() => {
     localStorage.removeItem('access')
     refreshToken(refresh).then((data) => {
-      dispatch(setToken({access: data.access}))
+      dispatch(setToken({ access: data.access }))
       localStorage.getItem('access', JSON.stringify(data.access))
     })
     fetchFavTracks()
@@ -35,13 +38,17 @@ export const Favorites = () => {
         dispatch(setFavoritePlaylist(data))
       })
       .catch((error) => console.log(error))
-  },[refresh])
+  }, [refresh])
 
-  if(isError){
-    window.location.href = '/login'
+  if (isError) {
+    navigate('/login')
   }
 
-  const favTracks = useSelector(currentPlaylistSelector)
+  const favTracks = useSelector(favoritePlaylistSelector)
+
+  useEffect(() => {
+    dispatch(setCurrentPage('Favorite'))
+  }, [])
 
   return (
     <>

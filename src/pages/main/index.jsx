@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { useGetAllTracksQuery } from '../../services/trackApi'
-import { setAllTracks } from '../../store/trackSlice'
+import { setAllTracks, setCurrentPage } from '../../store/trackSlice'
 
 export const MainPage = () => {
   const { allTracksError, setAllTracksError } = useContext(UserContext)
@@ -20,6 +20,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     dispatch(setAllTracks(data))
+    dispatch(setCurrentPage('Main'))
   })
 
   if (isError) {

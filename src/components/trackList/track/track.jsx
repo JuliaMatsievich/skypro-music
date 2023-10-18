@@ -5,6 +5,7 @@ import {
   currentTrackSelector,
   favoriteTrackSelector,
   selectIsPlaying,
+  setCurrentPlaylist,
   setFavoriteTrack,
 } from '../../../store/trackSlice'
 import { setCurrentTrack } from '../../../store/trackSlice'
@@ -18,22 +19,21 @@ export const TrackItem = ({ track, id, index }) => {
 
   const [addFavoriteTrack] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack] = useDeleteFavoriteTrackMutation()
-  // const isLike = useSelector(favoriteTrackSelector)
 
   const [isLike, setIsLike] = useState(false)
+
   const handlePlayTrack = (track, index) => {
     dispatch(setCurrentTrack({ track, index }))
+    dispatch(setCurrentPlaylist())
   }
 
   const handleLike = async (id) => {
     await addFavoriteTrack(id).unwrap()
     setIsLike(true)
-    console.log('add');
   }
 
   const handleDisLike = async (id) => {
     await deleteFavoriteTrack(id).unwrap()
-    console.log('delete')
     setIsLike(false)
   }
 
@@ -44,18 +44,6 @@ export const TrackItem = ({ track, id, index }) => {
       handleLike(id)
     }
   }
-
-  // const handleLike = async (id) => {
-  //   if (!isLike) {
-  //     await addFavoriteTrack(id).unwrap()
-  //     setIsLike(true)
-  //     console.log('add');
-  //   } else {
-  //     await deleteFavoriteTrack(id).unwrap()
-  //     console.log('delete');
-  //     setIsLike(false)
-  //   }
-  // }
 
   const isPlaying = useSelector(selectIsPlaying)
   const currentTrack = useSelector(currentTrackSelector)
@@ -100,14 +88,6 @@ export const TrackItem = ({ track, id, index }) => {
           </S.TrackTiltleAlbumLink>
         </S.TrackTiltleAlbum>
         <S.TrackTime>
-
-          {/* <S.TrackLikeSvg alt="like" onClick={() => handleLike(track.id)}>
-            <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-          </S.TrackLikeSvg>
-
-          <S.TrackLikeSvg alt="like" onClick={() => handleDisLike(track.id)}>
-            <use xlinkHref="img/icon/sprite.svg#icon-likeactive"></use>
-          </S.TrackLikeSvg> */}
 
           <S.TrackLikeSvg alt="like" onClick={() => handleLikeDislkie(track.id)}>
             <use
