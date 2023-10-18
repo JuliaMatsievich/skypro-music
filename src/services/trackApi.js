@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { BASEURL } from './url'
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 export const trackApi = createApi({
   reducerPath: 'trackApi',
   baseQuery: fetchBaseQuery({
@@ -36,6 +38,12 @@ export const trackApi = createApi({
               { type: 'FavTracks', id: 'LIST' },
             ]
           : [{ type: 'FavTracks', id: 'LIST' }],
+      transformResponse: (response) => {
+        const tracks = response.map((track) => {
+          return ({...track, stared_user:[user]})
+        })
+        return tracks
+      } 
     }),
 
     addFavoriteTrack: builder.mutation({
