@@ -20,8 +20,7 @@ export const Layout = () => {
           <NavMenu />
           <S.MainCenterBlock>
             <HeaderTrackList />
-            <Filter />
-            <Outlet />
+             <Outlet />
           </S.MainCenterBlock>
           <SideBar categories={CATEGORIES} />
         </SM.Main>
