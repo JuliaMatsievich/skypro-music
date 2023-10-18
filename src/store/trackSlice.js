@@ -104,7 +104,7 @@ export const trackSlice = createSlice({
     },
 
     setSelectionPlaylist: (state,action) => {
-      
+      state.titlePlayList = action.payload
     }
   },
 })
@@ -121,7 +121,8 @@ export const {
   setFavoritePlaylist,
   setFavoriteTrack,
   setCurrentPage,
-  setCurrentPlaylist
+  setCurrentPlaylist,
+  setSelectionPlaylist
 } = trackSlice.actions
 
 export default trackSlice.reducer
