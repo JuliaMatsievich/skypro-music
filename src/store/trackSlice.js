@@ -101,8 +101,11 @@ export const trackSlice = createSlice({
 
     setCurrentPage: (state,action) => {
       state.currentPage = action.payload
-    }
+    },
 
+    setSelectionPlaylist: (state,action) => {
+      
+    }
   },
 })
 

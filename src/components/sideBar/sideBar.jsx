@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import * as S from './sideBar.styles'
 import { UserContext } from '../../App'
-import { useGetAllTracksQuery } from '../../services/trackApi'
+import { useGetAllTracksQuery, useGetSelectionQuery } from '../../services/trackApi'
 
 export const SideBar = ({  categories }) => {
-  const { logIn, logOut,  setLoading } = useContext(UserContext)
+  const { logIn, logOut } = useContext(UserContext)
   const {isLoading} = useGetAllTracksQuery()
 
   const handleClickLoginOut = () => {

@@ -61,6 +61,14 @@ export const trackApi = createApi({
       }),
       invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
     }),
+
+    getSelection: builder.query({
+      query: (id) => ({
+        url: `/catalog/selection/${id}/`,
+        method: 'GET',
+      }),
+      invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
+    })
   }),
 })
 
@@ -70,4 +78,5 @@ export const {
   useLazyGetFavoriteTracksQuery,
   useAddFavoriteTrackMutation,
   useDeleteFavoriteTrackMutation,
+  useGetSelectionQuery
 } = trackApi
