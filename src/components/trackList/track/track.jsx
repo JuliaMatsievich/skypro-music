@@ -9,16 +9,20 @@ import {
   setFavoriteTrack,
 } from '../../../store/trackSlice'
 import { setCurrentTrack } from '../../../store/trackSlice'
-import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from '../../../services/trackApi'
+import {
+  useAddFavoriteTrackMutation,
+  useDeleteFavoriteTrackMutation,
+} from '../../../services/trackApi'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const TrackItem = ({ track, id, index }) => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const userId = JSON.parse(localStorage.getItem('user')).id
 
-  const [addFavoriteTrack] = useAddFavoriteTrackMutation()
-  const [deleteFavoriteTrack] = useDeleteFavoriteTrackMutation()
+  const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
+  const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
 
   const [isLike, setIsLike] = useState(false)
 
@@ -28,12 +32,20 @@ export const TrackItem = ({ track, id, index }) => {
   }
 
   const handleLike = async (id) => {
-    await addFavoriteTrack(id).unwrap()
+    await addFavoriteTrack(id)
+      .unwrap()
+      .catch((error) => {
+        navigate('/login')
+      })
     setIsLike(true)
   }
 
   const handleDisLike = async (id) => {
-    await deleteFavoriteTrack(id).unwrap()
+    await deleteFavoriteTrack(id)
+      .unwrap()
+      .catch((error) => {
+        navigate('/login')
+      })
     setIsLike(false)
   }
 
@@ -88,8 +100,10 @@ export const TrackItem = ({ track, id, index }) => {
           </S.TrackTiltleAlbumLink>
         </S.TrackTiltleAlbum>
         <S.TrackTime>
-
-          <S.TrackLikeSvg alt="like" onClick={() => handleLikeDislkie(track.id)}>
+          <S.TrackLikeSvg
+            alt="like"
+            onClick={() => handleLikeDislkie(track.id)}
+          >
             <use
               xlinkHref={
                 isLike
