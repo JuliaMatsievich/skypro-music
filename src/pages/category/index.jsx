@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CATEGORIES } from '../../constants'
 import { TrackList } from '../../components/trackList/trackList'
 import { useDispatch } from 'react-redux'
@@ -12,9 +12,10 @@ export const Category = () => {
     (category) => category.id === Number(params.id),
   )
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const id = String(category.id)
   let categoryTracks =[]
-  const { data, isSuccess } = useGetSelectionQuery(id)
+  const { data, isSuccess, isError } = useGetSelectionQuery(id)
 
   if (isSuccess) {
     categoryTracks = data.items
@@ -22,6 +23,10 @@ export const Category = () => {
   useEffect(() => {
     dispatch(setSelectionPlaylist(category.title))
   })
+
+  if (isError) {
+    navigate('/login')
+  }
 
   return (
     <>
