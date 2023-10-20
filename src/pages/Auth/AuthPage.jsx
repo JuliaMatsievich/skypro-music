@@ -5,6 +5,8 @@ import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../store/tokenSlice'
+import { useGetTokenMutation, useLogInMutation } from '../../services/trackApi'
+import { setUser } from '../../store/userSlice'
 
 export default function AuthPage({ isLoginMode }) {
   const { setIsUser, logIn } = useContext(UserContext)
@@ -22,25 +24,49 @@ export default function AuthPage({ isLoginMode }) {
   const passwordRef = useRef(null)
   const repeatPasswordRef = useRef(null)
 
+  const [logInApi, {}] = useLogInMutation()
+  const [getToken, {}] = useGetTokenMutation()
+
   const handleLogin = async ({ email, password }) => {
+
+    await getToken ({email, password}).unwrap()
+    .then((data) => {
+        localStorage.setItem('access', JSON.stringify(data.access))
+        localStorage.setItem('refresh', JSON.stringify(data.refresh))
+      })
+
+
     setIsLoadingUser(true)
-    getLogin({ email, password })
-      .then((data) => {
-        localStorage.setItem('user', JSON.stringify(data))
-        logIn()
-        setIsUser(true)
-        setIsLoadingUser(false)
-        window.location.href = '/'
-      })
-      .catch((error) => {
-        setError(error.message)
-        setIsLoadingUser(false)
-      })
-      
-    getToken({ email, password }).then((data) => {
-      localStorage.setItem('access', JSON.stringify(data.access))
-      localStorage.setItem('refresh', JSON.stringify(data.refresh))
+    await logInApi({ email, password}).unwrap()
+    .then((data) => {
+      localStorage.setItem('user', JSON.stringify(data));
+      setIsLoadingUser(false)
+      window.location.href = '/'
     })
+    .catch((error) => {
+      setError(error.message);
+      setIsLoadingUser(false)
+    });
+
+
+    // setIsLoadingUser(true)
+    // getLogin({ email, password })
+    //   .then((data) => {
+    //     localStorage.setItem('user', JSON.stringify(data))
+    //     logIn()
+    //     setIsUser(true)
+    //     setIsLoadingUser(false)
+    //     window.location.navigate = '/'
+    //   })
+    //   .catch((error) => {
+    //     setError(error.message)
+    //     setIsLoadingUser(false)
+    //   })
+      
+    // getToken({ email, password }).then((data) => {
+    //   localStorage.setItem('access', JSON.stringify(data.access))
+    //   localStorage.setItem('refresh', JSON.stringify(data.refresh))
+    // })
   }
 
   const handleRegister = async () => {

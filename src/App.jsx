@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as S from './App.styles'
 import { AppRoutes } from './routes'
 import { createContext, useEffect, useState } from 'react'
@@ -8,8 +8,7 @@ export const UserContext = createContext(null)
 
 const App = () => {
   const [allTracksError, setAllTracksError] = useState(null)
-  const initialUser = localStorage.getItem('user')
-  const [isUser, setIsUser] = useState(initialUser)
+  const isUser = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   const logIn = () => {
@@ -17,18 +16,18 @@ const App = () => {
     return user
   }
 
-  useEffect(() => {
-    const tokens = {
-      access: JSON.parse(localStorage.getItem('access')),
-      refresh: JSON.parse(localStorage.getItem('refresh'))
-    }
-    dispatch(setToken(tokens))
-  },[])
+  // useEffect(() => {
+  //   const tokens = {
+  //     access: JSON.parse(localStorage.getItem('access')),
+  //     refresh: JSON.parse(localStorage.getItem('refresh'))
+  //   }
+  //   dispatch(setToken(tokens))
+  // },[])
 
 
   const logOut = () => {
     localStorage.clear()
-    setIsUser(false)
+    // setIsUser(false)
   }
 
   return (
@@ -36,7 +35,7 @@ const App = () => {
       <S.GlobalStyle />
       <S.Wrapper>
         <UserContext.Provider
-          value={{ isUser, setIsUser, logIn, logOut, allTracksError, setAllTracksError}}
+          value={{logIn, logOut, allTracksError, setAllTracksError}}
         >
           <AppRoutes />
         </UserContext.Provider>

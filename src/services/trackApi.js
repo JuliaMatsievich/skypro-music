@@ -82,6 +82,51 @@ export const trackApi = createApi({
           : [{ type: 'Tracks', id: 'LIST' }],
       transformResponse: (response) => response.items,
     }),
+
+    //userApi
+    signUp: builder.mutation({
+      query: (body) => ({
+        url: '/user/signup/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
+
+    logIn: builder.mutation({
+      query: (body) => ({
+        url: '/user/login/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
+
+    getToken: builder.mutation({
+      query: (body) => ({
+        url: '/user/token/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
+
+    refreshToken: builder.mutation({
+      query: (body) => ({
+        url: '/user/token/refresh/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
   }),
 })
 
@@ -92,4 +137,6 @@ export const {
   useAddFavoriteTrackMutation,
   useDeleteFavoriteTrackMutation,
   useGetSelectionQuery,
+  useLogInMutation,
+  useGetTokenMutation
 } = trackApi

@@ -11,7 +11,10 @@ export const SideBar = ({  categories }) => {
     logOut()
   }
 
-  const user = logIn()
+  // const user = logIn()
+  const user = {
+    username: 'lll'
+  }
 
   return (
     <S.MainSidebar>

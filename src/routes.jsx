@@ -8,10 +8,9 @@ import AuthPage from './pages/Auth/AuthPage'
 import { useContext } from 'react'
 import { UserContext } from './App'
 import { Layout} from './components/Layout/Layout'
+import { useSelector } from 'react-redux'
 
 export const AppRoutes = () => {
-  const { isUser } = useContext(UserContext)
-
   return (
     <Routes>
       <Route
@@ -22,7 +21,7 @@ export const AppRoutes = () => {
         path="/register"
         element={<AuthPage isLoginMode={false}></AuthPage>}
       ></Route>
-      <Route element={<ProtectedRoute isAllowed={isUser} />}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="favorites" element={<Favorites />} />
