@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const tokenSlice = createSlice({
   name: 'token',
   initialState: {
-    accessToken: null,
-    refreshToken: null,
+    accessToken: JSON.parse(localStorage.getItem('access')),
+    refreshToken: JSON.parse(localStorage.getItem('refresh')),
   },
   reducers: {
     setToken: (state, action) => {

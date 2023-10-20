@@ -1,30 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  currentPlaylistSelector,
   favoritePlaylistSelector,
   setCurrentPage,
   setFavoritePlaylist,
 } from '../../store/trackSlice'
 import { useEffect } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
-import {
-  useGetFavoriteTracksQuery,
-  useLazyGetFavoriteTracksQuery,
-} from '../../services/trackApi'
+import { useLazyGetFavoriteTracksQuery} from '../../services/trackApi'
 import { refreshToken } from '../../api/apiUser'
-import {
-  accessTokenSelector,
-  setNewToken,
-  setToken,
-} from '../../store/tokenSlice'
-import { useNavigate } from 'react-router-dom'
+import { setToken } from '../../store/tokenSlice'
+
 
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
-  const [fetchFavTracks] = useLazyGetFavoriteTracksQuery()
-  const { isError, error } = useGetFavoriteTracksQuery()
-  const navigate = useNavigate()
+  const [fetchFavTracks, {isError, refetch}] = useLazyGetFavoriteTracksQuery()
 
   useEffect(() => {
     localStorage.removeItem('access')
@@ -41,7 +31,7 @@ export const Favorites = () => {
   }, [refresh])
 
   if (isError) {
-    navigate('/login')
+    window.location.href = '/login'
   }
 
   const favTracks = useSelector(favoritePlaylistSelector)

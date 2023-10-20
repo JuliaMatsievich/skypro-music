@@ -97,15 +97,16 @@ export const Player = () => {
   }, [currentTrack])
 
   const handleTimeUpdate = () => {
-    setCurrentTime(audioRef.current.currentTime)
-    setDuration(audioRef.current.duration)
+    setCurrentTime(audioRef.current?.currentTime)
+    setDuration(audioRef.current?.duration)
   }
 
   useEffect(() => {
+    if (audioRef.current) {
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
     audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
     audioRef.current.addEventListener('ended', handleNextTrack)
-
+    }
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
