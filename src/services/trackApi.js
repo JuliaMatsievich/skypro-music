@@ -40,10 +40,10 @@ export const trackApi = createApi({
           : [{ type: 'FavTracks', id: 'LIST' }],
       transformResponse: (response) => {
         const tracks = response.map((track) => {
-          return ({...track, stared_user:[user]})
+          return { ...track, stared_user: [user] }
         })
         return tracks
-      } 
+      },
     }),
 
     addFavoriteTrack: builder.mutation({
@@ -51,7 +51,10 @@ export const trackApi = createApi({
         url: `/catalog/track/${id}/favorite/`,
         method: 'POST',
       }),
-      invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
+      invalidatesTags: [
+        { type: 'FavTracks', id: 'LIST' },
+        { type: 'Tracks', id: 'LIST' },
+      ],
     }),
 
     deleteFavoriteTrack: builder.mutation({
@@ -59,7 +62,10 @@ export const trackApi = createApi({
         url: `/catalog/track/${id}/favorite/`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
+      invalidatesTags: [
+        { type: 'FavTracks', id: 'LIST' },
+        { type: 'Tracks', id: 'LIST' },
+      ],
     }),
 
     getSelection: builder.query({
@@ -67,8 +73,15 @@ export const trackApi = createApi({
         url: `/catalog/selection/${id}/`,
         method: 'GET',
       }),
-      invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
-    })
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Tracks', id })),
+              { type: 'Tracks', id: 'LIST' },
+            ]
+          : [{ type: 'Tracks', id: 'LIST' }],
+      transformResponse: (response) => response.items,
+    }),
   }),
 })
 
@@ -78,5 +91,5 @@ export const {
   useLazyGetFavoriteTracksQuery,
   useAddFavoriteTrackMutation,
   useDeleteFavoriteTrackMutation,
-  useGetSelectionQuery
+  useGetSelectionQuery,
 } = trackApi

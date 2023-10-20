@@ -14,12 +14,9 @@ export const Category = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const id = String(category.id)
-  let categoryTracks =[]
-  const { data, isSuccess, isError } = useGetSelectionQuery(id)
 
-  if (isSuccess) {
-    categoryTracks = data.items
-  }
+  const { data, isLoading, isError } = useGetSelectionQuery(id)
+
   useEffect(() => {
     dispatch(setSelectionPlaylist(category.title))
   })
@@ -30,7 +27,10 @@ export const Category = () => {
 
   return (
     <>
-      <TrackList tracks={categoryTracks} />
+    {isLoading ? 
+          <p>Данные загружаются....</p>
+          : <TrackList tracks={data} />}
+      
     </>
   )
 }
