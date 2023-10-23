@@ -14,7 +14,7 @@ import { setToken } from '../../store/tokenSlice'
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
-  const [fetchFavTracks, {isError, refetch}] = useLazyGetFavoriteTracksQuery()
+  const [fetchFavTracks, {data, isError, refetch}] = useLazyGetFavoriteTracksQuery()
 
   useEffect(() => {
     localStorage.removeItem('access')
@@ -28,7 +28,7 @@ export const Favorites = () => {
         dispatch(setFavoritePlaylist(data))
       })
       .catch((error) => console.log(error))
-  }, [refresh])
+  }, [refresh, data])
 
   if (isError) {
     window.location.href = '/login'
