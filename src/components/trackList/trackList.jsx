@@ -39,6 +39,7 @@ export const TrackList = ({tracks}) => {
                 track={track}
                 id={track.id}
                 index={index}
+                trackList={tracks}
               />
             )
           })}

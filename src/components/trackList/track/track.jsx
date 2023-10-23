@@ -3,10 +3,8 @@ import { getTimeInMinutes } from '../../../helpFunctions'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentTrackSelector,
-  favoriteTrackSelector,
   selectIsPlaying,
-  setCurrentPlaylist,
-  setFavoriteTrack,
+  setCurrentPlaylist
 } from '../../../store/trackSlice'
 import { setCurrentTrack } from '../../../store/trackSlice'
 import {
@@ -16,7 +14,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const TrackItem = ({ track, id, index }) => {
+export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userId = useSelector(state => state.user.id)
@@ -27,8 +25,8 @@ export const TrackItem = ({ track, id, index }) => {
   const [isLike, setIsLike] = useState(false)
 
   const handlePlayTrack = (track, index) => {
-    dispatch(setCurrentTrack({ track, index }))
-    dispatch(setCurrentPlaylist())
+   dispatch(setCurrentTrack({ track, index }))
+   dispatch(setCurrentPlaylist(trackList))
   }
 
   const handleLike = async (id) => {

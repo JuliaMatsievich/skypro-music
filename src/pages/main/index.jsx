@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { useGetAllTracksQuery } from '../../services/trackApi'
-import { setAllTracks, setCurrentPage } from '../../store/trackSlice'
+import { setAllTracks } from '../../store/trackSlice'
 import { Filter } from '../../components/trackList/filter/filter'
 
 export const MainPage = () => {
@@ -14,10 +14,9 @@ export const MainPage = () => {
 
   const { data, isError, error } = useGetAllTracksQuery()
 
-  useEffect(() => {
-    dispatch(setAllTracks(data))
-    dispatch(setCurrentPage('Main'))
-  })
+  // useEffect(() => {
+  //   dispatch(setAllTracks(data))
+  // })
 
   if (isError) {
     setAllTracksError(

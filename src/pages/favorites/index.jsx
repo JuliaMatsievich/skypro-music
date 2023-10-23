@@ -9,19 +9,12 @@ import { useEffect } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
 import { useLazyGetFavoriteTracksQuery} from '../../services/trackApi'
 import { refreshToken } from '../../api/apiUser'
-import {
-  accessTokenSelector,
-  setNewToken,
-  setToken,
-} from '../../store/tokenSlice'
-import { useNavigate } from 'react-router-dom'
+import { setToken} from '../../store/tokenSlice'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
   const [fetchFavTracks, {data, isError, error}] = useLazyGetFavoriteTracksQuery()
-  // const { isError, error } = useGetFavoriteTracksQuery()
-  const navigate = useNavigate()
 
   useEffect(() => {
     localStorage.removeItem('access')
@@ -38,14 +31,11 @@ export const Favorites = () => {
   }, [refresh, data])
 
   if (isError) {
-    navigate('/login')
+    window.location.href = '/login'
   }
 
   const favTracks = useSelector(favoritePlaylistSelector)
 
-  useEffect(() => {
-    dispatch(setCurrentPage('Favorite'))
-  }, [])
 
   return (
     <>

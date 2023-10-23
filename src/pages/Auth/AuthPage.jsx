@@ -37,15 +37,15 @@ export default function AuthPage({ isLoginMode }) {
         localStorage.setItem('refresh', JSON.stringify(data.refresh))
       })
       .catch((error) => {
-        if (error.status === 500) {
-          setError('Ошибка сервера')
-        }
-        if (error.status === 400) {
-          setError('Должны быть заполнены все поля')
-        }
-        if (error.status === 401) {
-          setError('Пользователь с таким email или паролем не найден')
-        }
+        // if (error.status === 500) {
+        //   setError('Ошибка сервера')
+        // }
+        // if (error.status === 400) {
+        //   setError('Должны быть заполнены все поля')
+        // }
+        // if (error.status === 401) {
+        //   setError('Пользователь с таким email или паролем не найден')
+        // }
         setIsLoadingUser(false)
       })
 

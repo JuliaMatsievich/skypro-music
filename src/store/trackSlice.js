@@ -90,21 +90,8 @@ export const trackSlice = createSlice({
       state.favoritePlaylist = action.payload
     },
 
-    setCurrentPlaylist: (state) => {
-      if(state.currentPage === 'Main') {
-        state.currentPlaylist = state.allTracks
-      }
-      if (state.currentPage === 'Favorite') {
-        state.currentPlaylist = state.favoritePlaylist
-      }
-    },
-
-    setCurrentPage: (state,action) => {
-      state.currentPage = action.payload
-    },
-
-    setSelectionPlaylist: (state,action) => {
-      state.titlePlayList = action.payload
+    setCurrentPlaylist: (state,action) => {
+      state.currentPlaylist = action.payload
     }
   },
 })
@@ -120,9 +107,7 @@ export const {
   setLoopTrack,
   setFavoritePlaylist,
   setFavoriteTrack,
-  setCurrentPage,
-  setCurrentPlaylist,
-  setSelectionPlaylist
+  setCurrentPlaylist
 } = trackSlice.actions
 
 export default trackSlice.reducer
@@ -135,7 +120,5 @@ export const currentTrackIndexSelector = (state) =>
 export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
 export const titlePlayListSelector = (state) => state.audioPlayer.titlePlayList
-export const currentPlaylistSelector = (state) =>
-  state.audioPlayer.currentPlaylist
 export const favoritePlaylistSelector = (state) => state.audioPlayer.favoritePlaylist  
 
