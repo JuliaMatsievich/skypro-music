@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 export const TrackItem = ({ track, id, index }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const userId = JSON.parse(localStorage.getItem('user')).id
+  const userId = useSelector(state => state.user.id)
 
   const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
@@ -60,14 +60,14 @@ export const TrackItem = ({ track, id, index }) => {
   const isPlaying = useSelector(selectIsPlaying)
   const currentTrack = useSelector(currentTrackSelector)
 
-  // useEffect(() => {
-  //   if (
-  //     track.stared_user &&
-  //     track.stared_user.find((user) => user.id === userId)
-  //   ) {
-  //     setIsLike(true)
-  //   }
-  // }, [track])
+  useEffect(() => {
+    if (
+      track.stared_user &&
+      track.stared_user.find((user) => user.id === userId)
+    ) {
+      setIsLike(true)
+    }
+  }, [track])
 
   return (
     <S.PlayListItem>
