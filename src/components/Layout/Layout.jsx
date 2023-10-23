@@ -19,7 +19,7 @@ export const Layout = () => {
         <SM.Main>
           <NavMenu />
           <S.MainCenterBlock>
-            <HeaderTrackList />
+            {/* <HeaderTrackList /> */}
             <Outlet />
           </S.MainCenterBlock>
           <SideBar categories={CATEGORIES} />

@@ -2,20 +2,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   currentPlaylistSelector,
   favoritePlaylistSelector,
-  setCurrentPage,
   setFavoritePlaylist,
 } from '../../store/trackSlice'
 import { useEffect } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
-import { useLazyGetFavoriteTracksQuery} from '../../services/trackApi'
+import { useLazyGetFavoriteTracksQuery } from '../../services/trackApi'
 import { refreshToken } from '../../api/apiUser'
-import { setToken} from '../../store/tokenSlice'
+import { setToken } from '../../store/tokenSlice'
+import { HeaderTrackList } from '../../components/trackList/headerTrackList'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
-  const [fetchFavTracks, {data, isError, error}] = useLazyGetFavoriteTracksQuery()
+  const [fetchFavTracks, { data, isError, error }] =
+    useLazyGetFavoriteTracksQuery()
 
+  let favTracks = []
   useEffect(() => {
     localStorage.removeItem('access')
     refreshToken(refresh).then((data) => {
@@ -25,7 +27,7 @@ export const Favorites = () => {
     fetchFavTracks()
       .unwrap()
       .then((data) => {
-        dispatch(setFavoritePlaylist(data))
+        favTracks = data
       })
       .catch((error) => console.log(error))
   }, [refresh, data])
@@ -34,11 +36,12 @@ export const Favorites = () => {
     window.location.href = '/login'
   }
 
-  const favTracks = useSelector(favoritePlaylistSelector)
-
+  // const favTracks = useSelector(favoritePlaylistSelector)
 
   return (
     <>
+      <HeaderTrackList title={'Мои треки'} />
+
       <TrackList tracks={favTracks} />
     </>
   )

@@ -1,22 +1,15 @@
 import { TrackList } from '../../components/trackList/trackList'
 import { ErrorMessage } from '../../components/errors/error'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { UserContext } from '../../App'
-import { useDispatch } from 'react-redux'
 import { useGetAllTracksQuery } from '../../services/trackApi'
-import { setAllTracks } from '../../store/trackSlice'
 import { Filter } from '../../components/trackList/filter/filter'
+import { HeaderTrackList } from '../../components/trackList/headerTrackList'
 
 export const MainPage = () => {
   const { allTracksError, setAllTracksError } = useContext(UserContext)
 
-  const dispatch = useDispatch()
-
   const { data, isError, error } = useGetAllTracksQuery()
-
-  // useEffect(() => {
-  //   dispatch(setAllTracks(data))
-  // })
 
   if (isError) {
     setAllTracksError(
@@ -26,6 +19,7 @@ export const MainPage = () => {
 
   return (
     <>
+    <HeaderTrackList title={'Треки'}/>
       <Filter />
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />

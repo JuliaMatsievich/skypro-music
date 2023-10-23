@@ -1,11 +1,6 @@
-import { useSelector } from 'react-redux'
 import * as S from './trackList.styles'
-import { titlePlayListSelector } from '../../store/trackSlice'
 
-
-export const HeaderTrackList = () => {
-
-  const titlePlaylist = useSelector(titlePlayListSelector)
+export const HeaderTrackList = ({title}) => {
 
   return (
     <>	 
@@ -15,7 +10,7 @@ export const HeaderTrackList = () => {
         </S.SearchSvg>
         <S.SearchText type="search" placeholder="Поиск" name="search" />
       </S.CenterBlockSearch>
-      <S.CenterBlockTitle>{titlePlaylist}</S.CenterBlockTitle>
+      <S.CenterBlockTitle>{title}</S.CenterBlockTitle>
     </>
   )
 }

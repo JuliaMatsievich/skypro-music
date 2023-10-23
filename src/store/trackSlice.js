@@ -4,23 +4,14 @@ import { sortArray } from '../helpFunctions'
 export const trackSlice = createSlice({
   name: 'track',
   initialState: {
-    allTracks: [],
     currentTrack: {},
     isPlaying: false,
     isShuffled: false,
     shuffledTracks: [],
     isLoop: false,
-    currentPlaylist: [],
-    titlePlayList: 'Треки',
-    favoritePlaylist: [],
-    currentPage: ''
+    currentPlaylist: []
   },
   reducers: {
-    setAllTracks: (state, action) => {
-      state.allTracks = action.payload
-      state.titlePlayList = 'Треки'
-    },
-
     setCurrentTrack: (state, action) => {
       const { track, index } = action.payload
       state.currentTrack = track
@@ -105,20 +96,16 @@ export const {
   setPrevTrack,
   setShuffledTracks,
   setLoopTrack,
-  setFavoritePlaylist,
-  setFavoriteTrack,
-  setCurrentPlaylist
+  setCurrentPlaylist,
+  setFavoritePlaylist
 } = trackSlice.actions
 
 export default trackSlice.reducer
 
-export const allTracksSelector = (state) => state.audioPlayer.allTracks
 export const currentTrackSelector = (state) => state.audioPlayer.currentTrack
 export const selectIsPlaying = (state) => state.audioPlayer.isPlaying
 export const currentTrackIndexSelector = (state) =>
   state.audioPlayer.currentTrack.id
 export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
-export const titlePlayListSelector = (state) => state.audioPlayer.titlePlayList
-export const favoritePlaylistSelector = (state) => state.audioPlayer.favoritePlaylist  
 
