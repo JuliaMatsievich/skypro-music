@@ -24,7 +24,7 @@ import { useGetAllTracksQuery } from '../../services/trackApi'
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
-  let audioRef = useRef(new Audio(currentTrack.track_file))
+  let audioRef = useRef(null)
 
   const {isLoading} = useGetAllTracksQuery()
 
@@ -43,8 +43,10 @@ export const Player = () => {
   const intervalRef = useRef()
 
   const handlePlay = () => {
-    audioRef.current.play()
-    dispatch(setPlayTrack())
+    if (audioRef) {
+      audioRef.current.play()
+      dispatch(setPlayTrack())
+    }
   }
 
   const handleNextTrack = () => {
@@ -56,8 +58,10 @@ export const Player = () => {
   }
 
   const handlePause = () => {
-    audioRef.current.pause()
-    dispatch(setPauseTrack())
+    if (audioRef) {
+      audioRef.current.pause()
+      dispatch(setPauseTrack())
+    }
   }
 
   const handlePlayPause = () => {
@@ -69,8 +73,10 @@ export const Player = () => {
   }
 
   const handleLoop = () => {
-    audioRef.current.loop = !audioRef.current.loop
-    dispatch(setLoopTrack())
+    if (audioRef) {
+      audioRef.current.loop = !audioRef.current.loop
+      dispatch(setLoopTrack())
+    }
   }
 
   const handleShuffle = () => {
@@ -78,8 +84,10 @@ export const Player = () => {
   }
 
   const handleVolume = (e) => {
-    audioRef.current.volume = e.target.value
-    setVolume(e.target.value)
+    if (audioRef) {
+      audioRef.current.volume = e.target.value
+      setVolume(e.target.value)
+    }
   }
 
 
