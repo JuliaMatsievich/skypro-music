@@ -5,7 +5,7 @@ import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../store/tokenSlice'
-import { useGetTokenMutation, useLogInMutation } from '../../services/trackApi'
+import { useGetTokenMutation, useLogInMutation, useSignUpMutation } from '../../services/trackApi'
 import { setUser } from '../../store/userSlice'
 
 export default function AuthPage({ isLoginMode }) {
@@ -26,28 +26,49 @@ export default function AuthPage({ isLoginMode }) {
 
   const [logInApi, {}] = useLogInMutation()
   const [getToken, {}] = useGetTokenMutation()
+  const [signUpApi, {}] = useSignUpMutation()
 
   const handleLogin = async ({ email, password }) => {
-
-    await getToken ({email, password}).unwrap()
-    .then((data) => {
+    setIsLoadingUser(true)
+    await getToken({ email, password })
+      .unwrap()
+      .then((data) => {
         localStorage.setItem('access', JSON.stringify(data.access))
         localStorage.setItem('refresh', JSON.stringify(data.refresh))
       })
+      .catch((error) => {
+        if (error.status === 500) {
+          setError('Ошибка сервера')
+        }
+        if (error.status === 400) {
+          setError('Должны быть заполнены все поля')
+        }
+        if (error.status === 401) {
+          setError('Пользователь с таким email или паролем не найден')
+        }
+        setIsLoadingUser(false)
+      })
 
+    await logInApi({ email, password })
+      .unwrap()
+      .then((data) => {
+        localStorage.setItem('user', JSON.stringify(data))
+        setIsLoadingUser(false)
 
-    setIsLoadingUser(true)
-    await logInApi({ email, password}).unwrap()
-    .then((data) => {
-      localStorage.setItem('user', JSON.stringify(data));
-      setIsLoadingUser(false)
-      window.location.href = '/'
-    })
-    .catch((error) => {
-      setError(error.message);
-      setIsLoadingUser(false)
-    });
-
+        window.location.href = '/'
+      })
+      .catch((error) => {
+        if (error.status === 500) {
+          setError('Ошибка сервера')
+        }
+        if (error.status === 400) {
+          setError('Должны быть заполнены все поля')
+        }
+        if (error.status === 401) {
+          setError('Пользователь с таким email или паролем не найден')
+        }
+        setIsLoadingUser(false)
+      })
 
     // setIsLoadingUser(true)
     // getLogin({ email, password })
@@ -58,15 +79,7 @@ export default function AuthPage({ isLoginMode }) {
     //     setIsLoadingUser(false)
     //     window.location.navigate = '/'
     //   })
-    //   .catch((error) => {
-    //     setError(error.message)
-    //     setIsLoadingUser(false)
-    //   })
-      
-    // getToken({ email, password }).then((data) => {
-    //   localStorage.setItem('access', JSON.stringify(data.access))
-    //   localStorage.setItem('refresh', JSON.stringify(data.refresh))
-    // })
+
   }
 
   const handleRegister = async () => {
@@ -88,28 +101,55 @@ export default function AuthPage({ isLoginMode }) {
       return
     }
 
-    getSignup({ email, password, username })
+    await getToken({ email, password })
+    .unwrap()
+    .then((data) => {
+      localStorage.setItem('access', JSON.stringify(data.access))
+      localStorage.setItem('refresh', JSON.stringify(data.refresh))
+    })
+    .catch((error) => {
+      if (error.status === 500) {
+        setError('Ошибка сервера')
+      }
+      if (error.status === 400) {
+        setError('Должны быть заполнены все поля')
+      }
+      if (error.status === 401) {
+        setError('Пользователь с таким email или паролем не найден')
+      }
+      setIsLoadingUser(false)
+    })
+
+    await signUpApi({email, password, username})
+    .unwrap()
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data))
-        logIn()
-        setIsUser(true)
+        // logIn()
+        // setIsUser(true)
         setIsLoadingUser(false)
         window.location.href = '/'
       })
       .catch((error) => {
-        const errorObject = JSON.parse(error.message)
-        if (errorObject.username) {
-          setError(errorObject.username)
-          return
+        console.log(error.data);
+        if(error.data.username) {
+          setError(error.data.username)
         }
-        if (errorObject.email) {
-          setError(errorObject.email)
-          return
+        if(error.data.email) {
+          setError(error.data.email)
         }
-        if (errorObject.password) {
-          setError(errorObject.password)
-          return
-        }
+        // const errorObject = JSON.parse(error.message)
+        // if (errorObject.username) {
+        //   setError(errorObject.username)
+        //   return
+        // }
+        // if (errorObject.email) {
+        //   setError(errorObject.email)
+        //   return
+        // }
+        // if (errorObject.password) {
+        //   setError(errorObject.password)
+        //   return
+        // }
         setIsLoadingUser(false)
       })
   }

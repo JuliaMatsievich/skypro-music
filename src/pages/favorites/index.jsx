@@ -7,10 +7,7 @@ import {
 } from '../../store/trackSlice'
 import { useEffect } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
-import {
-  useGetFavoriteTracksQuery,
-  useLazyGetFavoriteTracksQuery,
-} from '../../services/trackApi'
+import { useLazyGetFavoriteTracksQuery} from '../../services/trackApi'
 import { refreshToken } from '../../api/apiUser'
 import {
   accessTokenSelector,
@@ -22,8 +19,8 @@ import { useNavigate } from 'react-router-dom'
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
-  const [fetchFavTracks] = useLazyGetFavoriteTracksQuery()
-  const { isError, error } = useGetFavoriteTracksQuery()
+  const [fetchFavTracks, {data, isError, error}] = useLazyGetFavoriteTracksQuery()
+  // const { isError, error } = useGetFavoriteTracksQuery()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -38,7 +35,7 @@ export const Favorites = () => {
         dispatch(setFavoritePlaylist(data))
       })
       .catch((error) => console.log(error))
-  }, [refresh])
+  }, [refresh, data])
 
   if (isError) {
     navigate('/login')

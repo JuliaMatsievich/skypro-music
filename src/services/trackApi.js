@@ -138,5 +138,6 @@ export const {
   useDeleteFavoriteTrackMutation,
   useGetSelectionQuery,
   useLogInMutation,
-  useGetTokenMutation
+  useGetTokenMutation,
+  useSignUpMutation
 } = trackApi
