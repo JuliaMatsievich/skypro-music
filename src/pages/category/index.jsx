@@ -1,26 +1,23 @@
 import { useParams } from 'react-router-dom'
 import { CATEGORIES } from '../../constants'
 import { TrackList } from '../../components/trackList/trackList'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useGetSelectionQuery } from '../../services/trackApi'
-// import { setSelectionPlaylist } from '../../store/trackSlice'
-import { useEffect } from 'react'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
+import { useState } from 'react'
+import { searchMusic } from '../../helpFunctions'
 
 export const Category = () => {
   const params = useParams()
   const category = CATEGORIES.find(
     (category) => category.id === Number(params.id),
   )
+  const [search, setSearch] = useState('')
   const dispatch = useDispatch()
 
   const id = String(category.id)
 
   const { data, isLoading, isError } = useGetSelectionQuery(id)
-
-  // useEffect(() => {
-  //   dispatch(setSelectionPlaylist(category.title))
-  // })
 
   if (isError) {
     window.location.href = '/login'
@@ -28,8 +25,12 @@ export const Category = () => {
 
   return (
     <>
-      <HeaderTrackList title={category.title} tracks={data}/>
-      {isLoading ? <p>Данные загружаются....</p> : <TrackList tracks={data} />}
+      <HeaderTrackList title={category.title} setSearch={setSearch} />
+      {isLoading 
+      ? <p>Данные загружаются....</p> 
+       : <>{search && (searchMusic(data, search).length === 0) 
+        ? <h2>Ничего не найдено</h2>
+        : <TrackList tracks={search ? searchMusic(data, search) : data} />}</>}
     </>
   )
 }

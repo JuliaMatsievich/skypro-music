@@ -22,7 +22,7 @@ export const MainPage = () => {
 
   return (
     <>
-      <HeaderTrackList title={'Треки'} tracks={data} setSearch={setSearch} />
+      <HeaderTrackList title={'Треки'} setSearch={setSearch} />
       <Filter />
 
       {allTracksError ? (

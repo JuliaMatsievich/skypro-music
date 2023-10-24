@@ -1,17 +1,6 @@
-import { useEffect, useState } from 'react'
 import * as S from './trackList.styles'
-import { useSelector } from 'react-redux'
-import { searchMusic } from '../../helpFunctions'
 
-export const HeaderTrackList = ({ title, tracks, setSearch }) => {
-  // const [search, setSearch] = useState('')
-
-  // useEffect(() => {
-  //   if (tracks) {
-  //     const newtracks = searchMusic(tracks, search)
-  //     console.log(newtracks)
-  //   }
-  // }, [search])
+export const HeaderTrackList = ({ title, setSearch }) => {
 
   return (
     <>
