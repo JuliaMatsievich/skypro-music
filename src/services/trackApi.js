@@ -139,5 +139,6 @@ export const {
   useGetSelectionQuery,
   useLogInMutation,
   useGetTokenMutation,
-  useSignUpMutation
+  useSignUpMutation,
+  useRefreshTokenMutation
 } = trackApi

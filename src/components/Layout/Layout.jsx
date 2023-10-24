@@ -3,8 +3,6 @@ import { NavMenu } from '../navMenu/navMenu'
 import * as SM from '../../pages/main/index.styles'
 import { SideBar } from '../sideBar/sideBar'
 import { CATEGORIES } from '../../constants'
-import { HeaderTrackList } from '../trackList/headerTrackList'
-import { Filter } from '../trackList/filter/filter'
 import { Outlet } from 'react-router-dom'
 import { Player } from '../../components/audioPlayer/audioPlayer'
 import { currentTrackSelector } from '../../store/trackSlice'
@@ -19,7 +17,6 @@ export const Layout = () => {
         <SM.Main>
           <NavMenu />
           <S.MainCenterBlock>
-            {/* <HeaderTrackList /> */}
             <Outlet />
           </S.MainCenterBlock>
           <SideBar categories={CATEGORIES} />
