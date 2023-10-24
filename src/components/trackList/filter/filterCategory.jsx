@@ -3,11 +3,11 @@ import { FilterCategoryAuthor } from './filterCategoryAuthor'
 import { FilterCategoryYear } from './FilterCategoryYear'
 import { FilterCategoryGanr } from './FilterCategoryGanr'
 
-export const FilterCategory = ({ onShow, title,author, year, ganr}) => {
+export const FilterCategory = ({ onShow, title, author, year, ganr, setFilterTracks}) => {
   return (
     <S.FilterButton onClick={onShow} className="_btn-text">
       {title}
-      {author ? <FilterCategoryAuthor /> : null}
+      {author ? <FilterCategoryAuthor setFilterTracks={setFilterTracks}/> : null}
       {year ? <FilterCategoryYear /> : null}
       {ganr ? <FilterCategoryGanr /> : null}
     </S.FilterButton>

@@ -54,5 +54,6 @@ export const FilterItem = styled.li`
 	&:hover {
 	color: #B672FF;
 	text-decoration: underline;
+
 }
 `

@@ -2,7 +2,7 @@ import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
 import * as S from './filter.styles'
 
-export const Filter = () => {
+export const Filter = ({setFilterTracks}) => {
   let [author, setAuthor] = useState(false)
   let [year, setYear] = useState(false)
   let [ganr, setGanr] = useState(false)
@@ -19,6 +19,7 @@ export const Filter = () => {
           setGanr((ganr = false))
         }}
         title="исполнителю"
+        setFilterTracks={setFilterTracks}
       />
       <FilterCategory
         onShow={() => {
