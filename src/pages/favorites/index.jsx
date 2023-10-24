@@ -18,32 +18,27 @@ export const Favorites = () => {
     useLazyGetFavoriteTracksQuery()
   const [refreshTokenApi, {}] = useRefreshTokenMutation()
 
-
   
 
-  // if(error) {
-  //   console.log(error);
-  // }
-  // let favTracks = []
-  // useEffect(() => {
-  //   localStorage.removeItem('access')
-  //   refreshToken(refresh).then((data) => {
-  //     dispatch(setToken({ access: data.access }))
-  //     localStorage.getItem('access', JSON.stringify(data.access))
-  //   })
-  //   fetchFavTracks()
-  //     .unwrap()
-  //     .then((data) => {
-  //       favTracks = data
-  //     })
-  //     .catch((error) => console.log(error))
-  // }, [refresh, data])
+  useEffect(() => {
+    localStorage.removeItem('access')
+    refreshToken(refresh).then((data) => {
+      dispatch(setToken({ access: data.access }))
+      localStorage.getItem('access', JSON.stringify(data.access))
+    })
+    fetchFavTracks()
+      .unwrap()
+      .then((data) => {
+        dispatch(setFavoritePlaylist(data))
+      })
+      .catch((error) => window.location.href = '/login')
+  }, [refresh, data])
 
-  // if (isError) {
-  //   window.location.href = '/login'
-  // }
+  if (isError) {
+    window.location.href = '/login'
+  }
 
-  // const favTracks = useSelector(favoritePlaylistSelector)
+  const favTracks = useSelector(favoritePlaylistSelector)
 
   return (
     <>

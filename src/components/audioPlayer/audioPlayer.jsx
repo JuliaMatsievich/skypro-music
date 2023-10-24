@@ -20,13 +20,12 @@ import {
 } from '../../store/trackSlice'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 
-
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
   let audioRef = useRef(new Audio(currentTrack.track_file))
 
-  const {isLoading} = useGetAllTracksQuery()
+  const { isLoading } = useGetAllTracksQuery()
 
   const isPlaying = useSelector(selectIsPlaying)
 
@@ -43,8 +42,13 @@ export const Player = () => {
   const intervalRef = useRef()
 
   const handlePlay = () => {
-    audioRef.current.play()
-    dispatch(setPlayTrack())
+    if (audioRef) {
+      audioRef.current.play()
+      .catch((error) => {
+        console.log(error);
+      })
+      dispatch(setPlayTrack())
+    }
   }
 
   const handleNextTrack = () => {
@@ -56,8 +60,10 @@ export const Player = () => {
   }
 
   const handlePause = () => {
-    audioRef.current.pause()
-    dispatch(setPauseTrack())
+    if (audioRef) {
+      audioRef.current.pause()
+      dispatch(setPauseTrack())
+    }
   }
 
   const handlePlayPause = () => {
@@ -69,8 +75,10 @@ export const Player = () => {
   }
 
   const handleLoop = () => {
-    audioRef.current.loop = !audioRef.current.loop
-    dispatch(setLoopTrack())
+    if (audioRef) {
+      audioRef.current.loop = !audioRef.current.loop
+      dispatch(setLoopTrack())
+    }
   }
 
   const handleShuffle = () => {
@@ -78,13 +86,14 @@ export const Player = () => {
   }
 
   const handleVolume = (e) => {
-    audioRef.current.volume = e.target.value
-    setVolume(e.target.value)
+    if (audioRef) {
+      audioRef.current.volume = e.target.value
+      setVolume(e.target.value)
+    }
   }
 
-
   useEffect(() => {
-    if (audioRef.current.currentTime > 0) {
+    if (audioRef?.current?.currentTime > 0) {
       audioRef.current = new Audio(currentTrack.track_file)
     }
     handlePlay()
@@ -97,14 +106,17 @@ export const Player = () => {
   }, [currentTrack])
 
   const handleTimeUpdate = () => {
-    setCurrentTime(audioRef.current.currentTime)
-    setDuration(audioRef.current.duration)
+    setCurrentTime(audioRef?.current?.currentTime)
+    setDuration(audioRef?.current?.duration)
   }
 
   useEffect(() => {
-    audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
-    audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
-    audioRef.current.addEventListener('ended', handleNextTrack)
+    if(audioRef) {
+      audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
+      audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
+      audioRef.current.addEventListener('ended', handleNextTrack)
+    }
+
 
     return () => {
       if (audioRef.current) {

@@ -9,7 +9,8 @@ export const trackSlice = createSlice({
     isShuffled: false,
     shuffledTracks: [],
     isLoop: false,
-    currentPlaylist: []
+    currentPlaylist: [],
+    favoritePlaylist: []
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -77,7 +78,6 @@ export const trackSlice = createSlice({
     },
 
     setFavoritePlaylist: (state, action) => {
-      state.titlePlayList = 'Мои треки'
       state.favoritePlaylist = action.payload
     },
 
@@ -108,4 +108,5 @@ export const currentTrackIndexSelector = (state) =>
   state.audioPlayer.currentTrack.id
 export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
+export const favoritePlaylistSelector = (state) => state.audioPlayer.favoritePlaylist
 
