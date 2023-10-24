@@ -27,7 +27,7 @@ export const Favorites = () => {
       .then((data) => {
         dispatch(setFavoritePlaylist(data))
       })
-      .catch((error) => console.log(error))
+      .catch((error) => window.location.href = '/login')
   }, [refresh, data])
 
   if (isError) {
