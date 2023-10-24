@@ -42,7 +42,7 @@ export const Favorites = () => {
 
   return (
     <>
-      <HeaderTrackList title={'Мои треки'} />
+      <HeaderTrackList title={'Мои треки'} tracks={favTracks} />
       <TrackList tracks={favTracks} />
     </>
   )

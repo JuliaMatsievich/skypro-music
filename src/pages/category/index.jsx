@@ -28,7 +28,7 @@ export const Category = () => {
 
   return (
     <>
-      <HeaderTrackList title={category.title} />
+      <HeaderTrackList title={category.title} tracks={data}/>
       {isLoading ? <p>Данные загружаются....</p> : <TrackList tracks={data} />}
     </>
   )
