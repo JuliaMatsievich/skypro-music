@@ -23,7 +23,7 @@ const App = () => {
       refresh: JSON.parse(localStorage.getItem('refresh'))
     }
     dispatch(setToken(tokens))
-  },[])
+  },[isUser])
 
 
   const logOut = () => {
