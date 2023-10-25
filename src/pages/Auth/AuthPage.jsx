@@ -29,59 +29,37 @@ export default function AuthPage({ isLoginMode }) {
   const [signUpApi, {}] = useSignUpMutation()
 
   const handleLogin = async ({ email, password }) => {
+
     setIsLoadingUser(true)
-    await getToken({ email, password })
-      .unwrap()
-      .then((data) => {
-        localStorage.setItem('access', JSON.stringify(data.access))
-        localStorage.setItem('refresh', JSON.stringify(data.refresh))
-      })
-      .catch((error) => {
-        // if (error.status === 500) {
-        //   setError('Ошибка сервера')
-        // }
-        // if (error.status === 400) {
-        //   setError('Должны быть заполнены все поля')
-        // }
-        // if (error.status === 401) {
-        //   setError('Пользователь с таким email или паролем не найден')
-        // }
-        setIsLoadingUser(false)
-      })
 
-    await logInApi({ email, password })
-      .unwrap()
-      .then((data) => {
-        localStorage.setItem('user', JSON.stringify(data))
-        setIsLoadingUser(false)
-
-        window.location.href = '/'
+    try {
+      await getToken({ email, password }).unwrap()
+       .then((token) => {
+        logInApi({ email, password }).unwrap()
+        .then((data) => {
+          localStorage.setItem('user', JSON.stringify(data))
+          setIsLoadingUser(false)
+          localStorage.setItem('access', JSON.stringify(token.access))
+          localStorage.setItem('refresh', JSON.stringify(token.refresh))
+          dispatch(setToken(token))
+          window.location.href = '/'
+        })
       })
-      .catch((error) => {
-        if (error.status === 500) {
-          setError('Ошибка сервера')
-        }
-        if (error.status === 400) {
-          setError('Должны быть заполнены все поля')
-        }
-        if (error.status === 401) {
-          setError('Пользователь с таким email или паролем не найден')
-        }
-        setIsLoadingUser(false)
-      })
-
-    // setIsLoadingUser(true)
-    // getLogin({ email, password })
-    //   .then((data) => {
-    //     localStorage.setItem('user', JSON.stringify(data))
-    //     logIn()
-    //     setIsUser(true)
-    //     setIsLoadingUser(false)
-    //     window.location.navigate = '/'
-    //   })
-
+    } catch (error) {
+      if (error.status === 500) {
+        setError('Ошибка сервера')
+      }
+      if (error.status === 400) {
+        setError('Должны быть заполнены все поля')
+      }
+      if (error.status === 401) {
+        setError('Пользователь с таким email или паролем не найден')
+      }
+    } finally {
+      setIsLoadingUser(false)
+    }
   }
-
+ 
   const handleRegister = async () => {
     setIsLoadingUser(true)
 
@@ -101,57 +79,35 @@ export default function AuthPage({ isLoginMode }) {
       return
     }
 
-    await getToken({ email, password })
-    .unwrap()
-    .then((data) => {
-      localStorage.setItem('access', JSON.stringify(data.access))
-      localStorage.setItem('refresh', JSON.stringify(data.refresh))
-    })
-    .catch((error) => {
+    try {
+      await signUpApi({email, password, username}).unwrap()
+      .then((data) => {
+        getToken({ email, password }).unwrap()
+        .then((token) => {
+          localStorage.setItem('user', JSON.stringify(data))
+         localStorage.setItem('access', JSON.stringify(token.access))
+         localStorage.setItem('refresh', JSON.stringify(token.refresh))
+         dispatch(setToken(token))
+         window.location.href = '/'
+        })
+      })
+ 
+    } catch (error) {
       if (error.status === 500) {
         setError('Ошибка сервера')
       }
       if (error.status === 400) {
         setError('Должны быть заполнены все поля')
       }
-      if (error.status === 401) {
-        setError('Пользователь с таким email или паролем не найден')
+      if(error.data.username) {
+        setError(error.data.username)
       }
+      if(error.data.email) {
+        setError(error.data.email)
+      }
+    } finally {
       setIsLoadingUser(false)
-    })
-
-    await signUpApi({email, password, username})
-    .unwrap()
-      .then((data) => {
-        localStorage.setItem('user', JSON.stringify(data))
-        // logIn()
-        // setIsUser(true)
-        setIsLoadingUser(false)
-        window.location.href = '/'
-      })
-      .catch((error) => {
-        console.log(error.data);
-        if(error.data.username) {
-          setError(error.data.username)
-        }
-        if(error.data.email) {
-          setError(error.data.email)
-        }
-        // const errorObject = JSON.parse(error.message)
-        // if (errorObject.username) {
-        //   setError(errorObject.username)
-        //   return
-        // }
-        // if (errorObject.email) {
-        //   setError(errorObject.email)
-        //   return
-        // }
-        // if (errorObject.password) {
-        //   setError(errorObject.password)
-        //   return
-        // }
-        setIsLoadingUser(false)
-      })
+    }
   }
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
