@@ -5,7 +5,11 @@ import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../store/tokenSlice'
-import { useGetTokenMutation, useLogInMutation, useSignUpMutation } from '../../services/trackApi'
+import {
+  useGetTokenMutation,
+  useLogInMutation,
+  useSignUpMutation,
+} from '../../services/trackApi'
 import { setUser } from '../../store/userSlice'
 
 export default function AuthPage({ isLoginMode }) {
@@ -29,22 +33,23 @@ export default function AuthPage({ isLoginMode }) {
   const [signUpApi, {}] = useSignUpMutation()
 
   const handleLogin = async ({ email, password }) => {
-
     setIsLoadingUser(true)
 
     try {
-      await getToken({ email, password }).unwrap()
-       .then((token) => {
-        logInApi({ email, password }).unwrap()
-        .then((data) => {
-          localStorage.setItem('user', JSON.stringify(data))
-          setIsLoadingUser(false)
-          localStorage.setItem('access', JSON.stringify(token.access))
-          localStorage.setItem('refresh', JSON.stringify(token.refresh))
-          dispatch(setToken(token))
-          window.location.href = '/'
+      await getToken({ email, password })
+        .unwrap()
+        .then((token) => {
+          logInApi({ email, password })
+            .unwrap()
+            .then((data) => {
+              localStorage.setItem('user', JSON.stringify(data))
+              setIsLoadingUser(false)
+              localStorage.setItem('access', JSON.stringify(token.access))
+              localStorage.setItem('refresh', JSON.stringify(token.refresh))
+              dispatch(setToken(token))
+              window.location.href = '/'
+            })
         })
-      })
     } catch (error) {
       if (error.status === 500) {
         setError('Ошибка сервера')
@@ -59,7 +64,7 @@ export default function AuthPage({ isLoginMode }) {
       setIsLoadingUser(false)
     }
   }
- 
+
   const handleRegister = async () => {
     setIsLoadingUser(true)
 
@@ -80,18 +85,19 @@ export default function AuthPage({ isLoginMode }) {
     }
 
     try {
-      await signUpApi({email, password, username}).unwrap()
-      .then((data) => {
-        getToken({ email, password }).unwrap()
-        .then((token) => {
-          localStorage.setItem('user', JSON.stringify(data))
-         localStorage.setItem('access', JSON.stringify(token.access))
-         localStorage.setItem('refresh', JSON.stringify(token.refresh))
-         dispatch(setToken(token))
-         window.location.href = '/'
+      await signUpApi({ email, password, username })
+        .unwrap()
+        .then((data) => {
+          getToken({ email, password })
+            .unwrap()
+            .then((token) => {
+              localStorage.setItem('user', JSON.stringify(data))
+              localStorage.setItem('access', JSON.stringify(token.access))
+              localStorage.setItem('refresh', JSON.stringify(token.refresh))
+              dispatch(setToken(token))
+              window.location.href = '/'
+            })
         })
-      })
- 
     } catch (error) {
       if (error.status === 500) {
         setError('Ошибка сервера')
@@ -99,10 +105,10 @@ export default function AuthPage({ isLoginMode }) {
       if (error.status === 400) {
         setError('Должны быть заполнены все поля')
       }
-      if(error.data.username) {
+      if (error.data.username) {
         setError(error.data.username)
       }
-      if(error.data.email) {
+      if (error.data.email) {
         setError(error.data.email)
       }
     } finally {

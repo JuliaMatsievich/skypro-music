@@ -9,31 +9,56 @@ import { searchMusic } from '../../helpFunctions'
 import { useDispatch } from 'react-redux'
 
 export const MainPage = () => {
-  const { allTracksError, setAllTracksError } = useContext(UserContext)
+  const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
   const dispatch = useDispatch()
-  const { data, isError, error } = useGetAllTracksQuery()
+  const { data, isError, error, isSuccess } = useGetAllTracksQuery()
+
+  // const authors = data?.map((track) => track.author)
+  // const uniqAuthors = Array.from(new Set(data?.map((track) => track.author)))
+
+  const [playlist, setPlaylist] = useState(null)
 
   if (isError) {
     setAllTracksError(
       'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
     )
+   logOut()
   }
 
-  const [search, setSearch] = useState('')
-  const [filterTracks, setFilterTracks] = useState(null)
+  useEffect(() => {
+    setPlaylist(data)
+  }, [data])
 
+  const [search, setSearch] = useState('')
+  const [filterTracks, setFilterTracks] = useState([])
+
+  useEffect(() => {
+    if (!search && !filterTracks) {
+      setPlaylist(data)
+    }
+    if (search) {
+      setPlaylist(searchMusic(data, search))
+    }
+    if (filterTracks) {
+      setPlaylist(filterTracks)
+    }
+  }, [search, filterTracks])
 
   return (
     <>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
-      <Filter setFilterTracks={setFilterTracks}/>
+      <Filter setFilterTracks={setFilterTracks} />
 
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />
       ) : (
-        <>{search && (searchMusic(data, search).length === 0) 
-          ? <h2>Ничего не найдено</h2>
-          : <TrackList tracks={search ? searchMusic(data, search) : data} />}</>
+        <>
+          {search && searchMusic(data, search).length === 0 ? (
+            <h2>Ничего не найдено</h2>
+          ) : (
+            <TrackList tracks={playlist} />
+          )}
+        </>
       )}
     </>
   )

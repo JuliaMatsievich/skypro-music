@@ -5,11 +5,10 @@ import * as S from './filterCategory.styles'
 export const FilterCategoryAuthor = ({setFilterTracks}) => {
   const { data } = useGetAllTracksQuery()
 
-  const authors = data.map(track => track.author)
+  const authors = data?.map(track => track.author)
   const uniqAuthors = Array.from(new Set(authors))
 
   const handleClick = (author) => {
-    console.log('author', author);
     const f = filterAuthor(data, author)
     setFilterTracks(f);
   }
