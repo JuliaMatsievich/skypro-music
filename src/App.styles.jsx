@@ -44,11 +44,11 @@ button,
   cursor: pointer;
 }
 
-._btn-text:hover {
+/* ._btn-text:hover {
   border-color: #d9b6ff;
   color: #d9b6ff;
   cursor: pointer;
-}
+} */
 
 ._btn-icon:hover svg {
   fill: transparent;

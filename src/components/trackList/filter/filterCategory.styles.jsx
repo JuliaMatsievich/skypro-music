@@ -42,7 +42,8 @@ export const FilterList = styled.ul`
 	list-style: none;
 `
 export const FilterItem = styled.li`
-	color: #fff;
+	color: ${props => props.isActive ? '#B672FF' : '#fff'};
+	text-decoration: ${props => props.isActive ? 'underline' : 'none'};
 	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;

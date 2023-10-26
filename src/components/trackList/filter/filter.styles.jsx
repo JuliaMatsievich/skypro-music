@@ -12,6 +12,7 @@ export const CenterblockFilter = styled.div`
 	-ms-flex-align: center;
 	align-items: center;
 	margin-bottom: 51px;
+	justify-content: space-between;
 `
 export const FilterTitle = styled.div`
 	font-style: normal;
@@ -19,4 +20,75 @@ export const FilterTitle = styled.div`
 	font-size: 16px;
 	line-height: 24px;
 	margin-right: 15px;
+`
+
+
+export const FilterButton = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: ${({$isActiveBtn}) =>( $isActiveBtn ? '1px solid #ad61ff' : '1px solid #ffffff')};
+  border-radius: 60px;
+  padding: 6px 20px;
+  position: relative;
+  color: ${({$isActiveBtn}) =>( $isActiveBtn ? '#ad61ff' : '#ffffff')};
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+  &:hover {
+  border: ${({$isActiveBtn}) =>( $isActiveBtn ? '1px solid #ad61ff' : '1px solid #d9b6ff')};
+  color: ${({$isActiveBtn}) =>( $isActiveBtn ? '#ad61ff' : '#d9b6ff')};
+  cursor: pointer;
+}
+`
+export const FilterCategory = styled.div`
+		border-radius: 12px;
+	background: #313131;
+	position: absolute;
+	top: 50px;
+	left: 0;
+`
+export const FilterWrapper = styled.div`
+	overflow-y: auto;
+	min-width: 300px;
+	max-height: 305px;
+	margin: 34px;
+	scrollbar-width: thin;
+	scrollbar-color: #FFFFFF #4B4949;
+
+	&::-webkit-scrollbar {
+	width: 4px; 
+	background-color: #4B4949;
+}
+	&::-webkit-scrollbar-thumb {
+	background-color: #FFFFFF;
+	border-radius: 2px;
+}
+`
+export const FilterList = styled.ul`
+	list-style: none;
+`
+export const FilterItem = styled.li`
+	color: ${props => props.isActive ? '#B672FF' : '#fff'};
+	text-decoration: ${props => props.isActive ? 'underline' : 'none'};
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 24px; /* 120% */
+
+	&:not(:first-child) {
+	padding-top: 28px;
+}
+	&:hover {
+	color: #B672FF;
+	text-decoration: underline;
+
+}
+`
+
+export const ContainerFilters = styled.div`
+	display: flex;
+	align-items: center;
 `

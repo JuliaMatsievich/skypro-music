@@ -19,9 +19,6 @@ export const searchMusic = (tracks, searchValue) => {
 }
 
 export const filterAuthor = (tracks, authorName) => {
-
-	// const filterAuthors = authors.filter((track) => track === author) // [массив из отфильрован авторов]
-
 	const filterTracks = tracks.filter(({ author }) =>  author === authorName)
 	return filterTracks
 }
