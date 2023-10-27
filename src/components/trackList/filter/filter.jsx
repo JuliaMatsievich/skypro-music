@@ -2,17 +2,18 @@ import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
 import * as S from './filter.styles'
 import { useGetAllTracksQuery } from '../../../services/trackApi'
+import { filterAuthor } from '../../../helpFunctions'
 
-export const Filter = ({ setFilterTracks }) => {
-
+export const Filter = ({ filterTracks, setFilterTracks }) => {
   const { data } = useGetAllTracksQuery()
 
-  const [isActive, setIsActive] = useState(false)
+  const [isActiveItem, setIsActiveItem] = useState('')
   const [activeFilter, setActiveFilter] = useState('')
+  console.log('isActiveItem in start', isActiveItem);
+  console.log('filterTracks in start', filterTracks);
 
   const authors = Array.from(new Set(data?.map((track) => track.author)))
   const genres = Array.from(new Set(data?.map((track) => track.genre)))
-
 
   const toggleFilterList = (filterName) => {
     if (!activeFilter) {
@@ -26,22 +27,23 @@ export const Filter = ({ setFilterTracks }) => {
     }
   }
 
-  const handleActiveFilter = (author) => {
-    setFilterTracks(filterAuthor(data, author))
-    setIsActive(true)
-  }
-
-  const handleDeactiveFilter = () => {
-    setFilterTracks(data)
-    setIsActive(false)
-  }
-
-  const toggleFilter = (author) => {
-    if (isActive) {
-      handleDeactiveFilter()
+  const handlefilterAuthor = (e, option) => {
+    e.stopPropagation()
+    if (isActiveItem.includes(option)) {
+      setFilterTracks(filterTracks.filter(({author}) => author !== option))
+      console.log('filterTracks -remove', filterTracks);
+      setIsActiveItem(isActiveItem.filter((item) => item !== option))
+      console.log('isActiveItem-remove2', isActiveItem)
     } else {
-      handleActiveFilter(author)
+      setFilterTracks([...filterTracks, ...filterAuthor(data, option)])
+      setIsActiveItem([...isActiveItem, option])
     }
+    if(!isActiveItem && !filterTracks) {
+      setFilterTracks(data)
+    }
+    console.log('filterTracks -add', filterTracks);
+    console.log('isActiveItem-add2', isActiveItem)
+
   }
 
   return (
@@ -64,9 +66,9 @@ export const Filter = ({ setFilterTracks }) => {
                   {authors.map((author, index) => {
                     return (
                       <S.FilterItem
-                        $isActive={isActive}
+                        $isActive={isActiveItem.includes(author)}
                         key={index}
-                        onClick={() => toggleFilter(author)}
+                        onClick={(e) => handlefilterAuthor(e, author)}
                       >
                         {author}
                       </S.FilterItem>
@@ -93,9 +95,9 @@ export const Filter = ({ setFilterTracks }) => {
                   {genres.map((genre, index) => {
                     return (
                       <S.FilterItem
-                        $isActive={isActive}
+                        $isActive={isActiveLi}
                         key={index}
-                        onClick={() => toggleFilter(genre)}
+                        onClick={() => handlefilterAuthor('genre')}
                       >
                         {genre}
                       </S.FilterItem>
@@ -126,9 +128,9 @@ export const Filter = ({ setFilterTracks }) => {
                   {authors.map((author, index) => {
                     return (
                       <S.FilterItem
-                        $isActive={isActive}
+                        $isActive={isActiveLi}
                         key={index}
-                        onClick={() => toggleFilter(author)}
+                        onClick={() => handlefilterAuthor(author)}
                       >
                         {author}
                       </S.FilterItem>

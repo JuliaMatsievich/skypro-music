@@ -41,13 +41,14 @@ export const MainPage = () => {
     }
     if (filterTracks) {
       setPlaylist(filterTracks)
+      console.log('filterTracks in main',filterTracks);
     }
   }, [search, filterTracks])
 
   return (
     <>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
-      <Filter setFilterTracks={setFilterTracks} />
+      <Filter setFilterTracks={setFilterTracks} filterTracks={filterTracks}/>
 
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />
