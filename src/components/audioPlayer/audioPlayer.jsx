@@ -23,7 +23,7 @@ import { useGetAllTracksQuery } from '../../services/trackApi'
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
-  let audioRef = useRef(new Audio(currentTrack.track_file))
+  let audioRef = useRef(null)
 
   const { isLoading } = useGetAllTracksQuery()
 
@@ -110,6 +110,7 @@ export const Player = () => {
     setDuration(audioRef?.current?.duration)
   }
 
+
   useEffect(() => {
     if(audioRef) {
       audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
@@ -118,6 +119,14 @@ export const Player = () => {
     }
 
 
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
+        audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
+        audioRef.current.removeEventListener('ended', handleNextTrack)
+      }
+    }
+  }, [currentTrack])
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
