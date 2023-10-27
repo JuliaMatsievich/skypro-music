@@ -1,35 +1,38 @@
-import * as S from './index.styles'
-import { Player } from '../../components/audioPlayer/audioPlayer'
-import { NavMenu } from '../../components/navMenu/navMenu'
 import { TrackList } from '../../components/trackList/trackList'
-import { SideBar } from '../../components/sideBar/sideBar'
-import { CATEGORIES } from '../../constants'
 import { ErrorMessage } from '../../components/errors/error'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
-import { useSelector } from 'react-redux'
-import { currentTrackSelector } from '../../store/trackSlice'
+import { useDispatch } from 'react-redux'
+import { useGetAllTracksQuery } from '../../services/trackApi'
+import { setAllTracks, setCurrentPage } from '../../store/trackSlice'
+import { Filter } from '../../components/trackList/filter/filter'
 
 export const MainPage = () => {
- const { allTracksError } = useContext(UserContext)
+  const { allTracksError, setAllTracksError } = useContext(UserContext)
 
- const currentTrack = useSelector(currentTrackSelector)
+  const dispatch = useDispatch()
 
- return (
-    <S.Container>
-      <S.Main>
-        <NavMenu />
-        {allTracksError ? (
-          <ErrorMessage allTracksError={allTracksError} />
-        ) : (
-          <TrackList />
-        )}
-        <SideBar categories={CATEGORIES} />
-      </S.Main>
-      {Object.keys(currentTrack).length ? (
-        <Player />
-      ) : null}
-      <S.Footer></S.Footer>
-    </S.Container>
+  const { data, isError, error } = useGetAllTracksQuery()
+
+  useEffect(() => {
+    dispatch(setAllTracks(data))
+    dispatch(setCurrentPage('Main'))
+  })
+
+  if (isError) {
+    setAllTracksError(
+      'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
+    )
+  }
+
+  return (
+    <>
+      <Filter />
+      {allTracksError ? (
+        <ErrorMessage allTracksError={allTracksError} />
+      ) : (
+        <TrackList tracks={data} />
+      )}
+    </>
   )
 }

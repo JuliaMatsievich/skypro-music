@@ -7,12 +7,10 @@ import { NotFound } from './pages/notfound'
 import AuthPage from './pages/Auth/AuthPage'
 import { useContext } from 'react'
 import { UserContext } from './App'
+import { Layout} from './components/Layout/Layout'
 
-export const AppRoutes = ({
-  currentTrack,
-  setCurrentTrack,
-}) => {
-  const { isUser, isLoading, setLoading } = useContext(UserContext)
+export const AppRoutes = () => {
+  const { isUser } = useContext(UserContext)
 
   return (
     <Routes>
@@ -25,17 +23,11 @@ export const AppRoutes = ({
         element={<AuthPage isLoginMode={false}></AuthPage>}
       ></Route>
       <Route element={<ProtectedRoute isAllowed={isUser} />}>
-        <Route
-          path="/"
-          element={
-            <MainPage
-              currentTrack={currentTrack}
-              setCurrentTrack={setCurrentTrack}
-            />
-          }
-        />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/category/:id" element={<Category />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="favorites" element={<Favorites />} />
+          <Route path="category/:id" element={<Category />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

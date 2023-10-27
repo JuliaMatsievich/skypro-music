@@ -1,20 +1,15 @@
+import { useDispatch } from 'react-redux'
 import * as S from './App.styles'
-// import { getTracksAll } from './api/apiTrack'
 import { AppRoutes } from './routes'
 import { createContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-// import { currentTrackSelector, allTracksSelector } from './store/selectors/track'
-// import { setAllTracks } from './store/actions/creators/track'
+import { setToken } from './store/tokenSlice'
 
 export const UserContext = createContext(null)
 
 const App = () => {
-  const [isLoading, setLoading] = useState(true)
   const [allTracksError, setAllTracksError] = useState(null)
   const initialUser = localStorage.getItem('user')
   const [isUser, setIsUser] = useState(initialUser)
-  const [currentTrack, setCurrentTrack] = useState(null)
-
   const dispatch = useDispatch()
 
   const logIn = () => {
@@ -22,8 +17,17 @@ const App = () => {
     return user
   }
 
+  useEffect(() => {
+    const tokens = {
+      access: JSON.parse(localStorage.getItem('access')),
+      refresh: JSON.parse(localStorage.getItem('refresh'))
+    }
+    dispatch(setToken(tokens))
+  },[isUser])
+
+
   const logOut = () => {
-    localStorage.removeItem('user')
+    localStorage.clear()
     setIsUser(false)
   }
 
@@ -32,12 +36,9 @@ const App = () => {
       <S.GlobalStyle />
       <S.Wrapper>
         <UserContext.Provider
-          value={{ isUser, setIsUser, logIn, logOut, isLoading, setLoading,allTracksError, setAllTracksError}}
+          value={{ isUser, setIsUser, logIn, logOut, allTracksError, setAllTracksError}}
         >
-          <AppRoutes
-            currentTrack={currentTrack}
-            setCurrentTrack={setCurrentTrack}
-          />
+          <AppRoutes />
         </UserContext.Provider>
       </S.Wrapper>
     </>

@@ -82,3 +82,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Расчетное время  - 36 часов \
 Фактическое время - 16 часов
 
+### Домашнее задание 9. RTK-Query
+
+Расчетное время  - 16 часов \
+Фактическое время - 22 часа
+

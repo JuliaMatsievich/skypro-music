@@ -10,70 +10,99 @@ export const trackSlice = createSlice({
     isShuffled: false,
     shuffledTracks: [],
     isLoop: false,
+    currentPlaylist: [],
+    titlePlayList: 'Треки',
+    favoritePlaylist: [],
+    currentPage: ''
   },
   reducers: {
     setAllTracks: (state, action) => {
       state.allTracks = action.payload
+      state.titlePlayList = 'Треки'
     },
 
     setCurrentTrack: (state, action) => {
-      const { track, index } = action.payload;
-		state.currentTrack = track
-		state.currentIndex = index
+      const { track, index } = action.payload
+      state.currentTrack = track
+      state.currentIndex = index
     },
 
     setPlayTrack: (state) => {
-		state.isPlaying =  true
-	 },
+      state.isPlaying = true
+    },
 
     setPauseTrack: (state) => {
-		state.isPlaying = false
-	 },
+      state.isPlaying = false
+    },
 
     setNextTrack: (state) => {
-		const nextIndex = (state.isShuffled)
-		? state.shuffledTracks.findIndex(el => el.id === state.currentTrack.id) + 1
-		:  state.currentIndex + 1
-      if(nextIndex > state.allTracks.length-1 && !state.isShuffled) {
-      //   nextIndex = 0
-			return state
+      const nextIndex = state.isShuffled
+        ? state.shuffledTracks.findIndex(
+            (el) => el.id === state.currentTrack.id,
+          ) + 1
+        : state.currentIndex + 1
+      if (nextIndex > state.currentPlaylist.length - 1 && !state.isShuffled) {
+        //   nextIndex = 0
+        return state
       }
-		state.currentIndex = nextIndex;
-		state.currentTrack = (state.isShuffled)
-		? state.shuffledTracks[nextIndex]
-		: state.allTracks[nextIndex]
-	 },
+      state.currentIndex = nextIndex
+      state.currentTrack = state.isShuffled
+        ? state.shuffledTracks[nextIndex]
+        : state.currentPlaylist[nextIndex]
+    },
 
     setPrevTrack: (state) => {
-		const prevIndex = (state.isShuffled) 
-		? state.shuffledTracks.findIndex(el => el.id === state.currentTrack.id) - 1 
-		: state.currentIndex - 1
+      const prevIndex = state.isShuffled
+        ? state.shuffledTracks.findIndex(
+            (el) => el.id === state.currentTrack.id,
+          ) - 1
+        : state.currentIndex - 1
       if (prevIndex < 0 && !state.isShuffled) {
         // prevIndex = state.allTracks.length-1
         return state
       }
-		state.currentIndex = prevIndex;
-		state.currentTrack = (state.isShuffled)
-		? state.shuffledTracks[prevIndex]
-		: state.allTracks[prevIndex]
-
-	 },
+      state.currentIndex = prevIndex
+      state.currentTrack = state.isShuffled
+        ? state.shuffledTracks[prevIndex]
+        : state.currentPlaylist[prevIndex]
+    },
 
     setShuffledTracks: (state) => {
-		if (!state.isShuffled) {
-			const shuffledTracks = sortArray([...state.allTracks])
-			state.isShuffled = true
-			state.shuffledTracks = shuffledTracks
-		 } else {
-			state.isShuffled = false
-			state.shuffledTracks = []
-			state.currentIndex = state.allTracks.findIndex(el => el.id === state.currentTrack.id)
-		 }
-	 },
+      if (!state.isShuffled) {
+        const shuffledTracks = sortArray([...state.currentPlaylist])
+        state.isShuffled = true
+        state.shuffledTracks = shuffledTracks
+      } else {
+        state.isShuffled = false
+        state.shuffledTracks = []
+        state.currentIndex = state.currentPlaylist.findIndex(
+          (el) => el.id === state.currentTrack.id,
+        )
+      }
+    },
 
     setLoopTrack: (state) => {
-		state.isLoop = !state.isLoop
-	 },
+      state.isLoop = !state.isLoop
+    },
+
+    setFavoritePlaylist: (state, action) => {
+      state.titlePlayList = 'Мои треки'
+      state.favoritePlaylist = action.payload
+    },
+
+    setCurrentPlaylist: (state) => {
+      if(state.currentPage === 'Main') {
+        state.currentPlaylist = state.allTracks
+      }
+      if (state.currentPage === 'Favorite') {
+        state.currentPlaylist = state.favoritePlaylist
+      }
+    },
+
+    setCurrentPage: (state,action) => {
+      state.currentPage = action.payload
+    }
+
   },
 })
 
@@ -86,6 +115,10 @@ export const {
   setPrevTrack,
   setShuffledTracks,
   setLoopTrack,
+  setFavoritePlaylist,
+  setFavoriteTrack,
+  setCurrentPage,
+  setCurrentPlaylist
 } = trackSlice.actions
 
 export default trackSlice.reducer
@@ -97,3 +130,8 @@ export const currentTrackIndexSelector = (state) =>
   state.audioPlayer.currentTrack.id
 export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
+export const titlePlayListSelector = (state) => state.audioPlayer.titlePlayList
+export const currentPlaylistSelector = (state) =>
+  state.audioPlayer.currentPlaylist
+export const favoritePlaylistSelector = (state) => state.audioPlayer.favoritePlaylist  
+

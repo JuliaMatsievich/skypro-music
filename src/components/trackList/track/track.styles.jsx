@@ -121,12 +121,13 @@ export const TrackTiltleAlbumLink = styled.a`
   color: #696969;
 `
 export const TrackTime = styled.div``
-export const TrackTimeSvg = styled.svg`
+export const TrackLikeSvg = styled.svg`
   width: 14px;
   height: 12px;
   margin-right: 17px;
   fill: transparent;
   stroke: #696969;
+  cursor: pointer;
 `
 export const TrackTimeText = styled.span`
   font-style: normal;

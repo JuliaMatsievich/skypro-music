@@ -12,9 +12,9 @@ export const SkeletonTrack = () => {
 		  <S.SkeletonTitleAuthor></S.SkeletonTitleAuthor>
 		  <S.SkeletonTitleAlbum></S.SkeletonTitleAlbum>
 		  <S.TrackTime>
-			 <S.TrackTimeSvg className="track__time-svg" alt="time">
+			 <S.TrackLikeSvg className="track__time-svg" alt="like">
 				<use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-			 </S.TrackTimeSvg>
+			 </S.TrackLikeSvg>
 			 <S.TrackTimeText>0.00</S.TrackTimeText>
 		  </S.TrackTime>
 		</S.PlayListTrack>

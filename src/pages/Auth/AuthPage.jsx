@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom'
 import * as S from './AuthPage.styles'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { getLogin, getSignup } from '../../api/apiUser'
+import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
+import { useDispatch } from 'react-redux'
+import { setToken } from '../../store/tokenSlice'
 
 export default function AuthPage({ isLoginMode }) {
   const { setIsUser, logIn } = useContext(UserContext)
+  const dispatch = useDispatch()
 
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
   const [username, setUsername] = useState('')
-  const [isLoadingUser, setIsLoadingUser] = useState(false);
-
+  const [isLoadingUser, setIsLoadingUser] = useState(false)
 
   const emailRef = useRef(null)
   const usernameRef = useRef(null)
@@ -21,19 +23,27 @@ export default function AuthPage({ isLoginMode }) {
   const repeatPasswordRef = useRef(null)
 
   const handleLogin = async ({ email, password }) => {
-    setIsLoadingUser(true)
-    getLogin({ email, password })
-      .then((data) => {
-        localStorage.setItem('user', JSON.stringify(data))
-        logIn()
-        setIsUser(true)
-        setIsLoadingUser(false)
-        window.location.href = '/'
-      })
-      .catch((error) => {
-        setError(error.message)
-        setIsLoadingUser(false)
-      })
+    try {
+      setIsLoadingUser(true)
+      const user = await getLogin({ email, password })
+      const { access, refresh } = await getToken({ email, password })
+
+      localStorage.setItem('access', JSON.stringify(access))
+      localStorage.setItem('refresh', JSON.stringify(refresh))
+      localStorage.setItem('user', JSON.stringify(user))
+
+      setIsUser(true)
+      logIn()
+      dispatch(setToken({ access, refresh }))
+
+      window.location.href = '/'
+    } catch (error) {
+      setError(error.message)
+
+    } finally {
+      setIsLoadingUser(false)
+    }
+
   }
 
   const handleRegister = async () => {
@@ -55,30 +65,37 @@ export default function AuthPage({ isLoginMode }) {
       return
     }
 
-    getSignup({ email, password, username })
-      .then((data) => {
-        localStorage.setItem('user', JSON.stringify(data))
-        logIn()
-        setIsUser(true)
-        setIsLoadingUser(false)
-        window.location.href = '/'
-      })
-      .catch((error) => {
-        const errorObject = JSON.parse(error.message)
-        if (errorObject.username) {
-          setError(errorObject.username)
-          return
-        }
-        if (errorObject.email) {
-          setError(errorObject.email)
-          return
-        }
-        if (errorObject.password) {
-          setError(errorObject.password)
-          return
-        }
-        setIsLoadingUser(false)
-      })
+    try {
+      const user = await getSignup({ email, password, username })
+      const { access, refresh } = await getToken({ email, password })
+
+      localStorage.setItem('access', JSON.stringify(access))
+      localStorage.setItem('refresh', JSON.stringify(refresh))
+      localStorage.setItem('user', JSON.stringify(user))
+
+      logIn()
+      setIsUser(true)
+      dispatch(setToken({ access, refresh }))
+
+      window.location.href = '/'
+    } catch (error) {
+      const errorObject = JSON.parse(error.message)
+      if (errorObject.username) {
+        setError(errorObject.username)
+        return
+      }
+      if (errorObject.email) {
+        setError(errorObject.email)
+        return
+      }
+      if (errorObject.password) {
+        setError(errorObject.password)
+        return
+      }
+    } finally {
+      setIsLoadingUser(false)
+    }
+
   }
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -118,11 +135,16 @@ export default function AuthPage({ isLoginMode }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton disabled={isLoadingUser} onClick={() => handleLogin({ email, password })}>
+              <S.PrimaryButton
+                disabled={isLoadingUser}
+                onClick={() => handleLogin({ email, password })}
+              >
                 Войти
-              </S.PrimaryButton >
+              </S.PrimaryButton>
               <Link to="/register">
-                <S.SecondaryButton  disabled={isLoadingUser}>Зарегистрироваться</S.SecondaryButton>
+                <S.SecondaryButton disabled={isLoadingUser}>
+                  Зарегистрироваться
+                </S.SecondaryButton>
               </Link>
             </S.Buttons>
           </>
@@ -172,7 +194,10 @@ export default function AuthPage({ isLoginMode }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton disabled={isLoadingUser} onClick={handleRegister}>
+              <S.PrimaryButton
+                disabled={isLoadingUser}
+                onClick={handleRegister}
+              >
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>
