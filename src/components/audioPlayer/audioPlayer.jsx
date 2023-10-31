@@ -126,14 +126,6 @@ export const Player = () => {
       }
     }
   }, [currentTrack])
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
-        audioRef.current.removeEventListener('loadedmetadata', handleTimeUpdate)
-        audioRef.current.removeEventListener('ended', handleNextTrack)
-      }
-    }
-  }, [currentTrack])
 
   return (
     <>
