@@ -8,7 +8,6 @@ import { HeaderTrackList } from '../../components/trackList/headerTrackList'
 import {
   filterAuthor,
   filterGenre,
-  filters,
   searchMusic,
 } from '../../helpers/helpFunctions'
 import { useDispatch } from 'react-redux'
@@ -16,10 +15,7 @@ import { useDispatch } from 'react-redux'
 export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
   const dispatch = useDispatch()
-  const { data, isError, error, isSuccess } = useGetAllTracksQuery()
-
-  // const authors = data?.map((track) => track.author)
-  // const uniqAuthors = Array.from(new Set(data?.map((track) => track.author)))
+  const { data, isError, error } = useGetAllTracksQuery()
 
   const [playlist, setPlaylist] = useState(null)
   const [authorFilter, setAuthorFilter] = useState([])
@@ -29,7 +25,7 @@ export const MainPage = () => {
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
-      setAuthorFilter([...authorFilter, value])
+      // setAuthorFilter([...authorFilter, value])
       console.log('authorFilter', authorFilter)
       if (authorFilter.includes(value)) {
         setFilterTracks(filterTracks.filter(({ author }) => author !== value))
@@ -39,14 +35,15 @@ export const MainPage = () => {
         setAuthorFilter([...authorFilter, value])
       }
     } else if (type === 'genre') {
-      setGenreFilter([...genreFilter, value])
+      // setGenreFilter([...genreFilter, value])
       if (genreFilter.includes(value)) {
-        setGenreFilter(filterTracks.filter(({ genre }) => genre !== value))
+        setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
         setGenreFilter(genreFilter.filter((item) => item !== value))
       } else {
         setFilterTracks([...filterTracks, ...filterGenre(data, value)])
         setGenreFilter([...genreFilter, value])
       }
+      console.log('genreFilter', genreFilter);
     }
   }
 

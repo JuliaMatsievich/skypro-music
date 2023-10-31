@@ -18,17 +18,6 @@ export const searchMusic = (tracks, searchValue) => {
   return filterTracks
 }
 
-export const filters = (tracks, type, value) => {
-  let filterTracks =[]
-  if(type === 'author') {
-   filterTracks = tracks.filter(({ author }) =>  author === value)
-  }
-  if(type === 'genre') {
-   filterTracks = tracks.filter(({ genre }) =>  genre === value)
-  }
-	return filterTracks
-}
-
 export const filterAuthor = (tracks, value) => {
   return tracks.filter(({ author }) =>  author === value)
 }
