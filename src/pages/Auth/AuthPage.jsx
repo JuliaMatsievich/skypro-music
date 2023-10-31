@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import * as S from './AuthPage.styles'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../store/tokenSlice'
@@ -10,10 +9,8 @@ import {
   useLogInMutation,
   useSignUpMutation,
 } from '../../services/trackApi'
-import { setUser } from '../../store/userSlice'
 
 export default function AuthPage({ isLoginMode }) {
-  const { setIsUser, logIn } = useContext(UserContext)
   const dispatch = useDispatch()
 
   const [error, setError] = useState(null)

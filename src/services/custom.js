@@ -57,6 +57,15 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
  }
 
  api.dispatch(setToken({ ...token, accessToken: refreshResult.data.access }));
+ 
+ const retryResult = await baseQuery(args, api, extraOptions);
 
+ if (retryResult?.error?.status === 401) {
+  return forceLogout();
+}
+
+console.debug("Повторный запрос завершился успешно");
+
+return retryResult;
  
 }

@@ -10,7 +10,6 @@ import {
   useLazyGetFavoriteTracksQuery,
   useRefreshTokenMutation,
 } from '../../services/trackApi'
-import { refreshToken } from '../../api/apiUser'
 import { setToken } from '../../store/tokenSlice'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
 import { searchMusic } from '../../helpers/helpFunctions'
@@ -25,22 +24,28 @@ export const Favorites = () => {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    localStorage.removeItem('access')
-    refreshToken(refresh).then((data) => {
-      dispatch(setToken({ access: data.access }))
-      localStorage.getItem('access', JSON.stringify(data.access))
-    })
-    fetchFavTracks()
-      .unwrap()
+    try {
+      fetchFavTracks().unwrap()
+          .then((data) => {
+            dispatch(setFavoritePlaylist(data))
+          })
+    }
+    catch (error) {
+      refreshTokenApi({refresh}).unwrap()
       .then((data) => {
-        dispatch(setFavoritePlaylist(data))
+        dispatch(setToken({ accessToken: data.access }))
+        localStorage.getItem('access', JSON.stringify(data.access))
+        fetchFavTracks().unwrap()
+          .then((data) => {
+            dispatch(setFavoritePlaylist(data))
+          })
       })
-      .catch((error) => (window.location.href = '/login'))
-  }, [refresh, data])
+      if(error.status === 401) {
+        window.location.navigate('/login')
+      }
+    }
+  }, [refresh, data, error])
 
-  if (isError) {
-    window.location.href = '/login'
-  }
 
   const favTracks = useSelector(favoritePlaylistSelector)
 
@@ -55,4 +60,3 @@ export const Favorites = () => {
     </>
   )
 }
-
