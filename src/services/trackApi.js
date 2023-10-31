@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { BASEURL } from './url'
+import { BASEURL } from '../constants/url'
 
 const user = JSON.parse(localStorage.getItem('user'))
 
@@ -7,7 +7,7 @@ export const trackApi = createApi({
   reducerPath: 'trackApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASEURL,
-    tagTypes: ['Tracks', 'FavTracks'],
+    tagTypes: ['Tracks'],
     prepareHeaders: (headers, { getState }) => {
       const accessToken = getState().token.accessToken
       if (accessToken) {
@@ -34,10 +34,10 @@ export const trackApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'FavTracks', id })),
-              { type: 'FavTracks', id: 'LIST' },
+              ...result.map(({ id }) => ({ type: 'Tracks', id })),
+              { type: 'Tracks', id: 'LIST' },
             ]
-          : [{ type: 'FavTracks', id: 'LIST' }],
+          : [{ type: 'Tracks', id: 'LIST' }],
       transformResponse: (response) => {
         const tracks = response.map((track) => {
           return { ...track, stared_user: [user] }
@@ -51,10 +51,7 @@ export const trackApi = createApi({
         url: `/catalog/track/${id}/favorite/`,
         method: 'POST',
       }),
-      invalidatesTags: [
-        { type: 'FavTracks', id: 'LIST' },
-        { type: 'Tracks', id: 'LIST' },
-      ],
+      invalidatesTags: [{ type: 'Tracks', id: 'LIST' }],
     }),
 
     deleteFavoriteTrack: builder.mutation({
@@ -62,10 +59,7 @@ export const trackApi = createApi({
         url: `/catalog/track/${id}/favorite/`,
         method: 'DELETE',
       }),
-      invalidatesTags: [
-        { type: 'FavTracks', id: 'LIST' },
-        { type: 'Tracks', id: 'LIST' },
-      ],
+      invalidatesTags: [{ type: 'Tracks', id: 'LIST' }],
     }),
 
     getSelection: builder.query({
@@ -76,7 +70,7 @@ export const trackApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Tracks', id })),
+              ...result?.map(({ id }) => ({ type: 'Tracks', id })),
               { type: 'Tracks', id: 'LIST' },
             ]
           : [{ type: 'Tracks', id: 'LIST' }],

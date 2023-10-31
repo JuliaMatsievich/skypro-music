@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { sortArray } from '../helpFunctions'
+import { sortArray } from '../helpers/helpFunctions'
 
 export const trackSlice = createSlice({
   name: 'track',
@@ -10,7 +10,7 @@ export const trackSlice = createSlice({
     shuffledTracks: [],
     isLoop: false,
     currentPlaylist: [],
-    favoritePlaylist: []
+    favoritePlaylist: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -28,14 +28,17 @@ export const trackSlice = createSlice({
     },
 
     setNextTrack: (state) => {
-      const nextIndex = state.isShuffled
+      let nextIndex = state.isShuffled
         ? state.shuffledTracks.findIndex(
             (el) => el.id === state.currentTrack.id,
           ) + 1
         : state.currentIndex + 1
+        console.log('nextIndex', nextIndex);
       if (nextIndex > state.currentPlaylist.length - 1 && !state.isShuffled) {
-        //   nextIndex = 0
         return state
+      }
+      if (nextIndex > state.currentPlaylist.length - 1 && state.isShuffled) {
+        nextIndex = 0
       }
       state.currentIndex = nextIndex
       state.currentTrack = state.isShuffled
@@ -44,15 +47,18 @@ export const trackSlice = createSlice({
     },
 
     setPrevTrack: (state) => {
-      const prevIndex = state.isShuffled
+      let prevIndex = state.isShuffled
         ? state.shuffledTracks.findIndex(
             (el) => el.id === state.currentTrack.id,
           ) - 1
         : state.currentIndex - 1
       if (prevIndex < 0 && !state.isShuffled) {
-        // prevIndex = state.allTracks.length-1
         return state
       }
+      if (prevIndex < 0 && state.isShuffled) {
+        prevIndex = state.currentPlaylist.length-1
+      }
+
       state.currentIndex = prevIndex
       state.currentTrack = state.isShuffled
         ? state.shuffledTracks[prevIndex]
@@ -81,9 +87,9 @@ export const trackSlice = createSlice({
       state.favoritePlaylist = action.payload
     },
 
-    setCurrentPlaylist: (state,action) => {
+    setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload
-    }
+    },
   },
 })
 
@@ -97,7 +103,7 @@ export const {
   setShuffledTracks,
   setLoopTrack,
   setCurrentPlaylist,
-  setFavoritePlaylist
+  setFavoritePlaylist,
 } = trackSlice.actions
 
 export default trackSlice.reducer
@@ -108,5 +114,5 @@ export const currentTrackIndexSelector = (state) =>
   state.audioPlayer.currentTrack.id
 export const isShuffledTrackSelector = (state) => state.audioPlayer.isShuffled
 export const isLoopTrackSelector = (state) => state.audioPlayer.isLoop
-export const favoritePlaylistSelector = (state) => state.audioPlayer.favoritePlaylist
-
+export const favoritePlaylistSelector = (state) =>
+  state.audioPlayer.favoritePlaylist

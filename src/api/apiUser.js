@@ -1,4 +1,4 @@
-import { BASEURL } from './url'
+import { BASEURL } from '../constants/url'
 
 export const getSignup = async ({ email, password, username }) => {
   const response = await fetch(BASEURL + '/user/signup/', {

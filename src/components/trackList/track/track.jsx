@@ -1,10 +1,10 @@
 import * as S from './track.styles'
-import { getTimeInMinutes } from '../../../helpFunctions'
+import { getTimeInMinutes } from '../../../helpers/helpFunctions'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentTrackSelector,
   selectIsPlaying,
-  setCurrentPlaylist
+  setCurrentPlaylist,
 } from '../../../store/trackSlice'
 import { setCurrentTrack } from '../../../store/trackSlice'
 import {
@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom'
 export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const userId = useSelector(state => state.user.id)
+  const userId = useSelector((state) => state.user.id)
 
   const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
@@ -25,8 +25,8 @@ export const TrackItem = ({ track, id, index, trackList }) => {
   const [isLike, setIsLike] = useState(false)
 
   const handlePlayTrack = (track, index) => {
-   dispatch(setCurrentTrack({ track, index }))
-   dispatch(setCurrentPlaylist(trackList))
+    dispatch(setCurrentTrack({ track, index }))
+    dispatch(setCurrentPlaylist(trackList))
   }
 
   const handleLike = async (id) => {

@@ -2,15 +2,15 @@ import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
 import * as S from './filter.styles'
 import { useGetAllTracksQuery } from '../../../services/trackApi'
-import { filterAuthor } from '../../../helpFunctions'
+import { filterAuthor } from '../../../helpers/helpFunctions'
 
 export const Filter = ({ filterTracks, setFilterTracks }) => {
   const { data } = useGetAllTracksQuery()
 
   const [isActiveItem, setIsActiveItem] = useState('')
   const [activeFilter, setActiveFilter] = useState('')
-  console.log('isActiveItem in start', isActiveItem);
-  console.log('filterTracks in start', filterTracks);
+  console.log('isActiveItem in start', isActiveItem)
+  console.log('filterTracks in start', filterTracks)
 
   const authors = Array.from(new Set(data?.map((track) => track.author)))
   const genres = Array.from(new Set(data?.map((track) => track.genre)))
@@ -30,20 +30,16 @@ export const Filter = ({ filterTracks, setFilterTracks }) => {
   const handlefilterAuthor = (e, option) => {
     e.stopPropagation()
     if (isActiveItem.includes(option)) {
-      setFilterTracks(filterTracks.filter(({author}) => author !== option))
-      console.log('filterTracks -remove', filterTracks);
+      setFilterTracks(filterTracks.filter(({ author }) => author !== option))
+      console.log('filterTracks -remove', filterTracks)
       setIsActiveItem(isActiveItem.filter((item) => item !== option))
       console.log('isActiveItem-remove2', isActiveItem)
     } else {
       setFilterTracks([...filterTracks, ...filterAuthor(data, option)])
       setIsActiveItem([...isActiveItem, option])
     }
-    if(!isActiveItem && !filterTracks) {
-      setFilterTracks(data)
-    }
-    console.log('filterTracks -add', filterTracks);
+    console.log('filterTracks -add', filterTracks)
     console.log('isActiveItem-add2', isActiveItem)
-
   }
 
   return (

@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom'
-import { CATEGORIES } from '../../constants'
+import { CATEGORIES } from '../../constants/constants'
 import { TrackList } from '../../components/trackList/trackList'
 import { useDispatch } from 'react-redux'
 import { useGetSelectionQuery } from '../../services/trackApi'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
 import { useState } from 'react'
-import { searchMusic } from '../../helpFunctions'
+import { searchMusic } from '../../helpers/helpFunctions'
 
 export const Category = () => {
   const params = useParams()
@@ -26,11 +26,17 @@ export const Category = () => {
   return (
     <>
       <HeaderTrackList title={category.title} setSearch={setSearch} />
-      {isLoading 
-      ? <p>Данные загружаются....</p> 
-       : <>{search && (searchMusic(data, search).length === 0) 
-        ? <h2>Ничего не найдено</h2>
-        : <TrackList tracks={search ? searchMusic(data, search) : data} />}</>}
+      {isLoading ? (
+        <p>Данные загружаются....</p>
+      ) : (
+        <>
+          {search && searchMusic(data, search).length === 0 ? (
+            <h2>Ничего не найдено</h2>
+          ) : (
+            <TrackList tracks={search ? searchMusic(data, search) : data} />
+          )}
+        </>
+      )}
     </>
   )
 }

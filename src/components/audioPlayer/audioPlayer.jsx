@@ -98,7 +98,7 @@ export const Player = () => {
     }
     handlePlay()
     return () => {
-      if (audioRef.current && audioRef.current.currentTime > 0) {
+      if (audioRef?.current && audioRef?.current.currentTime > 0) {
         handlePause()
         clearInterval(intervalRef.current)
       }
@@ -116,7 +116,6 @@ export const Player = () => {
       audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
       audioRef.current.addEventListener('ended', handleNextTrack)
     }
-
 
     return () => {
       if (audioRef.current) {

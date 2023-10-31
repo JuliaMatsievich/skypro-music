@@ -6,11 +6,14 @@ import {
 } from '../../store/trackSlice'
 import { useEffect, useState } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
-import { useLazyGetFavoriteTracksQuery, useRefreshTokenMutation } from '../../services/trackApi'
+import {
+  useLazyGetFavoriteTracksQuery,
+  useRefreshTokenMutation,
+} from '../../services/trackApi'
 import { refreshToken } from '../../api/apiUser'
 import { setToken } from '../../store/tokenSlice'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
-import { searchMusic } from '../../helpFunctions'
+import { searchMusic } from '../../helpers/helpFunctions'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
@@ -32,7 +35,7 @@ export const Favorites = () => {
       .then((data) => {
         dispatch(setFavoritePlaylist(data))
       })
-      .catch((error) => window.location.href = '/login')
+      .catch((error) => (window.location.href = '/login'))
   }, [refresh, data])
 
   if (isError) {
@@ -43,10 +46,12 @@ export const Favorites = () => {
 
   return (
     <>
-      <HeaderTrackList title={'Мои треки'} setSearch={setSearch}/>
-      {search && (searchMusic(data, search).length === 0) 
-          ? <h2>Ничего не найдено</h2>
-          : <TrackList tracks={search ? searchMusic(data, search) : favTracks} />}
+      <HeaderTrackList title={'Мои треки'} setSearch={setSearch} />
+      {search && searchMusic(data, search).length === 0 ? (
+        <h2>Ничего не найдено</h2>
+      ) : (
+        <TrackList tracks={search ? searchMusic(data, search) : favTracks} />
+      )}
     </>
   )
 }

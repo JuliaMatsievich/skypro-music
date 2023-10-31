@@ -2,7 +2,7 @@ import * as S from './Layout.styles'
 import { NavMenu } from '../navMenu/navMenu'
 import * as SM from '../../pages/main/index.styles'
 import { SideBar } from '../sideBar/sideBar'
-import { CATEGORIES } from '../../constants'
+import { CATEGORIES } from '../../constants/constants'
 import { Outlet } from 'react-router-dom'
 import { Player } from '../../components/audioPlayer/audioPlayer'
 import { currentTrackSelector } from '../../store/trackSlice'
@@ -27,4 +27,3 @@ export const Layout = () => {
     </S.Wrapper>
   )
 }
-

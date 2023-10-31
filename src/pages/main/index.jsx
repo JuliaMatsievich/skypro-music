@@ -5,7 +5,7 @@ import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 import { Filter } from '../../components/trackList/filter/filter'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
-import { searchMusic } from '../../helpFunctions'
+import { searchMusic } from '../../helpers/helpFunctions'
 import { useDispatch } from 'react-redux'
 
 export const MainPage = () => {
@@ -22,7 +22,7 @@ export const MainPage = () => {
     setAllTracksError(
       'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
     )
-   logOut()
+    logOut()
   }
 
   useEffect(() => {
@@ -35,20 +35,23 @@ export const MainPage = () => {
   useEffect(() => {
     if (!search && !filterTracks) {
       setPlaylist(data)
+      console.log('filterTracks in main1', filterTracks)
     }
     if (search) {
       setPlaylist(searchMusic(data, search))
+      console.log(searchMusic(data, search))
+      console.log('playlist', playlist)
     }
     if (filterTracks) {
       setPlaylist(filterTracks)
-      console.log('filterTracks in main',filterTracks);
+      console.log('filterTracks in main', filterTracks)
     }
   }, [search, filterTracks])
 
   return (
     <>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
-      <Filter setFilterTracks={setFilterTracks} filterTracks={filterTracks}/>
+      <Filter setFilterTracks={setFilterTracks} filterTracks={filterTracks} />
 
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />
