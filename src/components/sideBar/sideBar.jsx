@@ -13,7 +13,7 @@ export const SideBar = ({categories}) => {
   }
 
   const user = useSelector(state => state.user)
-  console.log('categories',categories);
+
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
@@ -34,7 +34,6 @@ export const SideBar = ({categories}) => {
         ) : (
           <S.SidebarList>
             {categories.map((category) => {
-              console.log('category', category);
               return (
                 <S.SidebarItem key={category.id}>
                   <S.SidebarLink to={`/category/${category.id}`}>

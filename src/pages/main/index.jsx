@@ -17,6 +17,17 @@ export const MainPage = () => {
   // const uniqAuthors = Array.from(new Set(data?.map((track) => track.author)))
 
   const [playlist, setPlaylist] = useState(null)
+  const [authorFilter, setAuthorFilter] = useState([])
+  const [genreFilter, setGenreFilter] = useState([])
+
+
+  const handleChangeFilter = (type, value) => {
+    if (type === 'author') {
+      setAuthorFilter([...authorFilter, value])
+    } else if (type === 'genre') {
+      setGenreFilter([...genreFilter, value])
+    }
+  }
 
   if (isError) {
     setAllTracksError(
@@ -35,23 +46,24 @@ export const MainPage = () => {
   useEffect(() => {
     if (!search && !filterTracks) {
       setPlaylist(data)
-      console.log('filterTracks in main1', filterTracks)
-    }
-    if (search) {
-      setPlaylist(searchMusic(data, search))
-      console.log(searchMusic(data, search))
-      console.log('playlist', playlist)
     }
     if (filterTracks) {
       setPlaylist(filterTracks)
-      console.log('filterTracks in main', filterTracks)
     }
+    if (search) {
+      setPlaylist(searchMusic(data, search))
+    }
+    console.log('playlist', playlist)
   }, [search, filterTracks])
 
   return (
     <>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
-      <Filter setFilterTracks={setFilterTracks} filterTracks={filterTracks} />
+      <Filter
+        setFilterTracks={setFilterTracks}
+        filterTracks={filterTracks}
+        handleChange={handleChangeFilter}
+      />
 
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />
@@ -67,4 +79,3 @@ export const MainPage = () => {
     </>
   )
 }
-

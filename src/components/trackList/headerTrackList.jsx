@@ -12,7 +12,7 @@ export const HeaderTrackList = ({ title, setSearch }) => {
           type="search"
           placeholder="Поиск"
           name="search"
-          onChange={(e) => setSearch(e.target.value)}
+          onInput={(e) => setSearch(e.target.value)}
         />
       </S.CenterBlockSearch>
       <S.CenterBlockTitle>{title}</S.CenterBlockTitle>
