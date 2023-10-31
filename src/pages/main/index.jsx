@@ -5,7 +5,12 @@ import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 import { Filter } from '../../components/trackList/filter/filter'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
-import { searchMusic } from '../../helpers/helpFunctions'
+import {
+  filterAuthor,
+  filterGenre,
+  filters,
+  searchMusic,
+} from '../../helpers/helpFunctions'
 import { useDispatch } from 'react-redux'
 
 export const MainPage = () => {
@@ -19,13 +24,29 @@ export const MainPage = () => {
   const [playlist, setPlaylist] = useState(null)
   const [authorFilter, setAuthorFilter] = useState([])
   const [genreFilter, setGenreFilter] = useState([])
-
+  const [search, setSearch] = useState('')
+  const [filterTracks, setFilterTracks] = useState([])
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
       setAuthorFilter([...authorFilter, value])
+      console.log('authorFilter', authorFilter)
+      if (authorFilter.includes(value)) {
+        setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+        setAuthorFilter(authorFilter.filter((item) => item !== value))
+      } else {
+        setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
+        setAuthorFilter([...authorFilter, value])
+      }
     } else if (type === 'genre') {
       setGenreFilter([...genreFilter, value])
+      if (genreFilter.includes(value)) {
+        setGenreFilter(filterTracks.filter(({ genre }) => genre !== value))
+        setGenreFilter(genreFilter.filter((item) => item !== value))
+      } else {
+        setFilterTracks([...filterTracks, ...filterGenre(data, value)])
+        setGenreFilter([...genreFilter, value])
+      }
     }
   }
 
@@ -40,18 +61,15 @@ export const MainPage = () => {
     setPlaylist(data)
   }, [data])
 
-  const [search, setSearch] = useState('')
-  const [filterTracks, setFilterTracks] = useState([])
-
   useEffect(() => {
-    if (!search && !filterTracks) {
-      setPlaylist(data)
-    }
     if (filterTracks) {
       setPlaylist(filterTracks)
     }
     if (search) {
       setPlaylist(searchMusic(data, search))
+    }
+    if (!search && filterTracks.length === 0) {
+      setPlaylist(data)
     }
     console.log('playlist', playlist)
   }, [search, filterTracks])
@@ -59,11 +77,7 @@ export const MainPage = () => {
   return (
     <>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
-      <Filter
-        setFilterTracks={setFilterTracks}
-        filterTracks={filterTracks}
-        handleChange={handleChangeFilter}
-      />
+      <Filter handleChange={handleChangeFilter} />
 
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />

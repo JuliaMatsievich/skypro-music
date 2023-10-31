@@ -2,15 +2,13 @@ import { FilterCategory } from './filterCategory'
 import { useState } from 'react'
 import * as S from './filter.styles'
 import { useGetAllTracksQuery } from '../../../services/trackApi'
-import { filterAuthor } from '../../../helpers/helpFunctions'
+// import { filterAuthor } from '../../../helpers/helpFunctions'
 
-export const Filter = ({ filterTracks, setFilterTracks, handleChange}) => {
+export const Filter = ({ handleChange}) => {
   const { data } = useGetAllTracksQuery()
 
   const [isActiveItem, setIsActiveItem] = useState('')
   const [activeFilter, setActiveFilter] = useState('')
-  // console.log('isActiveItem in start', isActiveItem)
-  // console.log('filterTracks in start', filterTracks)
 
   const authors = Array.from(new Set(data?.map((track) => track.author)))
   const genres = Array.from(new Set(data?.map((track) => track.genre)))
@@ -28,25 +26,15 @@ export const Filter = ({ filterTracks, setFilterTracks, handleChange}) => {
   }
 
 //На каждый item авторов и жанров повесить эту функцию
-  // const handleFilterChange = (event, type, value) => {
-  //   event.stopPropagation()
-  //   handleChange(type, value)
-  // }
-
-  // const handlefilterAuthor = (e, option) => {
-  //   e.stopPropagation()
-  //   if (isActiveItem.includes(option)) {
-  //     setFilterTracks(filterTracks.filter(({ author }) => author !== option))
-  //     // console.log('filterTracks -remove', filterTracks)
-  //     setIsActiveItem(isActiveItem.filter((item) => item !== option))
-  //     // console.log('isActiveItem-remove2', isActiveItem)
-  //   } else {
-  //     setFilterTracks([...filterTracks, ...filterAuthor(data, option)])
-  //     setIsActiveItem([...isActiveItem, option])
-  //   }
-  //   // console.log('filterTracks -add', filterTracks)
-  //   // console.log('isActiveItem-add2', isActiveItem)
-  // }
+  const handleFilterChange = (event, type, value) => {
+    event.stopPropagation()
+    handleChange(type, value)
+    if (isActiveItem.includes(value)) {
+      setIsActiveItem(isActiveItem.filter((item) => item !== value))
+    } else {
+      setIsActiveItem([...isActiveItem, value])
+    }
+  }
 
   return (
     <S.CenterblockFilter>
@@ -70,7 +58,7 @@ export const Filter = ({ filterTracks, setFilterTracks, handleChange}) => {
                       <S.FilterItem
                         $isActive={isActiveItem.includes(author)}
                         key={index}
-                        onClick={(e) => handleChange(e, 'author',author)}
+                        onClick={(e) => handleFilterChange(e, 'author',author)}
                       >
                         {author}
                       </S.FilterItem>
@@ -99,7 +87,7 @@ export const Filter = ({ filterTracks, setFilterTracks, handleChange}) => {
                       <S.FilterItem
                         $isActive={isActiveItem.includes(genre)}
                         key={index}
-                        onClick={(e) => handleChange(e,'genre',genre)}
+                        onClick={(e) => handleFilterChange(e,'genre',genre)}
                       >
                         {genre}
                       </S.FilterItem>
@@ -132,7 +120,7 @@ export const Filter = ({ filterTracks, setFilterTracks, handleChange}) => {
                       <S.FilterItem
                         $isActive={isActive}
                         key={index}
-                        onClick={(e) => handleChange(e,'sort', author)}
+                        onClick={(e) => handleFilterChange(e,'sort', author)}
                       >
                         {author}
                       </S.FilterItem>
