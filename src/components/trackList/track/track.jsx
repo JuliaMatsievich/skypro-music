@@ -1,5 +1,5 @@
 import * as S from './track.styles'
-import { getTimeInMinutes } from '../../../helpers/helpFunctions'
+import { getTimeInMinutes } from '../../../helpers/timeInMinutes'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentTrackSelector,

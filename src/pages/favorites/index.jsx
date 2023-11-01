@@ -12,7 +12,7 @@ import {
 } from '../../services/trackApi'
 import { setToken } from '../../store/tokenSlice'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
-import { searchMusic } from '../../helpers/helpFunctions'
+import { searchMusic } from '../../helpers/filterFunc'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
@@ -25,27 +25,28 @@ export const Favorites = () => {
 
   useEffect(() => {
     try {
-      fetchFavTracks().unwrap()
-          .then((data) => {
-            dispatch(setFavoritePlaylist(data))
-          })
-    }
-    catch (error) {
-      refreshTokenApi({refresh}).unwrap()
-      .then((data) => {
-        dispatch(setToken({ accessToken: data.access }))
-        localStorage.getItem('access', JSON.stringify(data.access))
-        fetchFavTracks().unwrap()
-          .then((data) => {
-            dispatch(setFavoritePlaylist(data))
-          })
-      })
-      if(error.status === 401) {
+      fetchFavTracks()
+        .unwrap()
+        .then((data) => {
+          dispatch(setFavoritePlaylist(data))
+        })
+    } catch (error) {
+      refreshTokenApi({ refresh })
+        .unwrap()
+        .then((data) => {
+          dispatch(setToken({ accessToken: data.access }))
+          localStorage.getItem('access', JSON.stringify(data.access))
+          fetchFavTracks()
+            .unwrap()
+            .then((data) => {
+              dispatch(setFavoritePlaylist(data))
+            })
+        })
+      if (error.status === 401) {
         window.location.navigate('/login')
       }
     }
   }, [refresh, data, error])
-
 
   const favTracks = useSelector(favoritePlaylistSelector)
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import * as S from './progressBar.styles'
-import { getTimeInMinutes } from '../../helpers/helpFunctions'
+import { getTimeInMinutes } from '../../helpers/timeInMinutes'
 
 export const ProgressBar = ({
   audioRef,

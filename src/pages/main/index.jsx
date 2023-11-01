@@ -9,7 +9,7 @@ import {
   filterAuthor,
   filterGenre,
   searchMusic,
-} from '../../helpers/helpFunctions'
+} from '../../helpers/filterFunc'
 import { useDispatch } from 'react-redux'
 
 export const MainPage = () => {
@@ -25,17 +25,23 @@ export const MainPage = () => {
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
-      // setAuthorFilter([...authorFilter, value])
-      console.log('authorFilter', authorFilter)
       if (authorFilter.includes(value)) {
         setFilterTracks(filterTracks.filter(({ author }) => author !== value))
         setAuthorFilter(authorFilter.filter((item) => item !== value))
+      } else if (
+        !authorFilter.includes(value) &&
+        filterTracks.find((track) => track.author === value) &&
+        filterTracks.find((track) => track.genre === genreFilter)
+      ) {
+        setFilterTracks(
+          filterTracks.filter(({ author }) => author.includes(value)),
+        )
+        console.log(filterTracks.find((track) => track.author === value))
       } else {
         setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
         setAuthorFilter([...authorFilter, value])
       }
     } else if (type === 'genre') {
-      // setGenreFilter([...genreFilter, value])
       if (genreFilter.includes(value)) {
         setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
         setGenreFilter(genreFilter.filter((item) => item !== value))
@@ -43,8 +49,8 @@ export const MainPage = () => {
         setFilterTracks([...filterTracks, ...filterGenre(data, value)])
         setGenreFilter([...genreFilter, value])
       }
-      console.log('genreFilter', genreFilter);
     }
+    console.log('filterTracks', filterTracks)
   }
 
   if (isError) {
@@ -68,7 +74,9 @@ export const MainPage = () => {
     if (!search && filterTracks.length === 0) {
       setPlaylist(data)
     }
-    console.log('playlist', playlist)
+    if (search && filterTracks) {
+      setPlaylist(searchMusic(filterTracks, search))
+    }
   }, [search, filterTracks])
 
   return (
@@ -80,7 +88,9 @@ export const MainPage = () => {
         <ErrorMessage allTracksError={allTracksError} />
       ) : (
         <>
-          {search && searchMusic(data, search).length === 0 ? (
+          {search &&
+          searchMusic(data, search).length === 0 &&
+          searchMusic(filterTracks, search).length === 0 ? (
             <h2>Ничего не найдено</h2>
           ) : (
             <TrackList tracks={playlist} />

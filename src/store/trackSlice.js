@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { sortArray } from '../helpers/helpFunctions'
+import { sortArray } from '../helpers/sortFunc'
 
 export const trackSlice = createSlice({
   name: 'track',

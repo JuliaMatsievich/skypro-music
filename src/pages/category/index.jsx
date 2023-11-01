@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useGetSelectionQuery } from '../../services/trackApi'
 import { HeaderTrackList } from '../../components/trackList/headerTrackList'
 import { useState } from 'react'
-import { searchMusic } from '../../helpers/helpFunctions'
+import { searchMusic } from '../../helpers/filterFunc'
 
 export const Category = () => {
   const params = useParams()
