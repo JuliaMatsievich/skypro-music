@@ -1,7 +1,6 @@
-import * as S from './trackList.styles'
+import * as S from './headerTrackList.styles'
 
 export const HeaderTrackList = ({ title, setSearch }) => {
-
   return (
     <>
       <S.CenterBlockSearch>

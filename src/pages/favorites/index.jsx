@@ -11,7 +11,7 @@ import {
   useRefreshTokenMutation,
 } from '../../services/trackApi'
 import { setToken } from '../../store/tokenSlice'
-import { HeaderTrackList } from '../../components/trackList/headerTrackList'
+import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
 import { searchMusic } from '../../helpers/filterFunc'
 
 export const Favorites = () => {

@@ -3,7 +3,7 @@ import { CATEGORIES } from '../../constants/constants'
 import { TrackList } from '../../components/trackList/trackList'
 import { useDispatch } from 'react-redux'
 import { useGetSelectionQuery } from '../../services/trackApi'
-import { HeaderTrackList } from '../../components/trackList/headerTrackList'
+import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
 import { useState } from 'react'
 import { searchMusic } from '../../helpers/filterFunc'
 

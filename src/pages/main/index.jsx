@@ -3,8 +3,8 @@ import { ErrorMessage } from '../../components/errors/error'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
-import { Filter } from '../../components/trackList/filter/filter'
-import { HeaderTrackList } from '../../components/trackList/headerTrackList'
+import { Filter } from '../../components/filter/filter'
+import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
 import {
   filterAuthor,
   filterGenre,

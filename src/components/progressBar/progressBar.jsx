@@ -10,7 +10,6 @@ export const ProgressBar = ({
   duration,
   intervalRef,
 }) => {
-
   const handleSeek = (e) => {
     audioRef.current.currentTime = e.target.value
     setCurrentTime(e.target.value)

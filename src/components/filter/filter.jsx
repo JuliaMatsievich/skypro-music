@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import * as S from './filter.styles'
-import { useGetAllTracksQuery } from '../../../services/trackApi'
+import { useGetAllTracksQuery } from '../../services/trackApi'
 
-export const Filter = ({ handleChange}) => {
+export const Filter = ({ handleChange }) => {
   const { data } = useGetAllTracksQuery()
 
   const [isActiveItem, setIsActiveItem] = useState('')
@@ -23,7 +23,7 @@ export const Filter = ({ handleChange}) => {
     }
   }
 
-//На каждый item авторов и жанров повесить эту функцию
+  //На каждый item авторов и жанров повесить эту функцию
   const handleFilterChange = (event, type, value) => {
     event.stopPropagation()
     handleChange(type, value)
@@ -56,7 +56,7 @@ export const Filter = ({ handleChange}) => {
                       <S.FilterItem
                         $isActive={isActiveItem.includes(author)}
                         key={index}
-                        onClick={(e) => handleFilterChange(e, 'author',author)}
+                        onClick={(e) => handleFilterChange(e, 'author', author)}
                       >
                         {author}
                       </S.FilterItem>
@@ -85,7 +85,7 @@ export const Filter = ({ handleChange}) => {
                       <S.FilterItem
                         $isActive={isActiveItem.includes(genre)}
                         key={index}
-                        onClick={(e) => handleFilterChange(e,'genre',genre)}
+                        onClick={(e) => handleFilterChange(e, 'genre', genre)}
                       >
                         {genre}
                       </S.FilterItem>
@@ -118,7 +118,7 @@ export const Filter = ({ handleChange}) => {
                       <S.FilterItem
                         $isActive={isActive}
                         key={index}
-                        onClick={(e) => handleFilterChange(e,'sort', author)}
+                        onClick={(e) => handleFilterChange(e, 'sort', author)}
                       >
                         {author}
                       </S.FilterItem>

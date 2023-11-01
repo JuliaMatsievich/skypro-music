@@ -1,16 +1,16 @@
 import * as S from './track.styles'
-import { getTimeInMinutes } from '../../../helpers/timeInMinutes'
+import { getTimeInMinutes } from '../../helpers/timeInMinutes'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentTrackSelector,
   selectIsPlaying,
   setCurrentPlaylist,
-} from '../../../store/trackSlice'
-import { setCurrentTrack } from '../../../store/trackSlice'
+} from '../../store/trackSlice'
+import { setCurrentTrack } from '../../store/trackSlice'
 import {
   useAddFavoriteTrackMutation,
   useDeleteFavoriteTrackMutation,
-} from '../../../services/trackApi'
+} from '../../services/trackApi'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

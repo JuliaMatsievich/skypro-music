@@ -1,6 +1,6 @@
 import * as S from './audioPlayer.styles'
 import { useRef, useState, useEffect, useContext } from 'react'
-import { ProgressBar } from './progressBar'
+import { ProgressBar } from '../progressBar/progressBar'
 import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -43,9 +43,8 @@ export const Player = () => {
 
   const handlePlay = () => {
     if (audioRef) {
-      audioRef.current.play()
-      .catch((error) => {
-        console.log(error);
+      audioRef.current.play().catch((error) => {
+        console.log(error)
       })
       dispatch(setPlayTrack())
     }
@@ -110,9 +109,8 @@ export const Player = () => {
     setDuration(audioRef?.current?.duration)
   }
 
-
   useEffect(() => {
-    if(audioRef) {
+    if (audioRef) {
       audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
       audioRef.current.addEventListener('loadedmetadata', handleTimeUpdate)
       audioRef.current.addEventListener('ended', handleNextTrack)
