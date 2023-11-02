@@ -44,12 +44,12 @@ export const Filter = ({ handleChange }) => {
 
   const handleSort = (event, value) => {
     event.stopPropagation()
+    setIsActiveItem([value])
     if (isActiveItem.includes(value)) {
       setIsActiveItem(isActiveItem.filter((item) => item !== value))
-      setCountSort(countSort - 1)
+      setCountSort(0)
     } else {
-      setIsActiveItem([...isActiveItem, value])
-      setCountSort(countSort + 1)
+      setCountSort(1)
     }
   }
 
