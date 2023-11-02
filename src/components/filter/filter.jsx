@@ -2,7 +2,7 @@ import { useState } from 'react'
 import * as S from './filter.styles'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 
-export const Filter = ({ handleChange }) => {
+export const Filter = ({ handleChange, handleSort }) => {
   const { data } = useGetAllTracksQuery()
 
   const [isActiveItem, setIsActiveItem] = useState('')
@@ -42,8 +42,9 @@ export const Filter = ({ handleChange }) => {
     }
   }
 
-  const handleSort = (event, value) => {
+  const handleSortChange = (event, value) => {
     event.stopPropagation()
+    handleSort(value)
     setIsActiveItem([value])
     if (isActiveItem.includes(value)) {
       setIsActiveItem(isActiveItem.filter((item) => item !== value))
@@ -150,7 +151,7 @@ export const Filter = ({ handleChange }) => {
                         <S.FilterItem
                           $isActive={isActiveItem.includes(item)}
                           key={index}
-                          onClick={(e) => handleSort(e, item)}
+                          onClick={(e) => handleSortChange(e, item)}
                         >
                           {item}
                         </S.FilterItem>

@@ -5,9 +5,10 @@ import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 import { Filter } from '../../components/filter/filter'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
-import { filterAuthor,filterGenre} from '../../helpers/filterFunc'
+import { filterAuthor, filterGenre } from '../../helpers/filterFunc'
 import { searchMusic } from '../../helpers/searchFunc'
 import { useDispatch } from 'react-redux'
+import { sortTracks } from '../../helpers/sortFunc'
 
 export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
@@ -19,6 +20,7 @@ export const MainPage = () => {
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
   const [filterTracks, setFilterTracks] = useState([])
+  const [sort, setSort] = useState()
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
@@ -36,8 +38,10 @@ export const MainPage = () => {
         if (authorFilter.includes(value)) {
           setFilterTracks(filterTracks.filter(({ author }) => author !== value))
           setAuthorFilter(authorFilter.filter((item) => item !== value))
-          if(authorFilter.length === 1) {
-            setFilterTracks(data.filter((track) => genreFilter.indexOf(track.genre) > -1))
+          if (authorFilter.length === 1) {
+            setFilterTracks(
+              data.filter((track) => genreFilter.indexOf(track.genre) > -1),
+            )
           }
         }
         if (authorFilter.length === 0) {
@@ -66,12 +70,14 @@ export const MainPage = () => {
         }
       }
 
-      if(authorFilter.length !== 0) {
+      if (authorFilter.length !== 0) {
         if (genreFilter.includes(value)) {
           setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
           setGenreFilter(genreFilter.filter((item) => item !== value))
-          if(genreFilter.length === 1) {
-            setFilterTracks(data.filter((track) => authorFilter.indexOf(track.author) > -1))
+          if (genreFilter.length === 1) {
+            setFilterTracks(
+              data.filter((track) => authorFilter.indexOf(track.author) > -1),
+            )
           }
         }
         if (genreFilter.length === 0) {
@@ -92,10 +98,31 @@ export const MainPage = () => {
     }
   }
 
+  const f = [
+    { author: "1", release_date: "2005-06-11"},
+    { author: "2", release_date: "2019-06-12" },
+    { author: "3", release_date: null },
+    { author: "4", release_date: "1972-06-06" },
+    { author: "5", release_date: "1962-01-15" },
+    { author: "6", release_date: "2003-05-12" },
+  ];
 
-  console.log('filterTracks', filterTracks)
-  console.log('authorFilter', authorFilter)
-  console.log('genreFilter', genreFilter)
+
+  const handleSort = (value) => {
+    // console.log('playlist', data)
+    sortTracks(data, value)
+    console.log('sorted', sortTracks(data, value));  
+  }
+
+
+
+
+  
+  // console.log(playlist);
+
+  // console.log('filterTracks', filterTracks)
+  // console.log('authorFilter', authorFilter)
+  // console.log('genreFilter', genreFilter)
 
   if (isError) {
     setAllTracksError(
@@ -126,7 +153,7 @@ export const MainPage = () => {
   return (
     <>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
-      <Filter handleChange={handleChangeFilter} />
+      <Filter handleChange={handleChangeFilter} handleSort={handleSort} />
 
       {allTracksError ? (
         <ErrorMessage allTracksError={allTracksError} />
