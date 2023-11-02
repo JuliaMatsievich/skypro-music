@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from "../services/trackApi"
 import { useSelector } from "react-redux"
 
 
-export const useLikeDislike = (track,id) => {
+export const useLikeDislike = (track, id) => {
 	const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
 	const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
 	const [isLike, setIsLike] = useState(false)
@@ -16,6 +16,8 @@ export const useLikeDislike = (track,id) => {
 		  track.stared_user.find((user) => user.id === userId)
 		) {
 		  setIsLike(true)
+		} else {
+			setIsLike(false)
 		}
 	 }, [track])
 	
@@ -40,20 +42,19 @@ export const useLikeDislike = (track,id) => {
 		setIsLike(false)
 	 }
 
-	 if (isLike) {
-		handleDisLike(id)
-	 } else {
-		handleLike(id)
-	 }
-  
-	//  const handleLikeDislkie = (id) => {
-	// 	if (isLike) {
-	// 	  handleDisLike(id)
-	// 	} else {
-	// 	  handleLike(id)
-	// 	}
+	//  if (isLike) {
+	// 	handleDisLike(id)
+	//  } else {
+	// 	handleLike(id)
 	//  }
+  
+	 const handleLikeDislike = (id) => {
+		if (isLike) {
+		  handleDisLike(id)
+		} else {
+		  handleLike(id)
+		}
+	 }
 
-	 return isLike
-
+	 return {isLike, handleLikeDislike}
 }

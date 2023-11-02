@@ -12,64 +12,64 @@ import {
   useDeleteFavoriteTrackMutation,
 } from '../../services/trackApi'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-// import { useLikeDislike } from '../../customHooks/likeDislikeHook'
+import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
 export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const userId = useSelector((state) => state.user.id)
 
   const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
 
-  // const isLike = useLikeDislike(track.id)
-  const [isLike, setIsLike] = useState(false)
+  const {isLike, handleLikeDislike} = useLikeDislike(track, track.id)
+  //  const isL = useLikeDislike(track, track.id)
+  // const [isLike, setIsLike] = useState(false)
+  // console.log(isL);
 
   const handlePlayTrack = (track, index) => {
     dispatch(setCurrentTrack({ track, index }))
     dispatch(setCurrentPlaylist(trackList))
   }
 
-  const handleLike = async (id) => {
-    await addFavoriteTrack(id)
-      .unwrap()
-      .catch((error) => {
-        window.location.navigate('/login')
-      })
-    setIsLike(true)
-  }
+  // const handleLike = async (id) => {
+  //   await addFavoriteTrack(id)
+  //     .unwrap()
+  //     .catch((error) => {
+  //       window.location.navigate('/login')
+  //     })
+  //   setIsLike(true)
+  // }
 
-  const handleDisLike = async (id) => {
-    await deleteFavoriteTrack(id)
-      .unwrap()
-      .catch((error) => {
-        window.location.navigate('/login')
-      })
-    setIsLike(false)
-  }
+  // const handleDisLike = async (id) => {
+  //   await deleteFavoriteTrack(id)
+  //     .unwrap()
+  //     .catch((error) => {
+  //       window.location.navigate('/login')
+  //     })
+  //   setIsLike(false)
+  // }
 
-  const handleLikeDislkie = (id) => {
-    if (isLike) {
-      handleDisLike(id)
-    } else {
-      handleLike(id)
-    }
-  }
+  // const handleLikeDislkie = (id) => {
+  //   if (isLike) {
+  //     handleDisLike(id)
+  //   } else {
+  //     handleLike(id)
+  //   }
+  // }
 
   const isPlaying = useSelector(selectIsPlaying)
   const currentTrack = useSelector(currentTrackSelector)
 
-  useEffect(() => {
-    if (
-      track.stared_user &&
-      track.stared_user.find((user) => user.id === userId)
-    ) {
-      setIsLike(true)
-    } else {
-      setIsLike(false)
-    }
-  }, [track])
+  // useEffect(() => {
+  //   if (
+  //     track.stared_user &&
+  //     track.stared_user.find((user) => user.id === userId)
+  //   ) {
+  //     setIsLike(true)
+  //   } else {
+  //     setIsLike(false)
+  //   }
+  // }, [track])
 
   return (
     <S.PlayListItem>
@@ -104,7 +104,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
         <S.TrackTime>
           <S.TrackLikeSvg
             alt="like"
-            onClick={() => handleLikeDislkie(track.id)}
+            onClick={() => handleLikeDislike(track.id)}
           >
             <use
               xlinkHref={
