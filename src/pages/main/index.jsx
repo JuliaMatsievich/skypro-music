@@ -20,7 +20,7 @@ export const MainPage = () => {
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
   const [filterTracks, setFilterTracks] = useState([])
-  const [sort, setSort] = useState()
+  const [defaultPlaylist, setDefaultPlaylist] = useState([])
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
@@ -98,31 +98,13 @@ export const MainPage = () => {
     }
   }
 
-  const f = [
-    { author: "1", release_date: "2005-06-11"},
-    { author: "2", release_date: "2019-06-12" },
-    { author: "3", release_date: null },
-    { author: "4", release_date: "1972-06-06" },
-    { author: "5", release_date: "1962-01-15" },
-    { author: "6", release_date: "2003-05-12" },
-  ];
-
-
   const handleSort = (value) => {
-    // console.log('playlist', data)
-    sortTracks(data, value)
-    console.log('sorted', sortTracks(data, value));  
+    if (value !== 'По умолчанию') {
+      setPlaylist(sortTracks(playlist, value))
+    } else if (value === 'По умолчанию') {
+      setPlaylist(defaultPlaylist)
+    }
   }
-
-
-
-
-  
-  // console.log(playlist);
-
-  // console.log('filterTracks', filterTracks)
-  // console.log('authorFilter', authorFilter)
-  // console.log('genreFilter', genreFilter)
 
   if (isError) {
     setAllTracksError(
@@ -133,20 +115,25 @@ export const MainPage = () => {
 
   useEffect(() => {
     setPlaylist(data)
+    setDefaultPlaylist(data)
   }, [data])
 
   useEffect(() => {
     if (filterTracks) {
       setPlaylist(filterTracks)
+      setDefaultPlaylist(filterTracks)
     }
     if (search) {
       setPlaylist(searchMusic(data, search))
+      setDefaultPlaylist(searchMusic(data, search))
     }
     if (!search && filterTracks.length === 0) {
       setPlaylist(data)
+      setDefaultPlaylist(data)
     }
     if (search && filterTracks) {
       setPlaylist(searchMusic(filterTracks, search))
+      setDefaultPlaylist(searchMusic(filterTracks, search))
     }
   }, [search, filterTracks])
 
