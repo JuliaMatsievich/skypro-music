@@ -25,34 +25,80 @@ export const MainPage = () => {
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
-      if (authorFilter.includes(value)) {
-        setFilterTracks(filterTracks.filter(({ author }) => author !== value))
-        setAuthorFilter(authorFilter.filter((item) => item !== value))
-      } else if (
-        !authorFilter.includes(value) &&
-        filterTracks.find((track) => track.author === value) &&
-        filterTracks.find((track) => track.genre === genreFilter)
-      ) {
-        setFilterTracks(
-          filterTracks.filter(({ author }) => author.includes(value)),
-        )
-        console.log(filterTracks.find((track) => track.author === value))
-      } else {
-        setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
-        setAuthorFilter([...authorFilter, value])
+      if (genreFilter.length === 0) {
+        if (authorFilter.includes(value)) {
+          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+          setAuthorFilter(authorFilter.filter((item) => item !== value))
+        } else {
+          setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
+          setAuthorFilter([...authorFilter, value])
+        }
+      }
+
+      if (genreFilter.length !== 0) {
+        if (authorFilter.includes(value)) {
+          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+          setAuthorFilter(authorFilter.filter((item) => item !== value))
+          if(authorFilter.length === 1) {
+            setFilterTracks(data.filter((track) => genreFilter.indexOf(track.genre) > -1))
+          }
+        }
+        if (authorFilter.length === 0) {
+          setFilterTracks(filterAuthor(filterTracks, value))
+          setAuthorFilter([...authorFilter, value])
+        }
+        if (authorFilter.length !== 0 && !authorFilter.includes(value)) {
+          setFilterTracks([
+            ...filterTracks,
+            ...filterAuthor(
+              data.filter((track) => genreFilter.indexOf(track.genre) > -1),
+              value,
+            ),
+          ])
+          setAuthorFilter([...authorFilter, value])
+        }
       }
     } else if (type === 'genre') {
-      if (genreFilter.includes(value)) {
-        setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
-        setGenreFilter(genreFilter.filter((item) => item !== value))
-      } else {
-        setFilterTracks([...filterTracks, ...filterGenre(data, value)])
-        setGenreFilter([...genreFilter, value])
+      if (authorFilter.length === 0) {
+        if (genreFilter.includes(value)) {
+          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
+          setGenreFilter(genreFilter.filter((item) => item !== value))
+        } else {
+          setFilterTracks([...filterTracks, ...filterGenre(data, value)])
+          setGenreFilter([...genreFilter, value])
+        }
+      }
+
+      if(authorFilter.length !== 0) {
+        if (genreFilter.includes(value)) {
+          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
+          setGenreFilter(genreFilter.filter((item) => item !== value))
+          if(genreFilter.length === 1) {
+            setFilterTracks(data.filter((track) => authorFilter.indexOf(track.author) > -1))
+          }
+        }
+        if (genreFilter.length === 0) {
+          setFilterTracks(filterGenre(filterTracks, value))
+          setGenreFilter([...genreFilter, value])
+        }
+        if (genreFilter.length !== 0 && !genreFilter.includes(value)) {
+          setFilterTracks([
+            ...filterTracks,
+            ...filterGenre(
+              data.filter((track) => authorFilter.indexOf(track.author) > -1),
+              value,
+            ),
+          ])
+          setGenreFilter([...genreFilter, value])
+        }
       }
     }
-    console.log('filterTracks', filterTracks)
   }
 
+
+  console.log('filterTracks', filterTracks)
+  console.log('authorFilter', authorFilter)
+  console.log('genreFilter', genreFilter)
   if (isError) {
     setAllTracksError(
       'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
