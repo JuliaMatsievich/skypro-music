@@ -5,11 +5,8 @@ import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 import { Filter } from '../../components/filter/filter'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
-import {
-  filterAuthor,
-  filterGenre,
-  searchMusic,
-} from '../../helpers/filterFunc'
+import { filterAuthor,filterGenre} from '../../helpers/filterFunc'
+import { searchMusic } from '../../helpers/searchFunc'
 import { useDispatch } from 'react-redux'
 
 export const MainPage = () => {
@@ -99,7 +96,7 @@ export const MainPage = () => {
   console.log('filterTracks', filterTracks)
   console.log('authorFilter', authorFilter)
   console.log('genreFilter', genreFilter)
-  
+
   if (isError) {
     setAllTracksError(
       'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,

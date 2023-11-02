@@ -12,7 +12,7 @@ import {
 } from '../../services/trackApi'
 import { setToken } from '../../store/tokenSlice'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
-import { searchMusic } from '../../helpers/filterFunc'
+import { searchMusic } from '../../helpers/searchFunc'
 
 export const Favorites = () => {
   const dispatch = useDispatch()

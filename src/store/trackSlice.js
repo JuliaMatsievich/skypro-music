@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { sortArray } from '../helpers/sortFunc'
+import { sortArray } from '../helpers/shuffleFunc'
 
 export const trackSlice = createSlice({
   name: 'track',
