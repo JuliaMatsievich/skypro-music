@@ -26,7 +26,7 @@ export const useLikeDislike = (track, id) => {
 		  .unwrap()
 		  .catch((error) => {
 			console.log('error', error);
-			//  windows.location.navigate('/login')
+			 window.location.navigate('/login')
 		  })
 		setIsLike(true)
 	 }
@@ -36,17 +36,11 @@ export const useLikeDislike = (track, id) => {
 		  .unwrap()
 		  .catch((error) => {
 			console.log('error', error);
-
-			// windows.location.navigate('/login')
+			window.location.navigate('/login')
 		  })
 		setIsLike(false)
 	 }
 
-	//  if (isLike) {
-	// 	handleDisLike(id)
-	//  } else {
-	// 	handleLike(id)
-	//  }
   
 	 const handleLikeDislike = (id) => {
 		if (isLike) {

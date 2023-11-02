@@ -18,13 +18,15 @@ import {
   setShuffledTracks,
 } from '../../store/trackSlice'
 import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation, useGetAllTracksQuery } from '../../services/trackApi'
+import { useLikeDislike } from '../../customHooks/likeDislikeHook'
+
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
   let audioRef = useRef(null)
 
-  const [isLike, setIsLike] = useState(false)
+  // const [isLike, setIsLike] = useState(false)
 
   const { isLoading } = useGetAllTracksQuery()
 
@@ -41,6 +43,8 @@ export const Player = () => {
   const [volume, setVolume] = useState(0.5)
 
   const intervalRef = useRef()
+  const {isLike, handleLikeDislike} = useLikeDislike(currentTrack, currentTrack.id)
+
 
   const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
@@ -95,31 +99,31 @@ export const Player = () => {
     }
   }
 
-  const handleLike = async (id) => {
-    await addFavoriteTrack(id)
-      .unwrap()
-      .catch((error) => {
-        navigate('/login')
-      })
-    setIsLike(true)
-  }
+  // const handleLike = async (id) => {
+  //   await addFavoriteTrack(id)
+  //     .unwrap()
+  //     .catch((error) => {
+  //       navigate('/login')
+  //     })
+  //   setIsLike(true)
+  // }
 
-  const handleDisLike = async (id) => {
-    await deleteFavoriteTrack(id)
-      .unwrap()
-      .catch((error) => {
-        navigate('/login')
-      })
-    setIsLike(false)
-  }
+  // const handleDisLike = async (id) => {
+  //   await deleteFavoriteTrack(id)
+  //     .unwrap()
+  //     .catch((error) => {
+  //       navigate('/login')
+  //     })
+  //   setIsLike(false)
+  // }
 
-  const handleLikeDislkie = (id) => {
-    if (isLike) {
-      handleDisLike(id)
-    } else {
-      handleLike(id)
-    }
-  }
+  // const handleLikeDislkie = (id) => {
+  //   if (isLike) {
+  //     handleDisLike(id)
+  //   } else {
+  //     handleLike(id)
+  //   }
+  // }
 
   useEffect(() => {
     if (audioRef?.current?.currentTime > 0) {
@@ -251,7 +255,7 @@ export const Player = () => {
                   <S.TrackPlayLike className="_btn-icon">
                     <S.TrackPlayLikeSvg
                       alt="like"
-                      onClick={() => handleLikeDislkie(currentTrack.id)}
+                      onClick={() => handleLikeDislike(currentTrack.id)}
                     >
                       <use
                         xlinkHref={
