@@ -9,9 +9,11 @@ export const Filter = ({ handleChange }) => {
   const [activeFilter, setActiveFilter] = useState('')
   const [countAuthorFilter, setCountAuthorFilter] = useState(0)
   const [countGenreFilter, setCountGenreFilter] = useState(0)
+  const [countSort, setCountSort] = useState(0)
 
   const authors = Array.from(new Set(data?.map((track) => track.author)))
   const genres = Array.from(new Set(data?.map((track) => track.genre)))
+  const sort = ['По умолчанию', 'Сначала старые', 'Сначала новые']
 
   const toggleFilterList = (filterName) => {
     if (!activeFilter) {
@@ -31,12 +33,23 @@ export const Filter = ({ handleChange }) => {
     handleChange(type, value)
     if (isActiveItem.includes(value)) {
       setIsActiveItem(isActiveItem.filter((item) => item !== value))
-      if ((type = 'author')) setCountAuthorFilter(countAuthorFilter - 1)
-      if ((type = 'genre')) setCountGenreFilter(countGenreFilter - 1)
+      if ((type === 'author')) setCountAuthorFilter(countAuthorFilter - 1)
+      if ((type === 'genre')) setCountGenreFilter(countGenreFilter - 1)
     } else {
       setIsActiveItem([...isActiveItem, value])
-      if ((type = 'author')) setCountAuthorFilter(countAuthorFilter + 1)
-      if ((type = 'genre')) setCountGenreFilter(countGenreFilter + 1)
+      if ((type === 'author')) setCountAuthorFilter(countAuthorFilter + 1)
+      if ((type === 'genre')) setCountGenreFilter(countGenreFilter + 1)
+    }
+  }
+
+  const handleSort = (event, value) => {
+    event.stopPropagation()
+    if (isActiveItem.includes(value)) {
+      setIsActiveItem(isActiveItem.filter((item) => item !== value))
+      setCountSort(countSort - 1)
+    } else {
+      setIsActiveItem([...isActiveItem, value])
+      setCountSort(countSort + 1)
     }
   }
 
@@ -74,11 +87,11 @@ export const Filter = ({ handleChange }) => {
                   </S.FilterList>
                 </S.FilterWrapper>
               </S.FilterCategory>
-              <S.CountCircle $isVisible={countAuthorFilter !== 0}>
-                {countAuthorFilter}
-              </S.CountCircle>
             </>
           ) : null}
+          <S.CountCircle $isVisible={countAuthorFilter !== 0}>
+            {countAuthorFilter}
+          </S.CountCircle>
         </S.FilterButton>
 
         <S.FilterButton
@@ -108,11 +121,11 @@ export const Filter = ({ handleChange }) => {
                   </S.FilterList>
                 </S.FilterWrapper>
               </S.FilterCategory>
-              <S.CountCircle $isVisible={countGenreFilter !== 0}>
-                {countGenreFilter}
-              </S.CountCircle>
             </>
           ) : null}
+          <S.CountCircle $isVisible={countGenreFilter !== 0}>
+            {countGenreFilter}
+          </S.CountCircle>
         </S.FilterButton>
       </S.ContainerFilters>
 
@@ -126,26 +139,31 @@ export const Filter = ({ handleChange }) => {
           $isActiveBtn={activeFilter === 'sort'}
           className="_btn-text"
         >
-          исполнителю
+          По умолчанию
           {activeFilter === 'sort' ? (
-            <S.FilterCategory>
-              <S.FilterWrapper>
-                <S.FilterList>
-                  {authors.map((author, index) => {
-                    return (
-                      <S.FilterItem
-                        $isActive={isActive}
-                        key={index}
-                        onClick={(e) => handleFilterChange(e, 'sort', author)}
-                      >
-                        {author}
-                      </S.FilterItem>
-                    )
-                  })}
-                </S.FilterList>
-              </S.FilterWrapper>
-            </S.FilterCategory>
+            <>
+              <S.FilterCategory>
+                <S.FilterWrapper>
+                  <S.FilterList>
+                    {sort.map((item, index) => {
+                      return (
+                        <S.FilterItem
+                          $isActive={isActiveItem.includes(item)}
+                          key={index}
+                          onClick={(e) => handleSort(e, item)}
+                        >
+                          {item}
+                        </S.FilterItem>
+                      )
+                    })}
+                  </S.FilterList>
+                </S.FilterWrapper>
+              </S.FilterCategory>
+            </>
           ) : null}
+                        <S.CountCircle $isVisible={countSort !== 0}>
+                {countSort}
+              </S.CountCircle>
         </S.FilterButton>
       </S.ContainerFilters>
     </S.CenterblockFilter>
