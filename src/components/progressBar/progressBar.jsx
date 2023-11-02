@@ -11,8 +11,10 @@ export const ProgressBar = ({
   intervalRef,
 }) => {
   const handleSeek = (e) => {
-    audioRef.current.currentTime = e.target.value
-    setCurrentTime(e.target.value)
+    if (audioRef) {
+      audioRef.current.currentTime = e.target.value
+      setCurrentTime(e.target.value)      
+    }
   }
 
   useEffect(() => {

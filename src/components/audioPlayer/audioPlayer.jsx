@@ -1,7 +1,6 @@
 import * as S from './audioPlayer.styles'
-import { useRef, useState, useEffect, useContext } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { ProgressBar } from '../progressBar/progressBar'
-import { UserContext } from '../../App'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -18,12 +17,14 @@ import {
   setPrevTrack,
   setShuffledTracks,
 } from '../../store/trackSlice'
-import { useGetAllTracksQuery } from '../../services/trackApi'
+import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation, useGetAllTracksQuery } from '../../services/trackApi'
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
   let audioRef = useRef(null)
+
+  const [isLike, setIsLike] = useState(false)
 
   const { isLoading } = useGetAllTracksQuery()
 
@@ -40,6 +41,9 @@ export const Player = () => {
   const [volume, setVolume] = useState(0.5)
 
   const intervalRef = useRef()
+
+  const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
+  const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
 
   const handlePlay = () => {
     if (audioRef) {
@@ -88,6 +92,32 @@ export const Player = () => {
     if (audioRef) {
       audioRef.current.volume = e.target.value
       setVolume(e.target.value)
+    }
+  }
+
+  const handleLike = async (id) => {
+    await addFavoriteTrack(id)
+      .unwrap()
+      .catch((error) => {
+        navigate('/login')
+      })
+    setIsLike(true)
+  }
+
+  const handleDisLike = async (id) => {
+    await deleteFavoriteTrack(id)
+      .unwrap()
+      .catch((error) => {
+        navigate('/login')
+      })
+    setIsLike(false)
+  }
+
+  const handleLikeDislkie = (id) => {
+    if (isLike) {
+      handleDisLike(id)
+    } else {
+      handleLike(id)
     }
   }
 
@@ -219,18 +249,27 @@ export const Player = () => {
 
                 <S.TrackPlayLikeDis>
                   <S.TrackPlayLike className="_btn-icon">
-                    <S.TrackPlayLikeSvg alt="like">
-                      <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
+                    <S.TrackPlayLikeSvg
+                      alt="like"
+                      onClick={() => handleLikeDislkie(currentTrack.id)}
+                    >
+                      <use
+                        xlinkHref={
+                          isLike
+                            ? '/img/icon/sprite.svg#icon-likeactive'
+                            : '/img/icon/sprite.svg#icon-like'
+                        }
+                      ></use>
                     </S.TrackPlayLikeSvg>
                   </S.TrackPlayLike>
-                  <S.TrackPlayDisLike className="_btn-icon">
+                  {/* <S.TrackPlayDisLike className="_btn-icon">
                     <S.TrackPlayDisLikeSvg
                       className="track-play__dislike-svg"
                       alt="dislike"
                     >
                       <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
                     </S.TrackPlayDisLikeSvg>
-                  </S.TrackPlayDisLike>
+                  </S.TrackPlayDisLike> */}
                 </S.TrackPlayLikeDis>
               </S.TrackPlay>
             </S.BarPlayer>

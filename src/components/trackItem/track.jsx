@@ -13,6 +13,7 @@ import {
 } from '../../services/trackApi'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+// import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
 export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
   const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
 
+  // const isLike = useLikeDislike(track.id)
   const [isLike, setIsLike] = useState(false)
 
   const handlePlayTrack = (track, index) => {
@@ -33,7 +35,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
     await addFavoriteTrack(id)
       .unwrap()
       .catch((error) => {
-        navigate('/login')
+        window.location.navigate('/login')
       })
     setIsLike(true)
   }
@@ -42,7 +44,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
     await deleteFavoriteTrack(id)
       .unwrap()
       .catch((error) => {
-        navigate('/login')
+        window.location.navigate('/login')
       })
     setIsLike(false)
   }
@@ -64,6 +66,8 @@ export const TrackItem = ({ track, id, index, trackList }) => {
       track.stared_user.find((user) => user.id === userId)
     ) {
       setIsLike(true)
+    } else {
+      setIsLike(false)
     }
   }, [track])
 

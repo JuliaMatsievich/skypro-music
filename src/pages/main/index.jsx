@@ -12,7 +12,6 @@ import { sortTracks } from '../../helpers/sortFunc'
 
 export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
-  const dispatch = useDispatch()
   const { data, isError, error } = useGetAllTracksQuery()
 
   const [playlist, setPlaylist] = useState(null)
