@@ -99,6 +99,7 @@ export const MainPage = () => {
   console.log('filterTracks', filterTracks)
   console.log('authorFilter', authorFilter)
   console.log('genreFilter', genreFilter)
+  
   if (isError) {
     setAllTracksError(
       'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,

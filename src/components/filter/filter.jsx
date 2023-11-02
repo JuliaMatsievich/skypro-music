@@ -7,6 +7,8 @@ export const Filter = ({ handleChange }) => {
 
   const [isActiveItem, setIsActiveItem] = useState('')
   const [activeFilter, setActiveFilter] = useState('')
+  const [countAuthorFilter, setCountAuthorFilter] = useState(0)
+  const [countGenreFilter, setCountGenreFilter] = useState(0)
 
   const authors = Array.from(new Set(data?.map((track) => track.author)))
   const genres = Array.from(new Set(data?.map((track) => track.genre)))
@@ -29,8 +31,12 @@ export const Filter = ({ handleChange }) => {
     handleChange(type, value)
     if (isActiveItem.includes(value)) {
       setIsActiveItem(isActiveItem.filter((item) => item !== value))
+      if ((type = 'author')) setCountAuthorFilter(countAuthorFilter - 1)
+      if ((type = 'genre')) setCountGenreFilter(countGenreFilter - 1)
     } else {
       setIsActiveItem([...isActiveItem, value])
+      if ((type = 'author')) setCountAuthorFilter(countAuthorFilter + 1)
+      if ((type = 'genre')) setCountGenreFilter(countGenreFilter + 1)
     }
   }
 
@@ -48,23 +54,30 @@ export const Filter = ({ handleChange }) => {
         >
           исполнителю
           {activeFilter === 'author' ? (
-            <S.FilterCategory>
-              <S.FilterWrapper>
-                <S.FilterList>
-                  {authors.map((author, index) => {
-                    return (
-                      <S.FilterItem
-                        $isActive={isActiveItem.includes(author)}
-                        key={index}
-                        onClick={(e) => handleFilterChange(e, 'author', author)}
-                      >
-                        {author}
-                      </S.FilterItem>
-                    )
-                  })}
-                </S.FilterList>
-              </S.FilterWrapper>
-            </S.FilterCategory>
+            <>
+              <S.FilterCategory>
+                <S.FilterWrapper>
+                  <S.FilterList>
+                    {authors.map((author, index) => {
+                      return (
+                        <S.FilterItem
+                          $isActive={isActiveItem.includes(author)}
+                          key={index}
+                          onClick={(e) =>
+                            handleFilterChange(e, 'author', author)
+                          }
+                        >
+                          {author}
+                        </S.FilterItem>
+                      )
+                    })}
+                  </S.FilterList>
+                </S.FilterWrapper>
+              </S.FilterCategory>
+              <S.CountCircle $isVisible={countAuthorFilter !== 0}>
+                {countAuthorFilter}
+              </S.CountCircle>
+            </>
           ) : null}
         </S.FilterButton>
 
@@ -77,23 +90,28 @@ export const Filter = ({ handleChange }) => {
         >
           жанру
           {activeFilter === 'genre' ? (
-            <S.FilterCategory>
-              <S.FilterWrapper>
-                <S.FilterList>
-                  {genres.map((genre, index) => {
-                    return (
-                      <S.FilterItem
-                        $isActive={isActiveItem.includes(genre)}
-                        key={index}
-                        onClick={(e) => handleFilterChange(e, 'genre', genre)}
-                      >
-                        {genre}
-                      </S.FilterItem>
-                    )
-                  })}
-                </S.FilterList>
-              </S.FilterWrapper>
-            </S.FilterCategory>
+            <>
+              <S.FilterCategory>
+                <S.FilterWrapper>
+                  <S.FilterList>
+                    {genres.map((genre, index) => {
+                      return (
+                        <S.FilterItem
+                          $isActive={isActiveItem.includes(genre)}
+                          key={index}
+                          onClick={(e) => handleFilterChange(e, 'genre', genre)}
+                        >
+                          {genre}
+                        </S.FilterItem>
+                      )
+                    })}
+                  </S.FilterList>
+                </S.FilterWrapper>
+              </S.FilterCategory>
+              <S.CountCircle $isVisible={countGenreFilter !== 0}>
+                {countGenreFilter}
+              </S.CountCircle>
+            </>
           ) : null}
         </S.FilterButton>
       </S.ContainerFilters>
