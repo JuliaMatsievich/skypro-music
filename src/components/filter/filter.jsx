@@ -6,6 +6,7 @@ export const Filter = ({ handleChange, handleSort }) => {
   const { data } = useGetAllTracksQuery()
 
   const [isActiveItem, setIsActiveItem] = useState('')
+  const [isActiveSort, setIsActiveSort] = useState('')
   const [activeFilter, setActiveFilter] = useState('')
   const [countAuthorFilter, setCountAuthorFilter] = useState(0)
   const [countGenreFilter, setCountGenreFilter] = useState(0)
@@ -27,7 +28,6 @@ export const Filter = ({ handleChange, handleSort }) => {
     }
   }
 
-  //На каждый item авторов и жанров повесить эту функцию
   const handleFilterChange = (event, type, value) => {
     event.stopPropagation()
     handleChange(type, value)
@@ -45,9 +45,9 @@ export const Filter = ({ handleChange, handleSort }) => {
   const handleSortChange = (event, value) => {
     event.stopPropagation()
     handleSort(value)
-    setIsActiveItem([value])
-    if (isActiveItem.includes(value)) {
-      setIsActiveItem(isActiveItem.filter((item) => item !== value))
+    setIsActiveSort([value])
+    if (isActiveSort.includes(value)) {
+      setIsActiveSort(isActiveSort.filter((item) => item !== value))
       setCountSort(0)
     } else {
       setCountSort(1)
@@ -149,7 +149,7 @@ export const Filter = ({ handleChange, handleSort }) => {
                     {sort.map((item, index) => {
                       return (
                         <S.FilterItem
-                          $isActive={isActiveItem.includes(item)}
+                          $isActive={isActiveSort.includes(item)}
                           key={index}
                           onClick={(e) => handleSortChange(e, item)}
                         >

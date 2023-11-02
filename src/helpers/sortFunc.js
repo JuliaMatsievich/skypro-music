@@ -14,8 +14,5 @@ export const sortTracks = (tracks, type) => {
 			return dateA - dateB;
 		 })
 	}
-	if (type === 'По умолчанию') {
-		sortPlaylist = tracks
-	}
 	return sortPlaylist
 }
