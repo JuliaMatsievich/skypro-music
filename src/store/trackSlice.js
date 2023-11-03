@@ -33,7 +33,7 @@ export const trackSlice = createSlice({
             (el) => el.id === state.currentTrack.id,
           ) + 1
         : state.currentIndex + 1
-        console.log('nextIndex', nextIndex);
+      console.log('nextIndex', nextIndex)
       if (nextIndex > state.currentPlaylist.length - 1 && !state.isShuffled) {
         return state
       }
@@ -56,7 +56,7 @@ export const trackSlice = createSlice({
         return state
       }
       if (prevIndex < 0 && state.isShuffled) {
-        prevIndex = state.currentPlaylist.length-1
+        prevIndex = state.currentPlaylist.length - 1
       }
 
       state.currentIndex = prevIndex
@@ -90,6 +90,14 @@ export const trackSlice = createSlice({
     setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload
     },
+
+    setLike: (state, action) => {
+      state.currentTrack?.stared_user?.push(action.user)
+    },
+
+    setDislike: (state, action) => {
+
+    },
   },
 })
 
@@ -104,6 +112,8 @@ export const {
   setLoopTrack,
   setCurrentPlaylist,
   setFavoritePlaylist,
+  setLike,
+  setDislike,
 } = trackSlice.actions
 
 export default trackSlice.reducer

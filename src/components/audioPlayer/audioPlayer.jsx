@@ -20,13 +20,10 @@ import {
 import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation, useGetAllTracksQuery } from '../../services/trackApi'
 import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
-
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
   const dispatch = useDispatch()
   let audioRef = useRef(null)
-
-  // const [isLike, setIsLike] = useState(false)
 
   const { isLoading } = useGetAllTracksQuery()
 
@@ -43,12 +40,9 @@ export const Player = () => {
   const [volume, setVolume] = useState(0.5)
 
   const intervalRef = useRef()
-  const {isLike, handleLikeDislike} = useLikeDislike(currentTrack, currentTrack.id)
+  const {isLike, handleLikeDislike} = useLikeDislike({currentTrack})
 
-
-  const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
-  const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
-
+  
   const handlePlay = () => {
     if (audioRef) {
       audioRef.current.play().catch((error) => {
@@ -98,32 +92,6 @@ export const Player = () => {
       setVolume(e.target.value)
     }
   }
-
-  // const handleLike = async (id) => {
-  //   await addFavoriteTrack(id)
-  //     .unwrap()
-  //     .catch((error) => {
-  //       navigate('/login')
-  //     })
-  //   setIsLike(true)
-  // }
-
-  // const handleDisLike = async (id) => {
-  //   await deleteFavoriteTrack(id)
-  //     .unwrap()
-  //     .catch((error) => {
-  //       navigate('/login')
-  //     })
-  //   setIsLike(false)
-  // }
-
-  // const handleLikeDislkie = (id) => {
-  //   if (isLike) {
-  //     handleDisLike(id)
-  //   } else {
-  //     handleLike(id)
-  //   }
-  // }
 
   useEffect(() => {
     if (audioRef?.current?.currentTime > 0) {
@@ -265,15 +233,8 @@ export const Player = () => {
                         }
                       ></use>
                     </S.TrackPlayLikeSvg>
+
                   </S.TrackPlayLike>
-                  {/* <S.TrackPlayDisLike className="_btn-icon">
-                    <S.TrackPlayDisLikeSvg
-                      className="track-play__dislike-svg"
-                      alt="dislike"
-                    >
-                      <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
-                    </S.TrackPlayDisLikeSvg>
-                  </S.TrackPlayDisLike> */}
                 </S.TrackPlayLikeDis>
               </S.TrackPlay>
             </S.BarPlayer>
