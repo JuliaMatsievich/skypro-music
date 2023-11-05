@@ -7,7 +7,6 @@ import { Filter } from '../../components/filter/filter'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
 import { filterAuthor, filterGenre } from '../../helpers/filterFunc'
 import { searchMusic } from '../../helpers/searchFunc'
-import { useDispatch } from 'react-redux'
 import { sortTracks } from '../../helpers/sortFunc'
 
 export const MainPage = () => {

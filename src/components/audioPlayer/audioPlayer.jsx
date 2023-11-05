@@ -22,6 +22,7 @@ import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
+  const currentTrackIndex = useSelector((state) => state.currentIndex)
   const dispatch = useDispatch()
   let audioRef = useRef(null)
 
@@ -40,9 +41,10 @@ export const Player = () => {
   const [volume, setVolume] = useState(0.5)
 
   const intervalRef = useRef()
-  const {isLike, handleLikeDislike} = useLikeDislike({currentTrack})
-
   
+  const {isLike, handleLikeDislike} = useLikeDislike(currentTrack, currentTrackIndex)
+
+
   const handlePlay = () => {
     if (audioRef) {
       audioRef.current.play().catch((error) => {

@@ -4,10 +4,12 @@ import { TrackList } from '../../components/trackList/trackList'
 import { useDispatch } from 'react-redux'
 import { useGetSelectionQuery } from '../../services/trackApi'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { searchMusic } from '../../helpers/searchFunc'
+import { UserContext } from '../../App'
 
 export const Category = () => {
+  const {logOut} = useContext(UserContext)
   const params = useParams()
   const category = CATEGORIES.find(
     (category) => category.id === Number(params.id),
@@ -20,7 +22,7 @@ export const Category = () => {
   const { data, isLoading, isError } = useGetSelectionQuery(id)
 
   if (isError) {
-    window.location.href = '/login'
+    logOut()
   }
 
   return (

@@ -4,7 +4,7 @@ import {
   favoritePlaylistSelector,
   setFavoritePlaylist,
 } from '../../store/trackSlice'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
 import {
   useLazyGetFavoriteTracksQuery,
@@ -13,10 +13,12 @@ import {
 import { setToken } from '../../store/tokenSlice'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
 import { searchMusic } from '../../helpers/searchFunc'
+import { UserContext } from '../../App'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
   const refresh = JSON.parse(localStorage.getItem('refresh'))
+  const {logOut} = useContext(UserContext)
   const [fetchFavTracks, { data, isError, error }] =
     useLazyGetFavoriteTracksQuery()
   const [refreshTokenApi, {}] = useRefreshTokenMutation()
@@ -43,7 +45,7 @@ export const Favorites = () => {
             })
         })
       if (error.status === 401) {
-        window.location.navigate('/login')
+        logOut()
       }
     }
   }, [refresh, data, error])

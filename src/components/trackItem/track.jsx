@@ -5,13 +5,9 @@ import {
   currentTrackSelector,
   selectIsPlaying,
   setCurrentPlaylist,
+  setPlayTrack,
 } from '../../store/trackSlice'
 import { setCurrentTrack } from '../../store/trackSlice'
-import {
-  useAddFavoriteTrackMutation,
-  useDeleteFavoriteTrackMutation,
-} from '../../services/trackApi'
-import { useEffect, useState } from 'react'
 import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
 
@@ -19,11 +15,12 @@ export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
    const currentTrack = useSelector(currentTrackSelector)
 
-  const {isLike, handleLikeDislike} = useLikeDislike({track})
+  const {isLike, handleLikeDislike} = useLikeDislike(track,index)
 
   const handlePlayTrack = (track, index) => {
     dispatch(setCurrentTrack({ track, index }))
     dispatch(setCurrentPlaylist(trackList))
+    // dispatch(setPlayTrack())
   }
 
   const isPlaying = useSelector(selectIsPlaying)

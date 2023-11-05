@@ -10,6 +10,11 @@ import { useSelector } from 'react-redux'
 
 export const Layout = () => {
   const currentTrack = useSelector(currentTrackSelector)
+  const isPlaying = useSelector((state) => state.audioPlayer.isPlaying)
+  const currentPlaylist = useSelector(
+    (state) => state.audioPlayer.currentPlaylist,
+  )
+    console.log('layout');
 
   return (
     <S.Wrapper>
@@ -21,7 +26,10 @@ export const Layout = () => {
           </S.MainCenterBlock>
           <SideBar categories={CATEGORIES} />
         </SM.Main>
-        {Object.keys(currentTrack).length ? <Player /> : null}
+        {/* {Object.keys(currentTrack).length ? <Player /> : null} */}
+        {Object.keys(currentPlaylist).length ? <Player /> : null}
+        {/* {isPlaying ? <Player /> : null} */}
+
         <SM.Footer></SM.Footer>
       </SM.Container>
     </S.Wrapper>
