@@ -1,28 +1,54 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  currentPlaylistSelector,
   favoritePlaylistSelector,
   setFavoritePlaylist,
 } from '../../store/trackSlice'
-
+import { useContext, useEffect, useState } from 'react'
 import { TrackList } from '../../components/trackList/trackList'
-import { useLazyGetFavoriteTracksQuery } from '../../services/trackApi'
-
+import {
+  useLazyGetFavoriteTracksQuery,
+  useRefreshTokenMutation,
+} from '../../services/trackApi'
+import { setToken } from '../../store/tokenSlice'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
 import { searchMusic } from '../../helpers/searchFunc'
+import { UserContext } from '../../App'
 
 export const Favorites = () => {
   const dispatch = useDispatch()
-  const [fetchFavTracks, { data }] = useLazyGetFavoriteTracksQuery()
+  const refresh = JSON.parse(localStorage.getItem('refresh'))
+  const {logOut} = useContext(UserContext)
+  const [fetchFavTracks, { data, isError, error }] =
+    useLazyGetFavoriteTracksQuery()
+  const [refreshTokenApi, {}] = useRefreshTokenMutation()
 
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    fetchFavTracks()
-      .unwrap()
-      .then((data) => {
-        dispatch(setFavoritePlaylist(data))
-      })
-  }, [data])
+    try {
+      fetchFavTracks()
+        .unwrap()
+        .then((data) => {
+          dispatch(setFavoritePlaylist(data))
+        })
+    } catch (error) {
+      refreshTokenApi({ refresh })
+        .unwrap()
+        .then((data) => {
+          dispatch(setToken({ accessToken: data.access }))
+          localStorage.getItem('access', JSON.stringify(data.access))
+          fetchFavTracks()
+            .unwrap()
+            .then((data) => {
+              dispatch(setFavoritePlaylist(data))
+            })
+        })
+      if (error.status === 401) {
+        logOut()
+      }
+    }
+  }, [refresh, data, error])
 
   const favTracks = useSelector(favoritePlaylistSelector)
 

@@ -1,10 +1,22 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { BASEURL } from '../constants/url'
 import { baseQueryWithReauth } from './custom'
 
 const user = JSON.parse(localStorage.getItem('user'))
 
 export const trackApi = createApi({
   reducerPath: 'trackApi',
+  // baseQuery: fetchBaseQuery({
+  //   baseUrl: BASEURL,
+  //   tagTypes: ['Tracks'],
+  //   prepareHeaders: (headers, { getState }) => {
+  //     const accessToken = getState().token.accessToken
+  //     if (accessToken) {
+  //       headers.set('authorization', `Bearer ${accessToken}`)
+  //     }
+  //     return headers
+  //   },
+  // }),
   baseQuery: baseQueryWithReauth,
 
   endpoints: (builder) => ({
