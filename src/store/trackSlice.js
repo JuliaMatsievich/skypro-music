@@ -90,21 +90,6 @@ export const trackSlice = createSlice({
     setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload
     },
-
-    setLike: (state,action) => {
-      const {trackId, currentUser} = action.payload
-      if (!state.currentTrack?.stared_user?.find((user) => user.id === currentUser.id)) {
-        // state.currentTrack.stared_user.push(currentUser)
-        state
-      }
-    },
-
-    setDislike: (state, action) => {
-      const {trackId, currentUser} = action.payload
-      if (state.currentTrack?.stared_user?.find((user) => user.id === currentUser.id)) {
-        state.currentTrack?.stared_user?.filter(({id}) => id !== currentUser.id)
-      }
-    },
   },
 })
 
@@ -118,9 +103,7 @@ export const {
   setShuffledTracks,
   setLoopTrack,
   setCurrentPlaylist,
-  setFavoritePlaylist,
-  setLike,
-  setDislike,
+  setFavoritePlaylist 
 } = trackSlice.actions
 
 export default trackSlice.reducer
