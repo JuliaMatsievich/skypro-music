@@ -26,29 +26,34 @@ export const Favorites = () => {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    try {
-      fetchFavTracks()
-        .unwrap()
-        .then((data) => {
-          dispatch(setFavoritePlaylist(data))
-        })
-    } catch (error) {
-      refreshTokenApi({ refresh })
-        .unwrap()
-        .then((data) => {
-          dispatch(setToken({ accessToken: data.access }))
-          localStorage.getItem('access', JSON.stringify(data.access))
-          fetchFavTracks()
-            .unwrap()
-            .then((data) => {
-              dispatch(setFavoritePlaylist(data))
-            })
-        })
-      if (error.status === 401) {
-        logOut()
-      }
-    }
-  }, [refresh, data, error])
+    fetchFavTracks().unwrap()
+    .then((data) => {
+      dispatch(setFavoritePlaylist(data))
+    })
+    // try {
+    //   fetchFavTracks()
+    //     .unwrap()
+    //     .then((data) => {
+    //       dispatch(setFavoritePlaylist(data))
+    //     })
+    // } catch (error) {
+    //   refreshTokenApi({ refresh })
+    //     .unwrap()
+    //     .then((data) => {
+    //       dispatch(setToken({ accessToken: data.access }))
+    //       localStorage.getItem('access', JSON.stringify(data.access))
+    //       fetchFavTracks()
+    //         .unwrap()
+    //         .then((data) => {
+    //           dispatch(setFavoritePlaylist(data))
+    //         })
+    //     })
+    //   if (error.status === 401) {
+    //     logOut()
+    //   }
+    // }
+
+  }, [data])
 
   const favTracks = useSelector(favoritePlaylistSelector)
 

@@ -13,7 +13,7 @@ export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
   const { data, isError, error } = useGetAllTracksQuery()
 
-  const [playlist, setPlaylist] = useState(null)
+  const [playlist, setPlaylist] = useState([])
   const [authorFilter, setAuthorFilter] = useState([])
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
@@ -117,13 +117,13 @@ export const MainPage = () => {
   }, [data])
 
   useEffect(() => {
-    if (filterTracks) {
-      setPlaylist(filterTracks)
-      setDefaultPlaylist(filterTracks)
-    }
     if (search) {
       setPlaylist(searchMusic(data, search))
       setDefaultPlaylist(searchMusic(data, search))
+    }
+    if (filterTracks) {
+      setPlaylist(filterTracks)
+      setDefaultPlaylist(filterTracks)
     }
     if (!search && filterTracks.length === 0) {
       setPlaylist(data)
