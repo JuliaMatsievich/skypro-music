@@ -94,7 +94,8 @@ export const trackSlice = createSlice({
     setLike: (state,action) => {
       const {trackId, currentUser} = action.payload
       if (!state.currentTrack?.stared_user?.find((user) => user.id === currentUser.id)) {
-        state.currentTrack.stared_user.push(currentUser)
+        // state.currentTrack.stared_user.push(currentUser)
+        state
       }
     },
 

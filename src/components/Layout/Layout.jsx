@@ -5,14 +5,14 @@ import { SideBar } from '../sideBar/sideBar'
 import { CATEGORIES } from '../../constants/constants'
 import { Outlet } from 'react-router-dom'
 import { Player } from '../../components/audioPlayer/audioPlayer'
-import { currentTrackSelector } from '../../store/trackSlice'
 import { useSelector } from 'react-redux'
 
 export const Layout = () => {
-  const currentTrack = useSelector(currentTrackSelector)
-  const isPlaying = useSelector((state) => state.audioPlayer.isPlaying)
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
+  )
+  const currentTrack = useSelector(
+    (state) => state.audioPlayer.currentTrack,
   )
 
   return (
@@ -27,8 +27,6 @@ export const Layout = () => {
         </SM.Main>
         {/* {Object.keys(currentTrack).length ? <Player /> : null} */}
         {Object.keys(currentPlaylist).length ? <Player /> : null}
-        {/* {isPlaying ? <Player /> : null} */}
-
         <SM.Footer></SM.Footer>
       </SM.Container>
     </S.Wrapper>

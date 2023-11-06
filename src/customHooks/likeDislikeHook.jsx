@@ -24,11 +24,10 @@ export const useLikeDislike = (track, index) => {
     } else {
       setIsLike(false)
     }
-    if (Object.keys(currentTrack).length !== 0) {
+    if (Object.keys(currentTrack).length !== 0 && currentTrack.id === track.id) {
       dispatch(setCurrentTrack({ track, index }))
     }
-     
-  }, [track])
+  }, [track,currentTrack])
 
   const handleLike = async (id) => {
     await addFavoriteTrack(id)

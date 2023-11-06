@@ -127,7 +127,7 @@ export const Player = () => {
         audioRef.current.removeEventListener('ended', handleNextTrack)
       }
     }
-  }, [currentTrack])
+  }, [currentTrack.track_file])
 
   return (
     <>
