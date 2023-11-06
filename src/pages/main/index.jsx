@@ -117,10 +117,6 @@ export const MainPage = () => {
   }, [data])
 
   useEffect(() => {
-    if (search) {
-      setPlaylist(searchMusic(data, search))
-      setDefaultPlaylist(searchMusic(data, search))
-    }
     if (filterTracks) {
       setPlaylist(filterTracks)
       setDefaultPlaylist(filterTracks)
@@ -132,6 +128,10 @@ export const MainPage = () => {
     if (search && filterTracks) {
       setPlaylist(searchMusic(filterTracks, search))
       setDefaultPlaylist(searchMusic(filterTracks, search))
+    }
+    if (search) {
+      setPlaylist(searchMusic(data, search))
+      setDefaultPlaylist(searchMusic(data, search))
     }
   }, [search, filterTracks])
 
