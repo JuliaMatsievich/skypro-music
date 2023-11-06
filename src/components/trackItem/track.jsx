@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   currentTrackSelector,
   selectIsPlaying,
-  setCurrentPlaylist,
-  setPlayTrack,
+  setCurrentPlaylist
 } from '../../store/trackSlice'
 import { setCurrentTrack } from '../../store/trackSlice'
 import { useLikeDislike } from '../../customHooks/likeDislikeHook'
@@ -20,11 +19,9 @@ export const TrackItem = ({ track, id, index, trackList }) => {
   const handlePlayTrack = (track, index) => {
     dispatch(setCurrentTrack({ track, index }))
     dispatch(setCurrentPlaylist(trackList))
-    // dispatch(setPlayTrack())
   }
 
   const isPlaying = useSelector(selectIsPlaying)
-
 
   return (
     <S.PlayListItem>
@@ -34,13 +31,10 @@ export const TrackItem = ({ track, id, index, trackList }) => {
             <S.TrackTiltleImageSvg alt="music">
               <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
             </S.TrackTiltleImageSvg>
-            {Object.keys(currentTrack).length &&
-            currentTrack.id === id &&
-            isPlaying ? (
-              <S.CurrentTrackIndicateAnimation />
-            ) : Object.keys(currentTrack).length && currentTrack.id === id ? (
-              <S.CurrentTrackIndicate />
-            ) : null}
+            {(Object.keys(currentTrack).length && currentTrack.id === id && isPlaying)
+             ? (<S.CurrentTrackIndicateAnimation />)
+             : (Object.keys(currentTrack).length && currentTrack.id === id)
+             ? (<S.CurrentTrackIndicate />) : null}
           </S.TrackTiltleImage>
           <S.TrackTiltleText onClick={() => handlePlayTrack(track, index)}>
             <S.TrackTiltleLink>{track.name} </S.TrackTiltleLink>

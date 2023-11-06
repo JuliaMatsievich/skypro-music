@@ -106,7 +106,7 @@ export const Player = () => {
         clearInterval(intervalRef.current)
       }
     }
-  }, [currentTrack])
+  }, [currentTrack.track_file])
 
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef?.current?.currentTime)

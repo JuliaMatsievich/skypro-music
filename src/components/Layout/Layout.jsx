@@ -14,7 +14,6 @@ export const Layout = () => {
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
   )
-    console.log('layout');
 
   return (
     <S.Wrapper>
