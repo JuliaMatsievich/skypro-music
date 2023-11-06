@@ -16,7 +16,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
 
   const {isLike, handleLikeDislike} = useLikeDislike(track,index)
 
-  const handlePlayTrack = (track, index) => {
+  const handlePlayTrack = ({ track, index }) => {
     dispatch(setCurrentTrack({ track, index }))
     dispatch(setCurrentPlaylist(trackList))
   }
@@ -36,7 +36,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
              : (Object.keys(currentTrack).length && currentTrack.id === id)
              ? (<S.CurrentTrackIndicate />) : null}
           </S.TrackTiltleImage>
-          <S.TrackTiltleText onClick={() => handlePlayTrack(track, index)}>
+          <S.TrackTiltleText onClick={() => handlePlayTrack({ track, index })}>
             <S.TrackTiltleLink>{track.name} </S.TrackTiltleLink>
           </S.TrackTiltleText>
         </S.TrackTiltle>

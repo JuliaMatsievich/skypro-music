@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { BASEURL } from '../constants/url'
-import { setLike } from '../store/trackSlice'
+import { baseQueryWithReauth } from './custom'
 
 const user = JSON.parse(localStorage.getItem('user'))
 
@@ -17,6 +17,7 @@ export const trackApi = createApi({
       return headers
     },
   }),
+  // baseQuery: baseQueryWithReauth,
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
@@ -28,6 +29,7 @@ export const trackApi = createApi({
               { type: 'Tracks', id: 'LIST' },
             ]
           : [{ type: 'Tracks', id: 'LIST' }],
+          
     }),
 
     getFavoriteTracks: builder.query({

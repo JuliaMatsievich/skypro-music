@@ -11,9 +11,7 @@ export const Layout = () => {
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
   )
-  const currentTrack = useSelector(
-    (state) => state.audioPlayer.currentTrack,
-  )
+
 
   return (
     <S.Wrapper>
@@ -26,7 +24,7 @@ export const Layout = () => {
           <SideBar categories={CATEGORIES} />
         </SM.Main>
         {/* {Object.keys(currentTrack).length ? <Player /> : null} */}
-        {Object.keys(currentPlaylist).length ? <Player /> : null}
+        {Object.keys(currentPlaylist).length ? <Player/> : null}
         <SM.Footer></SM.Footer>
       </SM.Container>
     </S.Wrapper>

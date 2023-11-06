@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { BASEURL } from '../constants/url'
 
 
-const baseQueryWithReauth = async (args, api, extraOptions) => {
+export const baseQueryWithReauth = async (args, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
     baseUrl: BASEURL,
     prepareHeaders: (headers, { getState }) => {
@@ -16,6 +16,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
       return headers
     },
+    tagTypes: ['Tracks']
   })
 
   const result = await baseQuery(args, api, extraOptions)

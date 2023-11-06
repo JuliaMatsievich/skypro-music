@@ -11,6 +11,7 @@ export const trackSlice = createSlice({
     isLoop: false,
     currentPlaylist: [],
     favoritePlaylist: [],
+    currentIndex: '',
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -33,7 +34,6 @@ export const trackSlice = createSlice({
             (el) => el.id === state.currentTrack.id,
           ) + 1
         : state.currentIndex + 1
-      console.log('nextIndex', nextIndex)
       if (nextIndex > state.currentPlaylist.length - 1 && !state.isShuffled) {
         return state
       }

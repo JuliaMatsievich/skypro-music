@@ -17,12 +17,12 @@ import {
   setPrevTrack,
   setShuffledTracks,
 } from '../../store/trackSlice'
-import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation, useGetAllTracksQuery } from '../../services/trackApi'
+import { useGetAllTracksQuery } from '../../services/trackApi'
 import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
 export const Player = () => {
   const currentTrack = useSelector(currentTrackSelector)
-  const currentTrackIndex = useSelector((state) => state.currentIndex)
+  const currentTrackIndex = useSelector((state) => state.audioPlayer.currentIndex)
   const dispatch = useDispatch()
   let audioRef = useRef(null)
 
@@ -41,10 +41,10 @@ export const Player = () => {
   const [volume, setVolume] = useState(0.5)
 
   const intervalRef = useRef()
-  
+
   const {isLike, handleLikeDislike} = useLikeDislike(currentTrack, currentTrackIndex)
 
-
+  
   const handlePlay = () => {
     if (audioRef) {
       audioRef.current.play().catch((error) => {
