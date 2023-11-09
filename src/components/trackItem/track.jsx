@@ -14,10 +14,10 @@ export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
    const currentTrack = useSelector(currentTrackSelector)
 
-  const {isLike, handleLikeDislike} = useLikeDislike(track,index)
+  const {isLike, handleLikeDislike} = useLikeDislike(track, index)
 
-  const handlePlayTrack = ({ track, index }) => {
-    dispatch(setCurrentTrack({ track, index }))
+  const handlePlayTrack = ( {track, index} ) => {
+    dispatch(setCurrentTrack( {track, index} ))
     dispatch(setCurrentPlaylist(trackList))
   }
 

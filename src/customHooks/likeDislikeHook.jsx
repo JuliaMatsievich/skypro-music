@@ -6,7 +6,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentTrackSelector,
-  setCurrentTrack} from '../store/trackSlice'
+  setCurrentPlaylist,
+  setCurrentTrack,
+  setDislike,
+  setLike,
+} from '../store/trackSlice'
 import { UserContext } from '../App'
 
 export const useLikeDislike = (track, index) => {
@@ -17,6 +21,10 @@ export const useLikeDislike = (track, index) => {
   const dispatch = useDispatch()
   const currentTrack = useSelector(currentTrackSelector)
   const { logOut } = useContext(UserContext)
+  const currentPlaylist = useSelector(
+    (state) => state.audioPlayer.currentPlaylist,
+  )
+  const currentUser = useSelector((state) => state.user)
 
   useEffect(() => {
     if (track?.stared_user?.find((user) => user.id === userId)) {
@@ -24,32 +32,53 @@ export const useLikeDislike = (track, index) => {
     } else {
       setIsLike(false)
     }
-    if (Object.keys(currentTrack).length !== 0 && currentTrack.id === track.id) {
+    if (
+      Object.keys(currentTrack).length !== 0 &&
+      currentTrack?.id === track?.id
+    ) {
       dispatch(setCurrentTrack({ track, index }))
+      // dispatch(setCurrentPlaylist(currentPlaylist))
+      // dispatch(setLike({id: track.id, user: currentUser}))
     }
-  }, [track,currentTrack])
+  }, [track, currentTrack.stared_user])
+
+
+  // const liked = Boolean(
+  //   track.stared_user ? track.stared_user.find(({ id }) => id === userId) : [],
+  // )
+
+  // useEffect(() => {
+  //   setIsLike(liked)
+  // }, [liked, track, currentTrack])
 
   const handleLike = async (id) => {
     await addFavoriteTrack(id)
       .unwrap()
       .then(() => {
-        setIsLike(true)
+        // setIsLike(true)
+        // dispatch(setCurrentTrack({ track, index }))
+        // dispatch(setLike({ id: track.id, user: currentUser }))
+        // const newCurrenrPlaylist = {...currentPlaylist, currentPlaylist}
+        // dispatch(setCurrentPlaylist(currentPlaylist))
       })
       .catch((error) => {
         logOut()
       })
+      setIsLike(true)
+      // dispatch(setLike({ id: track.id, user: currentUser }))
   }
 
   const handleDisLike = async (id) => {
     await deleteFavoriteTrack(id)
       .unwrap()
       .then(() => {
-        setIsLike(false)
       })
       .catch((error) => {
         console.log('error', error)
         logOut()
       })
+      setIsLike(false)
+      // dispatch(setDislike({ id: track.id, user: currentUser }))
   }
 
   const handleLikeDislike = (id) => {

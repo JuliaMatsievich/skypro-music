@@ -90,21 +90,18 @@ export const trackSlice = createSlice({
     setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload
     },
+    
+    // setLike: (state, action) => {
+    //   state.currentTrack.stared_user.push(action.payload.user)
+    //   state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.push(action.payload.user)
+    // },
 
-    setLike: (state,action) => {
-      const {trackId, currentUser} = action.payload
-      if (!state.currentTrack?.stared_user?.find((user) => user.id === currentUser.id)) {
-        // state.currentTrack.stared_user.push(currentUser)
-        state
-      }
-    },
+    // setDislike: (state,action) => {
+    //   state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+    //   state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+    //   console.log(action);
+    // }
 
-    setDislike: (state, action) => {
-      const {trackId, currentUser} = action.payload
-      if (state.currentTrack?.stared_user?.find((user) => user.id === currentUser.id)) {
-        state.currentTrack?.stared_user?.filter(({id}) => id !== currentUser.id)
-      }
-    },
   },
 })
 
@@ -120,7 +117,7 @@ export const {
   setCurrentPlaylist,
   setFavoritePlaylist,
   setLike,
-  setDislike,
+  setDislike
 } = trackSlice.actions
 
 export default trackSlice.reducer

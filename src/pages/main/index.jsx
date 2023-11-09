@@ -110,30 +110,32 @@ export const MainPage = () => {
     )
     logOut()
   }
-
-  useEffect(() => {
-    setPlaylist(data)
-    setDefaultPlaylist(data)
-  }, [data])
-
   useEffect(() => {
     if (filterTracks.length !== 0 && !search) {
       setPlaylist(filterTracks)
       setDefaultPlaylist(filterTracks)
-    }
-    if (!search && filterTracks.length === 0) {
+    } 
+    else if (!search && filterTracks.length === 0) {
       setPlaylist(data)
       setDefaultPlaylist(data)
     }
-    if (search && filterTracks.length !==0) {
+    else if (search && filterTracks.length !==0) {
       setPlaylist(searchMusic(filterTracks, search))
       setDefaultPlaylist(searchMusic(filterTracks, search))
     }
-    if (search && filterTracks.length === 0) {
+   else if (search && filterTracks.length === 0) {
       setPlaylist(searchMusic(data, search))
       setDefaultPlaylist(searchMusic(data, search))
     }
-  }, [search, filterTracks])
+    else {
+      setPlaylist(data)
+    }
+  }, [search, filterTracks, data])
+
+  
+  useEffect(() => {
+    setDefaultPlaylist(data)
+  }, [data])
 
   return (
     <>
