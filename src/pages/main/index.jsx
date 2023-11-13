@@ -21,13 +21,7 @@ export const MainPage = () => {
   const [search, setSearch] = useState('')
   const [filterTracks, setFilterTracks] = useState([])
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
-  const currentTrack = useSelector(currentTrackSelector)
-  // const userId = useSelector((state) => state.user.id)
-  const [isLike, setIsLike] = useState(false)
-
-
-
-
+ 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
       if (genreFilter.length === 0) {
@@ -139,16 +133,6 @@ export const MainPage = () => {
   useEffect(() => {
     setDefaultPlaylist(data)
   }, [data])
-
-//  const liked = Boolean(
-//   currentTrack.stared_user ? currentTrack.stared_user.find(({ id }) => id === userId) : [],
-//   )
-//   console.log('liked', liked);
-
-//   useEffect(() => {
-//     // setPlaylist(filterTracks)
-//     setIsLike(liked)
-//   }, [liked, currentTrack])
 
   return (
     <>

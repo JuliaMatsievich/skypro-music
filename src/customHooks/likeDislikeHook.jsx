@@ -40,16 +40,7 @@ export const useLikeDislike = (track, index) => {
       // dispatch(setCurrentPlaylist(currentPlaylist))
       // dispatch(setLike({id: track.id, user: currentUser}))
     }
-  }, [track, currentTrack.stared_user])
-
-
-  // const liked = Boolean(
-  //   track.stared_user ? track.stared_user.find(({ id }) => id === userId) : [],
-  // )
-
-  // useEffect(() => {
-  //   setIsLike(liked)
-  // }, [liked, track, currentTrack])
+  }, [track, currentTrack])
 
   const handleLike = async (id) => {
     await addFavoriteTrack(id)
@@ -58,12 +49,10 @@ export const useLikeDislike = (track, index) => {
         // setIsLike(true)
         // dispatch(setCurrentTrack({ track, index }))
         dispatch(setLike({ id: track.id, user: currentUser }))
-        // const newCurrenrPlaylist = {...currentPlaylist, currentPlaylist}
         // dispatch(setCurrentPlaylist(currentPlaylist))
       })
       .catch((error) => {
         console.log('error', error)
-
         // logOut()
       })
       setIsLike(true)

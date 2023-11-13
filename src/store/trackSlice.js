@@ -103,9 +103,7 @@ export const trackSlice = createSlice({
       if(Object.keys(state.currentTrack).length !== 0) {
         state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
       }
-
       state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
-      console.log(action);
     }
 
   },
