@@ -29,15 +29,14 @@ export const trackApi = createApi({
             ]
           : [{ type: 'Tracks', id: 'LIST' }],
       // async onQueryStarted({}, { dispatch, queryFulfilled }) {
-      //   const patchResult = api.dispatch(
+      //   const patchResult = dispatch(
       //     trackApi.util.updateQueryData('getAllTracks', undefined, (draft) => {
-      //       const updatedTrack = setCurrentTrack(
-      //          draft.track,
-      //         draft.track.id,
+      //       const updatedTracks = setCurrentPlaylist(
+      //          draft.tracks
       //       )
       //       return {
       //         ...draft,
-      //         track: updatedTrack,
+      //         tracks: updatedTracks,
       //       }
       //     }),
       //   )
