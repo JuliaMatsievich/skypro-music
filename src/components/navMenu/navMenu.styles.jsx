@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 
 export const MainNav = styled.nav`
   width: 244px;
-  background-color: #181818;
+  background-color: ${props => props.theme.colors.bg_navmenu};
+  /* background-color: #181818; */
   padding: 20px 0 20px 36px;
 `
 export const NavLogo = styled.div`
@@ -40,7 +41,8 @@ export const BurgerLine = styled.span`
   display: inline-block;
   width: 100%;
   height: 1px;
-  background-color: #d3d3d3;
+  /* background-color: #d3d3d3; */
+  background-color: ${props => props.theme.colors.burger};
 `
 export const NavMenu = styled.div`
   display: block;
@@ -61,8 +63,13 @@ export const MenuItem = styled.li`
 `
 
 export const MenuLink = styled(Link)`
-  color: #ffffff;
+  /* color: #ffffff; */
+  color: ${props => props.theme.colors.text};
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+`
+
+export const ThemeBtn = styled.div`
+  cursor: pointer
 `

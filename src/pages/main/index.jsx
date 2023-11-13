@@ -8,6 +8,9 @@ import { HeaderTrackList } from '../../components/headerTrackListAndSearch/heade
 import { filterAuthor, filterGenre } from '../../helpers/filterFunc'
 import { searchMusic } from '../../helpers/searchFunc'
 import { sortTracks } from '../../helpers/sortFunc'
+import { useThemes } from '../../customHooks/themeHook'
+import { lightTheme, darkTheme } from '../../constants/themes'
+import { ThemeProvider } from 'styled-components'
 
 export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
@@ -19,6 +22,8 @@ export const MainPage = () => {
   const [search, setSearch] = useState('')
   const [filterTracks, setFilterTracks] = useState([])
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
+  const { theme } = useThemes(lightTheme, darkTheme)
+
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
@@ -139,6 +144,7 @@ export const MainPage = () => {
 
   return (
     <>
+      <ThemeProvider theme={theme}>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
       <Filter handleChange={handleChangeFilter} handleSort={handleSort} />
 
@@ -155,6 +161,7 @@ export const MainPage = () => {
           )}
         </>
       )}
+      </ThemeProvider>
     </>
   )
 }
