@@ -57,12 +57,14 @@ export const useLikeDislike = (track, index) => {
       .then(() => {
         // setIsLike(true)
         // dispatch(setCurrentTrack({ track, index }))
-        // dispatch(setLike({ id: track.id, user: currentUser }))
+        dispatch(setLike({ id: track.id, user: currentUser }))
         // const newCurrenrPlaylist = {...currentPlaylist, currentPlaylist}
         // dispatch(setCurrentPlaylist(currentPlaylist))
       })
       .catch((error) => {
-        logOut()
+        console.log('error', error)
+
+        // logOut()
       })
       setIsLike(true)
       // dispatch(setLike({ id: track.id, user: currentUser }))
@@ -72,13 +74,13 @@ export const useLikeDislike = (track, index) => {
     await deleteFavoriteTrack(id)
       .unwrap()
       .then(() => {
+        dispatch(setDislike({ id: track.id, user: currentUser }))
       })
       .catch((error) => {
         console.log('error', error)
-        logOut()
+        // logOut()
       })
       setIsLike(false)
-      // dispatch(setDislike({ id: track.id, user: currentUser }))
   }
 
   const handleLikeDislike = (id) => {

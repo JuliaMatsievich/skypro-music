@@ -91,16 +91,22 @@ export const trackSlice = createSlice({
       state.currentPlaylist = action.payload
     },
     
-    // setLike: (state, action) => {
-    //   state.currentTrack.stared_user.push(action.payload.user)
-    //   state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.push(action.payload.user)
-    // },
+    setLike: (state, action) => {
+      if(Object.keys(state.currentTrack).length !== 0 ) {
+        state.currentTrack.stared_user.push(action.payload.user)
+        console.log('po');
+      }
+      state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.push(action.payload.user)
+    },
 
-    // setDislike: (state,action) => {
-    //   state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
-    //   state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
-    //   console.log(action);
-    // }
+    setDislike: (state,action) => {
+      if(Object.keys(state.currentTrack).length !== 0) {
+        state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+      }
+
+      state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+      console.log(action);
+    }
 
   },
 })

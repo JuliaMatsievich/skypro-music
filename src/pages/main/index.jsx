@@ -8,6 +8,8 @@ import { HeaderTrackList } from '../../components/headerTrackListAndSearch/heade
 import { filterAuthor, filterGenre } from '../../helpers/filterFunc'
 import { searchMusic } from '../../helpers/searchFunc'
 import { sortTracks } from '../../helpers/sortFunc'
+import { currentTrackSelector } from '../../store/trackSlice'
+import { useSelector } from 'react-redux'
 
 export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
@@ -19,6 +21,12 @@ export const MainPage = () => {
   const [search, setSearch] = useState('')
   const [filterTracks, setFilterTracks] = useState([])
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
+  const currentTrack = useSelector(currentTrackSelector)
+  // const userId = useSelector((state) => state.user.id)
+  const [isLike, setIsLike] = useState(false)
+
+
+
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
@@ -114,28 +122,33 @@ export const MainPage = () => {
     if (filterTracks.length !== 0 && !search) {
       setPlaylist(filterTracks)
       setDefaultPlaylist(filterTracks)
-    } 
-    else if (!search && filterTracks.length === 0) {
+    } else if (!search && filterTracks.length === 0) {
       setPlaylist(data)
       setDefaultPlaylist(data)
-    }
-    else if (search && filterTracks.length !==0) {
+    } else if (search && filterTracks.length !== 0) {
       setPlaylist(searchMusic(filterTracks, search))
       setDefaultPlaylist(searchMusic(filterTracks, search))
-    }
-   else if (search && filterTracks.length === 0) {
+    } else if (search && filterTracks.length === 0) {
       setPlaylist(searchMusic(data, search))
       setDefaultPlaylist(searchMusic(data, search))
-    }
-    else {
+    } else {
       setPlaylist(data)
     }
   }, [search, filterTracks, data])
 
-  
   useEffect(() => {
     setDefaultPlaylist(data)
   }, [data])
+
+//  const liked = Boolean(
+//   currentTrack.stared_user ? currentTrack.stared_user.find(({ id }) => id === userId) : [],
+//   )
+//   console.log('liked', liked);
+
+//   useEffect(() => {
+//     // setPlaylist(filterTracks)
+//     setIsLike(liked)
+//   }, [liked, currentTrack])
 
   return (
     <>
