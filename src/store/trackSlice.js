@@ -92,7 +92,8 @@ export const trackSlice = createSlice({
     },
     
     setLike: (state, action) => {
-      if(Object.keys(state.currentTrack).length !== 0 ) {
+      if(Object.keys(state.currentTrack).length !== 0 &&
+      state.currentTrack?.id === action.payload.id) {
         state.currentTrack.stared_user.push(action.payload.user)
         console.log('po');
       }
@@ -100,11 +101,14 @@ export const trackSlice = createSlice({
     },
 
     setDislike: (state,action) => {
-      if(Object.keys(state.currentTrack).length !== 0) {
+      if(Object.keys(state.currentTrack).length !== 0  &&
+      state.currentTrack?.id === action.payload.id) {
         state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
       }
       state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
     }
+
+
 
   },
 })

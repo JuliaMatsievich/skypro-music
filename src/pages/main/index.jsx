@@ -21,7 +21,10 @@ export const MainPage = () => {
   const [search, setSearch] = useState('')
   const [filterTracks, setFilterTracks] = useState([])
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
- 
+  const currentPlaylist = useSelector(
+    (state) => state.audioPlayer.currentPlaylist,
+  )
+
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
       if (genreFilter.length === 0) {
@@ -131,8 +134,11 @@ export const MainPage = () => {
   }, [search, filterTracks, data])
 
   useEffect(() => {
+    if (filterTracks.length !== 0) {
+      setFilterTracks(filterTracks)
+    }
     setDefaultPlaylist(data)
-  }, [data])
+  }, [data,filterTracks])
 
   return (
     <>
