@@ -105,6 +105,7 @@ export const MainPage = () => {
         }
       }
     }
+    return filterTracks
   }
 
   const handleSort = (value) => {
@@ -122,11 +123,11 @@ export const MainPage = () => {
     )
     logOut()
   }
+
   useEffect(() => {
     if (filterTracks.length !== 0 && !search) {
       dispatch(setPlaylist(filterTracks))
       setDefaultPlaylist(filterTracks)
-      console.log('filters',filters);
     } else if (!search && filterTracks.length === 0) {
       dispatch(setPlaylist(data))
       setDefaultPlaylist(data)
@@ -138,15 +139,21 @@ export const MainPage = () => {
       setDefaultPlaylist(searchMusic(data, search))
     } else {
       dispatch(setPlaylist(data))
+      setDefaultPlaylist(data)
     }
   }, [search, filterTracks, data])
 
-  useEffect(() => {
-    if (filterTracks.length !== 0) {
-      handleChangeFilter(filters.type,filters.value)
-    }
-    setDefaultPlaylist(data)
-  }, [data])
+  // useEffect(() => {
+  //   if (filterTracks.length !== 0) {
+  //     handleChangeFilter(filters.type,filters.value)
+  //     console.log('filterTracks22',filterTracks);
+  //     dispatch(setPlaylist(filterTracks))
+  //   }
+
+  // }, [data])
+
+  console.log('filterTracks',filterTracks);
+  console.log('playlist',playlist);
 
   return (
     <>

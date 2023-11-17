@@ -62,7 +62,7 @@ export const useLikeDislike = (track, index) => {
     setIsLike(true)
     dispatch(setLike({ id: track.id, user: currentUser }))
     dispatch(setCurrentPlaylist(currentPlaylist))
-    // dispatch(setPlaylist(playlist))
+    dispatch(setPlaylist(playlist))
   }
 
   const handleDisLike = async (id) => {
@@ -76,7 +76,7 @@ export const useLikeDislike = (track, index) => {
     setIsLike(false)
     dispatch(setDislike({ id: track.id, user: currentUser }))
     dispatch(setCurrentPlaylist(currentPlaylist))
-    // dispatch(setPlaylist(playlist))
+    dispatch(setPlaylist(playlist))
   }
 
   const handleLikeDislike = (id) => {

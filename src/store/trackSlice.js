@@ -103,7 +103,11 @@ export const trackSlice = createSlice({
         state.currentTrack.stared_user.push(action.payload.user)
         console.log('po');
       }
-      state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.push(action.payload.user)
+      state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.push(action.payload.user);
+      // if(Object.keys(state.filterTracks).length !== 0) {
+      //   state?.filterTracks?.find(({id}) => id === action.payload.id)?.stared_user?.push(action.payload.user)
+      // }
+
     },
 
     setDislike: (state,action) => {
@@ -111,7 +115,11 @@ export const trackSlice = createSlice({
       state.currentTrack?.id === action.payload.id) {
         state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
       }
-      state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+      state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id);
+      // if(Object.keys(state.filterTracks).length !== 0) {
+      //   state.filterTracks = state?.filterTracks?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+      // }
+
     },
 
     setPlaylist: (state, action) => {
@@ -125,7 +133,6 @@ export const trackSlice = createSlice({
     setFilters: (state, action) => {
       state.filters.type = action.payload.type;
       state.filters.value = action.payload.value;
-      console.log('actions-filters',action);
     }
   },
 })
