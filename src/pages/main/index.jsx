@@ -24,6 +24,7 @@ export const MainPage = () => {
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
   )
+  const filters = useSelector((state) => state.audioPlayer.filters)
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
@@ -128,17 +129,33 @@ export const MainPage = () => {
     } else if (search && filterTracks.length === 0) {
       setPlaylist(searchMusic(data, search))
       setDefaultPlaylist(searchMusic(data, search))
-    } else {
+    } 
+    else {
       setPlaylist(data)
+      console.log('playlist3',playlist);
+
     }
-  }, [search, filterTracks, data])
+  }, [search, filterTracks,data])
 
   useEffect(() => {
-    if (filterTracks.length !== 0) {
-      setFilterTracks(filterTracks)
+    if (filters.type !=='' && filters.value !=='') {
+      // setPlaylist(filterTracks)
+      handleChangeFilter(filters.type, filters.value)
+      console.log('ah',filterTracks)
+      console.log('playlist',playlist);
     }
     setDefaultPlaylist(data)
-  }, [data,filterTracks])
+  }, [data])
+
+  console.log('playlist2',playlist);
+  console.log('filterTracks2',filterTracks);
+
+
+
+  // useEffect(() => {
+  //   handleChangeFilter(filters.type,filters.value)
+  //   setPlaylist(filterTracks)
+  // },[])
 
   return (
     <>
