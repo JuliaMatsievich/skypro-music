@@ -10,10 +10,11 @@ import {
   setCurrentTrack,
   setDislike,
   setLike,
+  setPlaylist,
 } from '../store/trackSlice'
 import { UserContext } from '../App'
 
-export const useLikeDislike = (track, index, trackList) => {
+export const useLikeDislike = (track, index) => {
   const [addFavoriteTrack, {}] = useAddFavoriteTrackMutation()
   const [deleteFavoriteTrack, {}] = useDeleteFavoriteTrackMutation()
   const [isLike, setIsLike] = useState(false)
@@ -25,6 +26,8 @@ export const useLikeDislike = (track, index, trackList) => {
     (state) => state.audioPlayer.currentPlaylist,
   )
   const currentUser = useSelector((state) => state.user)
+  const playlist = useSelector((state) => state.audioPlayer.playlist)
+
 
   useEffect(() => {
     if (track?.stared_user?.find((user) => user.id === userId)) {
@@ -32,6 +35,8 @@ export const useLikeDislike = (track, index, trackList) => {
     } else {
       setIsLike(false)
     }
+    dispatch(setPlaylist(playlist))
+
     // dispatch(setCurrentPlaylist(trackList))
     // if (
     //   Object.keys(currentTrack).length !== 0 &&
@@ -44,7 +49,7 @@ export const useLikeDislike = (track, index, trackList) => {
     // } else {
     //   // dispatch(setDislike({ id: track.id, user: currentUser }))
     // }
-  }, [track])
+  }, [track,playlist])
 
   const handleLike = async (id) => {
     await addFavoriteTrack(id)
@@ -56,7 +61,8 @@ export const useLikeDislike = (track, index, trackList) => {
       })
     setIsLike(true)
     dispatch(setLike({ id: track.id, user: currentUser }))
-    dispatch(setCurrentPlaylist(trackList))
+    dispatch(setCurrentPlaylist(currentPlaylist))
+    dispatch(setPlaylist(playlist))
   }
 
   const handleDisLike = async (id) => {
@@ -69,7 +75,8 @@ export const useLikeDislike = (track, index, trackList) => {
       })
     setIsLike(false)
     dispatch(setDislike({ id: track.id, user: currentUser }))
-    dispatch(setCurrentPlaylist(trackList))
+    dispatch(setCurrentPlaylist(currentPlaylist))
+    dispatch(setPlaylist(playlist))
   }
 
   const handleLikeDislike = (id) => {

@@ -2,10 +2,12 @@ import { TrackItem } from '../trackItem/track'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
 import { useGetAllTracksQuery } from '../../services/trackApi'
+import { useSelector } from 'react-redux'
 
-export const TrackList = ({ tracks }) => {
+export const TrackList = () => {
   const { isLoading } = useGetAllTracksQuery()
   
+  const playlist = useSelector((state) => state.audioPlayer.playlist)
 
   return (
     <S.CenterBlockContent>
@@ -32,14 +34,13 @@ export const TrackList = ({ tracks }) => {
         </S.ContentPlaylist>
       ) : (
         <S.ContentPlaylist>
-          {tracks?.map((track, index) => {
+          {playlist?.map((track, index) => {
             return (
               <TrackItem
                 key={track.id}
                 track={track}
                 id={track.id}
                 index={index}
-                trackList={tracks}
               />
             )
           })}

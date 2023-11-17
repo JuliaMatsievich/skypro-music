@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import * as S from './filter.styles'
 import { useGetAllTracksQuery } from '../../services/trackApi'
+import { setFilters } from '../../store/trackSlice'
+import { useDispatch } from 'react-redux'
 
 export const Filter = ({ handleChange, handleSort }) => {
   const { data } = useGetAllTracksQuery()
@@ -11,6 +13,7 @@ export const Filter = ({ handleChange, handleSort }) => {
   const [countAuthorFilter, setCountAuthorFilter] = useState(0)
   const [countGenreFilter, setCountGenreFilter] = useState(0)
   const [countSort, setCountSort] = useState(0)
+  const dispatch = useDispatch()
 
   const authors = Array.from(new Set(data?.map((track) => track.author)))
   const genres = Array.from(new Set(data?.map((track) => track.genre)))
@@ -30,6 +33,7 @@ export const Filter = ({ handleChange, handleSort }) => {
 
   const handleFilterChange = (event, type, value) => {
     event.stopPropagation()
+    dispatch(setFilters(type,value))
     handleChange(type, value)
     if (isActiveItem.includes(value)) {
       setIsActiveItem(isActiveItem.filter((item) => item !== value))

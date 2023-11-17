@@ -8,93 +8,98 @@ import { HeaderTrackList } from '../../components/headerTrackListAndSearch/heade
 import { filterAuthor, filterGenre } from '../../helpers/filterFunc'
 import { searchMusic } from '../../helpers/searchFunc'
 import { sortTracks } from '../../helpers/sortFunc'
-import { currentTrackSelector } from '../../store/trackSlice'
-import { useSelector } from 'react-redux'
+import { currentTrackSelector, setFilterTracks, setPlaylist } from '../../store/trackSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 
 export const MainPage = () => {
   const { logOut, allTracksError, setAllTracksError } = useContext(UserContext)
   const { data, isError, error } = useGetAllTracksQuery()
 
-  const [playlist, setPlaylist] = useState([])
+  // const [playlist, setPlaylist] = useState([])
   const [authorFilter, setAuthorFilter] = useState([])
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
-  const [filterTracks, setFilterTracks] = useState([])
+  // const [filterTracks, setFilterTracks] = useState([])
+  const filterTracks = useSelector((state) => state.audioPlayer.filterTracks)
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
   )
+  const playlist = useSelector((state) => state.audioPlayer.playlist)
+
+  const dispatch = useDispatch()
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
       if (genreFilter.length === 0) {
         if (authorFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+          dispatch(setFilterTracks(filterTracks.filter(({ author }) => author !== value)))
           setAuthorFilter(authorFilter.filter((item) => item !== value))
         } else {
-          setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
+          dispatch(setFilterTracks([...filterTracks, ...filterAuthor(data, value)]))
           setAuthorFilter([...authorFilter, value])
         }
       }
 
       if (genreFilter.length !== 0) {
         if (authorFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+          dispatch(setFilterTracks(filterTracks.filter(({ author }) => author !== value)))
           setAuthorFilter(authorFilter.filter((item) => item !== value))
           if (authorFilter.length === 1) {
-            setFilterTracks(
+            dispatch(setFilterTracks(
               data.filter((track) => genreFilter.indexOf(track.genre) > -1),
-            )
+            ))
           }
         }
         if (authorFilter.length === 0) {
-          setFilterTracks(filterAuthor(filterTracks, value))
+          dispatch(setFilterTracks(filterAuthor(filterTracks, value)))
           setAuthorFilter([...authorFilter, value])
         }
         if (authorFilter.length !== 0 && !authorFilter.includes(value)) {
-          setFilterTracks([
+          dispatch(setFilterTracks([
             ...filterTracks,
             ...filterAuthor(
               data.filter((track) => genreFilter.indexOf(track.genre) > -1),
               value,
             ),
-          ])
+          ]))
           setAuthorFilter([...authorFilter, value])
         }
       }
     } else if (type === 'genre') {
       if (authorFilter.length === 0) {
         if (genreFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
+          dispatch(setFilterTracks(filterTracks.filter(({ genre }) => genre !== value)))
           setGenreFilter(genreFilter.filter((item) => item !== value))
         } else {
-          setFilterTracks([...filterTracks, ...filterGenre(data, value)])
+          dispatch(setFilterTracks([...filterTracks, ...filterGenre(data, value)]))
           setGenreFilter([...genreFilter, value])
         }
       }
 
       if (authorFilter.length !== 0) {
         if (genreFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
+          dispatch(setFilterTracks(filterTracks.filter(({ genre }) => genre !== value)))
           setGenreFilter(genreFilter.filter((item) => item !== value))
           if (genreFilter.length === 1) {
-            setFilterTracks(
+            dispatch(setFilterTracks(
               data.filter((track) => authorFilter.indexOf(track.author) > -1),
-            )
+            ))
           }
         }
         if (genreFilter.length === 0) {
-          setFilterTracks(filterGenre(filterTracks, value))
+          dispatch(setFilterTracks(filterGenre(filterTracks, value)))
           setGenreFilter([...genreFilter, value])
         }
         if (genreFilter.length !== 0 && !genreFilter.includes(value)) {
-          setFilterTracks([
+          dispatch(setFilterTracks([
             ...filterTracks,
             ...filterGenre(
               data.filter((track) => authorFilter.indexOf(track.author) > -1),
               value,
             ),
-          ])
+          ]))
           setGenreFilter([...genreFilter, value])
         }
       }
@@ -103,12 +108,13 @@ export const MainPage = () => {
 
   const handleSort = (value) => {
     if (value !== 'По умолчанию') {
-      setPlaylist(sortTracks(playlist, value))
+      dispatch(setPlaylist(sortTracks(playlist, value)))
     } else if (value === 'По умолчанию') {
-      setPlaylist(defaultPlaylist)
+      dispatch(setPlaylist(defaultPlaylist))
     }
   }
 
+ 
   if (isError) {
     setAllTracksError(
       'Не удалось загрузить плейлист, попробуйте позже: ' + error.message,
@@ -117,28 +123,28 @@ export const MainPage = () => {
   }
   useEffect(() => {
     if (filterTracks.length !== 0 && !search) {
-      setPlaylist(filterTracks)
+      dispatch(setPlaylist(filterTracks))
       setDefaultPlaylist(filterTracks)
     } else if (!search && filterTracks.length === 0) {
-      setPlaylist(data)
+      dispatch(setPlaylist(data))
       setDefaultPlaylist(data)
     } else if (search && filterTracks.length !== 0) {
-      setPlaylist(searchMusic(filterTracks, search))
+      dispatch(setPlaylist(searchMusic(filterTracks, search)))
       setDefaultPlaylist(searchMusic(filterTracks, search))
     } else if (search && filterTracks.length === 0) {
-      setPlaylist(searchMusic(data, search))
+      dispatch(setPlaylist(searchMusic(data, search)))
       setDefaultPlaylist(searchMusic(data, search))
     } else {
-      setPlaylist(data)
+      dispatch(setPlaylist(data))
     }
   }, [search, filterTracks, data])
 
   useEffect(() => {
     if (filterTracks.length !== 0) {
-      setFilterTracks(filterTracks)
+      handleChangeFilter(type,value)
     }
     setDefaultPlaylist(data)
-  }, [data,filterTracks])
+  }, [data])
 
   return (
     <>
@@ -154,7 +160,7 @@ export const MainPage = () => {
           searchMusic(filterTracks, search).length === 0 ? (
             <h2>Ничего не найдено</h2>
           ) : (
-            <TrackList tracks={playlist} />
+            <TrackList />
           )}
         </>
       )}

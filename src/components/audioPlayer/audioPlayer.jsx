@@ -43,7 +43,7 @@ export const Player = () => {
 
   const intervalRef = useRef()
 
-  const {isLike, handleLikeDislike} = useLikeDislike(currentTrack, currentTrackIndex, currentPlaylist)
+  const {isLike, handleLikeDislike} = useLikeDislike(currentTrack, currentTrackIndex)
 
   
   const handlePlay = () => {

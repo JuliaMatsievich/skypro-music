@@ -4,6 +4,7 @@ import { sortArray } from '../helpers/shuffleFunc'
 export const trackSlice = createSlice({
   name: 'track',
   initialState: {
+    playlist: [],
     currentTrack: {},
     isPlaying: false,
     isShuffled: false,
@@ -12,6 +13,11 @@ export const trackSlice = createSlice({
     currentPlaylist: [],
     favoritePlaylist: [],
     currentIndex: '',
+    filterTracks: [],
+    filters: {
+      type: '',
+      value: ''
+    }
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -106,10 +112,20 @@ export const trackSlice = createSlice({
         state.currentTrack.stared_user = state?.currentTrack?.stared_user?.filter(({id}) => id !== action.payload.user.id)
       }
       state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
+    },
+
+    setPlaylist: (state, action) => {
+      state.playlist = action.payload
+    },
+
+    setFilterTracks: (state, action) => {
+      state.filterTracks = action.payload
+    },
+
+    setFilters: (state, action) => {
+      state.filters.type = action.payload.type;
+      state.filters.value = action.payload.value;
     }
-
-
-
   },
 })
 
@@ -125,7 +141,10 @@ export const {
   setCurrentPlaylist,
   setFavoritePlaylist,
   setLike,
-  setDislike
+  setDislike,
+  setPlaylist,
+  setFilterTracks,
+  setFilters
 } = trackSlice.actions
 
 export default trackSlice.reducer

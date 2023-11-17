@@ -13,12 +13,13 @@ import { useLikeDislike } from '../../customHooks/likeDislikeHook'
 export const TrackItem = ({ track, id, index, trackList }) => {
   const dispatch = useDispatch()
    const currentTrack = useSelector(currentTrackSelector)
+   const playlist = useSelector((state) => state.audioPlayer.playlist)
 
   const {isLike, handleLikeDislike} = useLikeDislike(track, index,trackList)
 
   const handlePlayTrack = ( {track, index} ) => {
     dispatch(setCurrentTrack( {track, index} ))
-    dispatch(setCurrentPlaylist(trackList))
+    dispatch(setCurrentPlaylist(playlist))
   }
 
   const isPlaying = useSelector(selectIsPlaying)
