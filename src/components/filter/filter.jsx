@@ -33,7 +33,7 @@ export const Filter = ({ handleChange, handleSort }) => {
 
   const handleFilterChange = (event, type, value) => {
     event.stopPropagation()
-    dispatch(setFilters(type,value))
+    dispatch(setFilters({type,value}))
     handleChange(type, value)
     if (isActiveItem.includes(value)) {
       setIsActiveItem(isActiveItem.filter((item) => item !== value))

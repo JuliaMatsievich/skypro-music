@@ -27,6 +27,7 @@ export const MainPage = () => {
     (state) => state.audioPlayer.currentPlaylist,
   )
   const playlist = useSelector((state) => state.audioPlayer.playlist)
+  const filters = useSelector((state) => state.audioPlayer.filters)
 
   const dispatch = useDispatch()
 
@@ -125,6 +126,7 @@ export const MainPage = () => {
     if (filterTracks.length !== 0 && !search) {
       dispatch(setPlaylist(filterTracks))
       setDefaultPlaylist(filterTracks)
+      console.log('filters',filters);
     } else if (!search && filterTracks.length === 0) {
       dispatch(setPlaylist(data))
       setDefaultPlaylist(data)
@@ -141,7 +143,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     if (filterTracks.length !== 0) {
-      handleChangeFilter(type,value)
+      handleChangeFilter(filters.type,filters.value)
     }
     setDefaultPlaylist(data)
   }, [data])
