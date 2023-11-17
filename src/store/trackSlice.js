@@ -125,6 +125,7 @@ export const trackSlice = createSlice({
     setFilters: (state, action) => {
       state.filters.type = action.payload.type;
       state.filters.value = action.payload.value;
+      console.log('actions-filters',action);
     }
   },
 })
