@@ -132,20 +132,21 @@ export const MainPage = () => {
     } 
     else {
       setPlaylist(data)
-      console.log('playlist3',playlist);
+      setDefaultPlaylist(data)
+      // console.log('playlist3',playlist);
 
     }
   }, [search, filterTracks,data])
 
-  useEffect(() => {
-    if (filters.type !=='' && filters.value !=='') {
-      // setPlaylist(filterTracks)
-      handleChangeFilter(filters.type, filters.value)
-      console.log('ah',filterTracks)
-      console.log('playlist',playlist);
-    }
-    setDefaultPlaylist(data)
-  }, [data])
+  // useEffect(() => {
+  //   if (filters.type !=='' && filters.value !=='') {
+  //     // setPlaylist(filterTracks)
+  //     handleChangeFilter(filters.type, filters.value)
+  //     console.log('ah',filterTracks)
+  //     console.log('playlist',playlist);
+  //   }
+  //   setDefaultPlaylist(data)
+  // }, [data])
 
   console.log('playlist2',playlist);
   console.log('filterTracks2',filterTracks);
