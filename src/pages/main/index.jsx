@@ -134,7 +134,6 @@ export const MainPage = () => {
       setPlaylist(data)
       setDefaultPlaylist(data)
       // console.log('playlist3',playlist);
-
     }
   }, [search, filterTracks,data])
 
