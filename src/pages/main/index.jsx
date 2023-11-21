@@ -19,7 +19,7 @@ export const MainPage = () => {
   const [authorFilter, setAuthorFilter] = useState([])
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
-  const [filterTracks, setFilterTracks] = useState([])
+  // const [filterTracks, setFilterTracks] = useState([])
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
@@ -27,80 +27,96 @@ export const MainPage = () => {
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
-      if (genreFilter.length === 0) {
-        if (authorFilter.includes(value)) {
-          // setFilterTracks(filterTracks.filter(({ author }) => author !== value))
-          setAuthorFilter(authorFilter.filter((item) => item !== value))
-        } else {
-          // setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
-          setAuthorFilter([...authorFilter, value])
-        }
+      if (authorFilter.includes(value)) {
+        setAuthorFilter(authorFilter.filter((item) => item !== value))
+      } else {
+        setAuthorFilter([...authorFilter, value])
       }
-
-      if (genreFilter.length !== 0) {
-        if (authorFilter.includes(value)) {
-          // setFilterTracks(filterTracks.filter(({ author }) => author !== value))
-          setAuthorFilter(authorFilter.filter((item) => item !== value))
-          if (authorFilter.length === 1) {
-            setFilterTracks(
-              data.filter((track) => genreFilter.indexOf(track.genre) > -1),
-            )
-          }
-        }
-        if (authorFilter.length === 0) {
-          // setFilterTracks(filterAuthor(filterTracks, value))
-          setAuthorFilter([...authorFilter, value])
-        }
-        if (authorFilter.length !== 0 && !authorFilter.includes(value)) {
-          // setFilterTracks([
-          //   ...filterTracks,
-          //   ...filterAuthor(
-          //     data.filter((track) => genreFilter.indexOf(track.genre) > -1),
-          //     value,
-          //   ),
-          // ])
-          setAuthorFilter([...authorFilter, value])
-        }
-      }
-    } else if (type === 'genre') {
-      if (authorFilter.length === 0) {
-        if (genreFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
-          setGenreFilter(genreFilter.filter((item) => item !== value))
-        } else {
-          setFilterTracks([...filterTracks, ...filterGenre(data, value)])
-          setGenreFilter([...genreFilter, value])
-        }
-      }
-
-      if (authorFilter.length !== 0) {
-        if (genreFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
-          setGenreFilter(genreFilter.filter((item) => item !== value))
-          if (genreFilter.length === 1) {
-            setFilterTracks(
-              data.filter((track) => authorFilter.indexOf(track.author) > -1),
-            )
-          }
-        }
-        if (genreFilter.length === 0) {
-          setFilterTracks(filterGenre(filterTracks, value))
-          setGenreFilter([...genreFilter, value])
-        }
-        if (genreFilter.length !== 0 && !genreFilter.includes(value)) {
-          setFilterTracks([
-            ...filterTracks,
-            ...filterGenre(
-              data.filter((track) => authorFilter.indexOf(track.author) > -1),
-              value,
-            ),
-          ])
-          setGenreFilter([...genreFilter, value])
-        }
+    }
+    if (type === 'genre') {
+      if (genreFilter.includes(value)) {
+        setGenreFilter(genreFilter.filter((item) => item !== value))
+      } else {
+        setGenreFilter([...genreFilter, value])
       }
     }
   }
 
+  // const handleChangeFilter = (type, value) => {
+  //   if (type === 'author') {
+  //     if (genreFilter.length === 0) {
+  //       if (authorFilter.includes(value)) {
+  //         // setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+  //         setAuthorFilter(authorFilter.filter((item) => item !== value))
+  //       } else {
+  //         // setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
+  //         setAuthorFilter([...authorFilter, value])
+  //       }
+  //     }
+
+  //     if (genreFilter.length !== 0) {
+  //       if (authorFilter.includes(value)) {
+  //         // setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+  //         setAuthorFilter(authorFilter.filter((item) => item !== value))
+  //         if (authorFilter.length === 1) {
+  //           // setFilterTracks(
+  //           //   data.filter((track) => genreFilter.indexOf(track.genre) > -1),
+  //           // )
+  //         }
+  //       }
+  //       if (authorFilter.length === 0) {
+  //         // setFilterTracks(filterAuthor(filterTracks, value))
+  //         setAuthorFilter([...authorFilter, value])
+  //       }
+  //       if (authorFilter.length !== 0 && !authorFilter.includes(value)) {
+  //         // setFilterTracks([
+  //         //   ...filterTracks,
+  //         //   ...filterAuthor(
+  //         //     data.filter((track) => genreFilter.indexOf(track.genre) > -1),
+  //         //     value,
+  //         //   ),
+  //         // ])
+  //         setAuthorFilter([...authorFilter, value])
+  //       }
+  //     }
+  //   } else if (type === 'genre') {
+  //     if (authorFilter.length === 0) {
+  //       if (genreFilter.includes(value)) {
+  //         // setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
+  //         setGenreFilter(genreFilter.filter((item) => item !== value))
+  //       } else {
+  //         // setFilterTracks([...filterTracks, ...filterGenre(data, value)])
+  //         setGenreFilter([...genreFilter, value])
+  //       }
+  //     }
+
+  //     if (authorFilter.length !== 0) {
+  //       if (genreFilter.includes(value)) {
+  //         // setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
+  //         setGenreFilter(genreFilter.filter((item) => item !== value))
+  //         if (genreFilter.length === 1) {
+  //           // setFilterTracks(
+  //           //   data.filter((track) => authorFilter.indexOf(track.author) > -1),
+  //           // )
+  //         }
+  //       }
+  //       if (genreFilter.length === 0) {
+  //         // setFilterTracks(filterGenre(filterTracks, value))
+  //         setGenreFilter([...genreFilter, value])
+  //       }
+  //       if (genreFilter.length !== 0 && !genreFilter.includes(value)) {
+  //         // setFilterTracks([
+  //         //   ...filterTracks,
+  //         //   ...filterGenre(
+  //         //     data.filter((track) => authorFilter.indexOf(track.author) > -1),
+  //         //     value,
+  //         //   ),
+  //         // ])
+  //         setGenreFilter([...genreFilter, value])
+  //       }
+  //     }
+  //   }
+  // }
 
   const handleSort = (value) => {
     if (value !== 'По умолчанию') {
@@ -117,41 +133,68 @@ export const MainPage = () => {
     logOut()
   }
 
-
-  const filterPlaylist = () => {
-    if (authorFilter.length > 0) {
-      setFilterTracks(data.filter(({author}) => authorFilter.includes(author)))
-    }
-    
- }
+  // const filterPlaylist = () => {
+  //   setFilterTracks(data.filter(({ author }) => authorFilter.includes(author)))
+  //   console.log('filetr', filterTracks)
+  //   // if (authorFilter.length > 0) {
+  //   return
+  //   // }
+  // }
 
   useEffect(() => {
-    if (authorFilter.length !== 0 && !search) {
-      setPlaylist(filterTracks)
-      setDefaultPlaylist(filterTracks)
-      
-    } else if (!search && filterTracks.length === 0) {
-      setPlaylist(data)
-      setDefaultPlaylist(data)
-    } else if (search && filterTracks.length !== 0) {
-      setPlaylist(searchMusic(filterTracks, search))
-      setDefaultPlaylist(searchMusic(filterTracks, search))
-    } else if (search && filterTracks.length === 0) {
-      setPlaylist(searchMusic(data, search))
-      setDefaultPlaylist(searchMusic(data, search))
-    } 
-    else {
-      setPlaylist(data)
-      setDefaultPlaylist(data)
-      // console.log('playlist3',playlist);
+    if (search) {
+      if (authorFilter.length !== 0) {
+        // setFilterTracks(
+        //   data.filter(({ author }) => authorFilter.includes(author)),
+        // )
+        setPlaylist(searchMusic(data.filter(({ author }) => authorFilter.includes(author)), search))
+        setDefaultPlaylist(searchMusic(data.filter(({ author }) => authorFilter.includes(author)), search))
+      }
+      if (authorFilter.length === 0) {
+        setPlaylist(searchMusic(data, search))
+        setDefaultPlaylist(searchMusic(data, search))
+      }
     }
+    if (!search) {
+      if (authorFilter.length !== 0) {
+        // setFilterTracks(
+        //   data.filter(({ author }) => authorFilter.includes(author)),
+        // )
+        setPlaylist(data.filter(({ author }) => authorFilter.includes(author)))
+        setDefaultPlaylist(data.filter(({ author }) => authorFilter.includes(author)))
+      }
+      if (authorFilter.length === 0) {
+        setPlaylist(data)
+        setDefaultPlaylist(data)
+      }
+    } else {
+      setPlaylist(data)
+      setDefaultPlaylist(data)
+    }
+  }, [search, authorFilter, data])
 
-  }, [search, filterTracks, data])
+  // useEffect(() => {
+  //   if (authorFilter.length !== 0 && !search) {
+  //     setPlaylist(filterTracks)
+  //     setDefaultPlaylist(filterTracks)
+  //   } else if (!search && filterTracks.length === 0) {
+  //     setPlaylist(data)
+  //     setDefaultPlaylist(data)
+  //   } else if (search && filterTracks.length !== 0) {
+  //     setPlaylist(searchMusic(filterTracks, search))
+  //     setDefaultPlaylist(searchMusic(filterTracks, search))
+  //   } else if (search && filterTracks.length === 0) {
+  //     setPlaylist(searchMusic(data, search))
+  //     setDefaultPlaylist(searchMusic(data, search))
+  //   } else {
+  //     setPlaylist(data)
+  //     setDefaultPlaylist(data)
+  //     // console.log('playlist3',playlist);
+  //   }
+  // }, [search, filterTracks, data])
 
-
- console.log('authorFilter',authorFilter);
+  // console.log('authorFilter', authorFilter)
   // console.log('filterTracks2',filterTracks);
-
 
   return (
     <>
