@@ -1,6 +1,6 @@
 import { TrackList } from '../../components/trackList/trackList'
 import { ErrorMessage } from '../../components/errors/error'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 import { Filter } from '../../components/filter/filter'
@@ -24,23 +24,22 @@ export const MainPage = () => {
   const currentPlaylist = useSelector(
     (state) => state.audioPlayer.currentPlaylist,
   )
-  const filters = useSelector((state) => state.audioPlayer.filters)
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
       if (genreFilter.length === 0) {
         if (authorFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+          // setFilterTracks(filterTracks.filter(({ author }) => author !== value))
           setAuthorFilter(authorFilter.filter((item) => item !== value))
         } else {
-          setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
+          // setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
           setAuthorFilter([...authorFilter, value])
         }
       }
 
       if (genreFilter.length !== 0) {
         if (authorFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
+          // setFilterTracks(filterTracks.filter(({ author }) => author !== value))
           setAuthorFilter(authorFilter.filter((item) => item !== value))
           if (authorFilter.length === 1) {
             setFilterTracks(
@@ -49,17 +48,17 @@ export const MainPage = () => {
           }
         }
         if (authorFilter.length === 0) {
-          setFilterTracks(filterAuthor(filterTracks, value))
+          // setFilterTracks(filterAuthor(filterTracks, value))
           setAuthorFilter([...authorFilter, value])
         }
         if (authorFilter.length !== 0 && !authorFilter.includes(value)) {
-          setFilterTracks([
-            ...filterTracks,
-            ...filterAuthor(
-              data.filter((track) => genreFilter.indexOf(track.genre) > -1),
-              value,
-            ),
-          ])
+          // setFilterTracks([
+          //   ...filterTracks,
+          //   ...filterAuthor(
+          //     data.filter((track) => genreFilter.indexOf(track.genre) > -1),
+          //     value,
+          //   ),
+          // ])
           setAuthorFilter([...authorFilter, value])
         }
       }
@@ -102,6 +101,7 @@ export const MainPage = () => {
     }
   }
 
+
   const handleSort = (value) => {
     if (value !== 'По умолчанию') {
       setPlaylist(sortTracks(playlist, value))
@@ -116,10 +116,20 @@ export const MainPage = () => {
     )
     logOut()
   }
+
+
+  const filterPlaylist = () => {
+    if (authorFilter.length > 0) {
+      setFilterTracks(data.filter(({author}) => authorFilter.includes(author)))
+    }
+    
+ }
+
   useEffect(() => {
-    if (filterTracks.length !== 0 && !search) {
+    if (authorFilter.length !== 0 && !search) {
       setPlaylist(filterTracks)
       setDefaultPlaylist(filterTracks)
+      
     } else if (!search && filterTracks.length === 0) {
       setPlaylist(data)
       setDefaultPlaylist(data)
@@ -135,27 +145,13 @@ export const MainPage = () => {
       setDefaultPlaylist(data)
       // console.log('playlist3',playlist);
     }
-  }, [search, filterTracks,data])
 
-  // useEffect(() => {
-  //   if (filters.type !=='' && filters.value !=='') {
-  //     // setPlaylist(filterTracks)
-  //     handleChangeFilter(filters.type, filters.value)
-  //     console.log('ah',filterTracks)
-  //     console.log('playlist',playlist);
-  //   }
-  //   setDefaultPlaylist(data)
-  // }, [data])
-
-  console.log('playlist2',playlist);
-  console.log('filterTracks2',filterTracks);
+  }, [search, filterTracks, data])
 
 
+ console.log('authorFilter',authorFilter);
+  // console.log('filterTracks2',filterTracks);
 
-  // useEffect(() => {
-  //   handleChangeFilter(filters.type,filters.value)
-  //   setPlaylist(filterTracks)
-  // },[])
 
   return (
     <>

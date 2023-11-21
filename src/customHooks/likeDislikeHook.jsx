@@ -32,13 +32,15 @@ export const useLikeDislike = (track, index, trackList) => {
     } else {
       setIsLike(false)
     }
+    
     // dispatch(setCurrentPlaylist(trackList))
     // if (
     //   Object.keys(currentTrack).length !== 0 &&
     //   currentTrack?.id === track?.id
     // ) {
     //   // dispatch(setCurrentTrack({ track, index }))
-    //   // dispatch(setCurrentPlaylist(trackList))
+    //   dispatch(setCurrentPlaylist(trackList))
+    // }
 
     //   // dispatch(setLike({ id: track.id, user: currentUser }))
     // } else {

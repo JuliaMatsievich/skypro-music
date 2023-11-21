@@ -12,10 +12,6 @@ export const trackSlice = createSlice({
     currentPlaylist: [],
     favoritePlaylist: [],
     currentIndex: '',
-    filters: {
-      type:'',
-      value: ''
-    }
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -111,11 +107,6 @@ export const trackSlice = createSlice({
       }
       state.currentPlaylist = state?.currentPlaylist?.find(({id}) => id === action.payload.id)?.stared_user?.filter(({id}) => id !== action.payload.user.id)
     },
-
-    setFilters: (state,action) => {
-      state.filters.type = action.payload.type;
-      state.filters.value = action.payload.value
-    }
   },
 })
 
@@ -131,8 +122,7 @@ export const {
   setCurrentPlaylist,
   setFavoritePlaylist,
   setLike,
-  setDislike,
-  setFilters
+  setDislike
 } = trackSlice.actions
 
 export default trackSlice.reducer
