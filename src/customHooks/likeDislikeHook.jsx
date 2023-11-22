@@ -4,10 +4,7 @@ import {
   useDeleteFavoriteTrackMutation,
 } from '../services/trackApi'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  currentTrackSelector,
-  setCurrentPlaylist,
-  setCurrentTrack,
+import { setCurrentPlaylist,
   setDislike,
   setLike,
 } from '../store/trackSlice'
@@ -19,11 +16,7 @@ export const useLikeDislike = (track, index, trackList) => {
   const [isLike, setIsLike] = useState(false)
   const userId = useSelector((state) => state.user.id)
   const dispatch = useDispatch()
-  const currentTrack = useSelector(currentTrackSelector)
   const { logOut } = useContext(UserContext)
-  const currentPlaylist = useSelector(
-    (state) => state.audioPlayer.currentPlaylist,
-  )
   const currentUser = useSelector((state) => state.user)
 
   useEffect(() => {
@@ -32,20 +25,6 @@ export const useLikeDislike = (track, index, trackList) => {
     } else {
       setIsLike(false)
     }
-    
-    // dispatch(setCurrentPlaylist(trackList))
-    // if (
-    //   Object.keys(currentTrack).length !== 0 &&
-    //   currentTrack?.id === track?.id
-    // ) {
-    //   // dispatch(setCurrentTrack({ track, index }))
-    //   dispatch(setCurrentPlaylist(trackList))
-    // }
-
-    //   // dispatch(setLike({ id: track.id, user: currentUser }))
-    // } else {
-    //   // dispatch(setDislike({ id: track.id, user: currentUser }))
-    // }
   }, [track])
 
   const handleLike = async (id) => {
