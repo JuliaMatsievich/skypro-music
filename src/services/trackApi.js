@@ -1,21 +1,22 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { BASEURL } from './url'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { baseQueryWithReauth } from './custom'
 
 const user = JSON.parse(localStorage.getItem('user'))
 
 export const trackApi = createApi({
   reducerPath: 'trackApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASEURL,
-    tagTypes: ['Tracks', 'FavTracks'],
-    prepareHeaders: (headers, { getState }) => {
-      const accessToken = getState().token.accessToken
-      if (accessToken) {
-        headers.set('authorization', `Bearer ${accessToken}`)
-      }
-      return headers
-    },
-  }),
+  // baseQuery: fetchBaseQuery({
+  //   baseUrl: BASEURL,
+  //   tagTypes: ['Tracks'],
+  //   prepareHeaders: (headers, { getState }) => {
+  //     const accessToken = getState().token.accessToken
+  //     if (accessToken) {
+  //       headers.set('authorization', `Bearer ${accessToken}`)
+  //     }
+  //     return headers
+  //   },
+  // }),
+  baseQuery: baseQueryWithReauth,
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
@@ -27,6 +28,24 @@ export const trackApi = createApi({
               { type: 'Tracks', id: 'LIST' },
             ]
           : [{ type: 'Tracks', id: 'LIST' }],
+      // async onQueryStarted({}, { dispatch, queryFulfilled }) {
+      //   const patchResult = dispatch(
+      //     trackApi.util.updateQueryData('getAllTracks', undefined, (draft) => {
+      //       const updatedTracks = setCurrentPlaylist(
+      //          draft.tracks
+      //       )
+      //       return {
+      //         ...draft,
+      //         tracks: updatedTracks,
+      //       }
+      //     }),
+      //   )
+      //   try {
+      //     await queryFulfilled
+      //   } catch {
+      //     patchResult.undo()
+      //   }
+      // },
     }),
 
     getFavoriteTracks: builder.query({
@@ -34,16 +53,16 @@ export const trackApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'FavTracks', id })),
-              { type: 'FavTracks', id: 'LIST' },
+              ...result.map(({ id }) => ({ type: 'Tracks', id })),
+              { type: 'Tracks', id: 'LIST' },
             ]
-          : [{ type: 'FavTracks', id: 'LIST' }],
+          : [{ type: 'Tracks', id: 'LIST' }],
       transformResponse: (response) => {
         const tracks = response.map((track) => {
-          return ({...track, stared_user:[user]})
+          return { ...track, stared_user: [user] }
         })
         return tracks
-      } 
+      },
     }),
 
     addFavoriteTrack: builder.mutation({
@@ -51,7 +70,7 @@ export const trackApi = createApi({
         url: `/catalog/track/${id}/favorite/`,
         method: 'POST',
       }),
-      invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Tracks', id: 'LIST' }],
     }),
 
     deleteFavoriteTrack: builder.mutation({
@@ -59,10 +78,68 @@ export const trackApi = createApi({
         url: `/catalog/track/${id}/favorite/`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'FavTracks', id: 'LIST' }, { type: 'Tracks', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Tracks', id: 'LIST' }],
     }),
 
-    
+    getSelection: builder.query({
+      query: (id) => ({
+        url: `/catalog/selection/${id}/`,
+        method: 'GET',
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result?.map(({ id }) => ({ type: 'Tracks', id })),
+              { type: 'Tracks', id: 'LIST' },
+            ]
+          : [{ type: 'Tracks', id: 'LIST' }],
+      transformResponse: (response) => response.items,
+    }),
+
+    //userApi
+    signUp: builder.mutation({
+      query: (body) => ({
+        url: '/user/signup/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
+
+    logIn: builder.mutation({
+      query: (body) => ({
+        url: '/user/login/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
+
+    getToken: builder.mutation({
+      query: (body) => ({
+        url: '/user/token/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
+
+    refreshToken: builder.mutation({
+      query: (body) => ({
+        url: '/user/token/refresh/',
+        body,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+    }),
   }),
 })
 
@@ -72,4 +149,9 @@ export const {
   useLazyGetFavoriteTracksQuery,
   useAddFavoriteTrackMutation,
   useDeleteFavoriteTrackMutation,
+  useGetSelectionQuery,
+  useLogInMutation,
+  useGetTokenMutation,
+  useSignUpMutation,
+  useRefreshTokenMutation,
 } = trackApi

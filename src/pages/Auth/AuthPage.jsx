@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom'
 import * as S from './AuthPage.styles'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { getLogin, getSignup, getToken, refreshToken } from '../../api/apiUser'
 import { UserContext } from '../../App'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../store/tokenSlice'
+import {
+  useGetTokenMutation,
+  useLogInMutation,
+  useSignUpMutation,
+} from '../../services/trackApi'
 
 export default function AuthPage({ isLoginMode }) {
-  const { setIsUser, logIn } = useContext(UserContext)
   const dispatch = useDispatch()
 
   const [error, setError] = useState(null)
@@ -22,28 +25,42 @@ export default function AuthPage({ isLoginMode }) {
   const passwordRef = useRef(null)
   const repeatPasswordRef = useRef(null)
 
+  const [logInApi, {}] = useLogInMutation()
+  const [getToken, {}] = useGetTokenMutation()
+  const [signUpApi, {}] = useSignUpMutation()
+
   const handleLogin = async ({ email, password }) => {
+    setIsLoadingUser(true)
+
     try {
-      setIsLoadingUser(true)
-      const user = await getLogin({ email, password })
-      const { access, refresh } = await getToken({ email, password })
-
-      localStorage.setItem('access', JSON.stringify(access))
-      localStorage.setItem('refresh', JSON.stringify(refresh))
-      localStorage.setItem('user', JSON.stringify(user))
-
-      setIsUser(true)
-      logIn()
-      dispatch(setToken({ access, refresh }))
-
-      window.location.href = '/'
+      await getToken({ email, password })
+        .unwrap()
+        .then((token) => {
+          logInApi({ email, password })
+            .unwrap()
+            .then((data) => {
+              localStorage.setItem('user', JSON.stringify(data))
+              setIsLoadingUser(false)
+              localStorage.setItem('access', JSON.stringify(token.access))
+              localStorage.setItem('refresh', JSON.stringify(token.refresh))
+              dispatch(setToken(token))
+              window.location.href = '/'
+              // console.log(token.access);
+            })
+        })
     } catch (error) {
-      setError(error.message)
-
+      if (error.status === 500) {
+        setError('Ошибка сервера')
+      }
+      if (error.status === 400) {
+        setError('Должны быть заполнены все поля')
+      }
+      if (error.status === 401) {
+        setError('Пользователь с таким email или паролем не найден')
+      }
     } finally {
       setIsLoadingUser(false)
     }
-
   }
 
   const handleRegister = async () => {
@@ -66,36 +83,35 @@ export default function AuthPage({ isLoginMode }) {
     }
 
     try {
-      const user = await getSignup({ email, password, username })
-      const { access, refresh } = await getToken({ email, password })
-
-      localStorage.setItem('access', JSON.stringify(access))
-      localStorage.setItem('refresh', JSON.stringify(refresh))
-      localStorage.setItem('user', JSON.stringify(user))
-
-      logIn()
-      setIsUser(true)
-      dispatch(setToken({ access, refresh }))
-
-      window.location.href = '/'
+      await signUpApi({ email, password, username })
+        .unwrap()
+        .then((data) => {
+          getToken({ email, password })
+            .unwrap()
+            .then((token) => {
+              localStorage.setItem('user', JSON.stringify(data))
+              localStorage.setItem('access', JSON.stringify(token.access))
+              localStorage.setItem('refresh', JSON.stringify(token.refresh))
+              dispatch(setToken(token))
+              window.location.href = '/'
+            })
+        })
     } catch (error) {
-      const errorObject = JSON.parse(error.message)
-      if (errorObject.username) {
-        setError(errorObject.username)
-        return
+      if (error.status === 500) {
+        setError('Ошибка сервера')
       }
-      if (errorObject.email) {
-        setError(errorObject.email)
-        return
+      if (error.status === 400) {
+        setError('Должны быть заполнены все поля')
       }
-      if (errorObject.password) {
-        setError(errorObject.password)
-        return
+      if (error.data.username) {
+        setError(error.data.username)
+      }
+      if (error.data.email) {
+        setError(error.data.email)
       }
     } finally {
       setIsLoadingUser(false)
     }
-
   }
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы

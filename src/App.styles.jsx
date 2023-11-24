@@ -1,6 +1,16 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+
+@font-face {
+  font-family: "StratosSkyeng";
+  src: local("StratosSkyeng"), local("StratosSkyeng"),
+    url("../fonts/StratosSkyeng.woff2") format("woff2"),
+    url("../fonts/StratosSkyeng.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -23,14 +33,6 @@ a:visited {
 ul li {
   list-style: none;
 }
-@font-face {
-  font-family: "StratosSkyeng";
-  src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url("../public/fonts/StratosSkyeng.woff2") format("woff2"),
-    url("../public/fonts/StratosSkyeng.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
 
 html,
 body {
@@ -44,11 +46,11 @@ button,
   cursor: pointer;
 }
 
-._btn-text:hover {
+/* ._btn-text:hover {
   border-color: #d9b6ff;
   color: #d9b6ff;
   cursor: pointer;
-}
+} */
 
 ._btn-icon:hover svg {
   fill: transparent;

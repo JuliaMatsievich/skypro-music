@@ -1,1 +1,0 @@
-export const BASEURL = 'https://skypro-music-api.skyeng.tech';

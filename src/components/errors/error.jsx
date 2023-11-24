@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import { Filter } from '../trackList/filter/filter'
-import { HeaderTrackList } from '../trackList/headerTrackList'
+import { Filter } from '../filter/filter'
+import { HeaderTrackList } from '../headerTrackListAndSearch/headerTrackList'
 import * as S from '../trackList/trackList.styles'
 import { UserContext } from '../../App'
 
 export const ErrorMessage = () => {
- const { allTracksError} = useContext(UserContext)
+  const { allTracksError } = useContext(UserContext)
 
   return (
     <>

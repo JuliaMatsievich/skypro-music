@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import * as S from './progressBar.styles'
-import { getTimeInMinutes } from '../../helpFunctions'
+import { getTimeInMinutes } from '../../helpers/timeInMinutes'
 
 export const ProgressBar = ({
   audioRef,
@@ -10,16 +10,17 @@ export const ProgressBar = ({
   duration,
   intervalRef,
 }) => {
-
   const handleSeek = (e) => {
-    audioRef.current.currentTime = e.target.value
-    setCurrentTime(e.target.value)
+    if (audioRef) {
+      audioRef.current.currentTime = e.target.value
+      setCurrentTime(e.target.value)      
+    }
   }
 
   useEffect(() => {
     if (isPlaying) {
       intervalRef.current = setInterval(() => {
-        setCurrentTime(audioRef.current.currentTime)
+        setCurrentTime(audioRef?.current.currentTime)
       }, [100])
     }
     return () => {

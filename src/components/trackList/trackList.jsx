@@ -1,12 +1,12 @@
-import { TrackItem } from './track/track'
+import { TrackItem } from '../trackItem/track'
 import * as S from './trackList.styles'
 import { SkeletonTrack } from '../skeleton/skeletonTrack'
-import { useGetAllTracksQuery} from '../../services/trackApi'
+import { useGetAllTracksQuery } from '../../services/trackApi'
 
-export const TrackList = ({tracks}) => {
-
-  const {isLoading} = useGetAllTracksQuery()
+export const TrackList = ({ tracks }) => {
+  const { isLoading } = useGetAllTracksQuery()
   
+
   return (
     <S.CenterBlockContent>
       <S.ContentTitle>
@@ -32,13 +32,14 @@ export const TrackList = ({tracks}) => {
         </S.ContentPlaylist>
       ) : (
         <S.ContentPlaylist>
-          {tracks.map((track, index) => {
+          {tracks?.map((track, index) => {
             return (
               <TrackItem
                 key={track.id}
                 track={track}
                 id={track.id}
                 index={index}
+                trackList={tracks}
               />
             )
           })}

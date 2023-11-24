@@ -2,16 +2,17 @@ import { useContext } from 'react'
 import * as S from './sideBar.styles'
 import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
+import { useSelector } from 'react-redux'
 
-export const SideBar = ({  categories }) => {
-  const { logIn, logOut,  setLoading } = useContext(UserContext)
+export const SideBar = ({categories}) => {
+  const {logOut } = useContext(UserContext)
   const {isLoading} = useGetAllTracksQuery()
 
   const handleClickLoginOut = () => {
     logOut()
   }
 
-  const user = logIn()
+  const user = useSelector(state => state.user)
 
   return (
     <S.MainSidebar>
