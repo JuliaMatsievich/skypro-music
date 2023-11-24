@@ -1,11 +1,10 @@
 import { TrackList } from '../../components/trackList/trackList'
 import { ErrorMessage } from '../../components/errors/error'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { UserContext } from '../../App'
 import { useGetAllTracksQuery } from '../../services/trackApi'
 import { Filter } from '../../components/filter/filter'
 import { HeaderTrackList } from '../../components/headerTrackListAndSearch/headerTrackList'
-import { filterAuthor, filterGenre } from '../../helpers/filterFunc'
 import { searchMusic } from '../../helpers/searchFunc'
 import { sortTracks } from '../../helpers/sortFunc'
 import { useThemes } from '../../customHooks/themeHook'
@@ -20,83 +19,23 @@ export const MainPage = () => {
   const [authorFilter, setAuthorFilter] = useState([])
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
-  const [filterTracks, setFilterTracks] = useState([])
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
   const { theme } = useThemes(lightTheme, darkTheme)
 
 
   const handleChangeFilter = (type, value) => {
     if (type === 'author') {
-      if (genreFilter.length === 0) {
-        if (authorFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
-          setAuthorFilter(authorFilter.filter((item) => item !== value))
-        } else {
-          setFilterTracks([...filterTracks, ...filterAuthor(data, value)])
-          setAuthorFilter([...authorFilter, value])
-        }
+      if (authorFilter.includes(value)) {
+        setAuthorFilter(authorFilter.filter((item) => item !== value))
+      } else {
+        setAuthorFilter([...authorFilter, value])
       }
-
-      if (genreFilter.length !== 0) {
-        if (authorFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ author }) => author !== value))
-          setAuthorFilter(authorFilter.filter((item) => item !== value))
-          if (authorFilter.length === 1) {
-            setFilterTracks(
-              data.filter((track) => genreFilter.indexOf(track.genre) > -1),
-            )
-          }
-        }
-        if (authorFilter.length === 0) {
-          setFilterTracks(filterAuthor(filterTracks, value))
-          setAuthorFilter([...authorFilter, value])
-        }
-        if (authorFilter.length !== 0 && !authorFilter.includes(value)) {
-          setFilterTracks([
-            ...filterTracks,
-            ...filterAuthor(
-              data.filter((track) => genreFilter.indexOf(track.genre) > -1),
-              value,
-            ),
-          ])
-          setAuthorFilter([...authorFilter, value])
-        }
-      }
-    } else if (type === 'genre') {
-      if (authorFilter.length === 0) {
-        if (genreFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
-          setGenreFilter(genreFilter.filter((item) => item !== value))
-        } else {
-          setFilterTracks([...filterTracks, ...filterGenre(data, value)])
-          setGenreFilter([...genreFilter, value])
-        }
-      }
-
-      if (authorFilter.length !== 0) {
-        if (genreFilter.includes(value)) {
-          setFilterTracks(filterTracks.filter(({ genre }) => genre !== value))
-          setGenreFilter(genreFilter.filter((item) => item !== value))
-          if (genreFilter.length === 1) {
-            setFilterTracks(
-              data.filter((track) => authorFilter.indexOf(track.author) > -1),
-            )
-          }
-        }
-        if (genreFilter.length === 0) {
-          setFilterTracks(filterGenre(filterTracks, value))
-          setGenreFilter([...genreFilter, value])
-        }
-        if (genreFilter.length !== 0 && !genreFilter.includes(value)) {
-          setFilterTracks([
-            ...filterTracks,
-            ...filterGenre(
-              data.filter((track) => authorFilter.indexOf(track.author) > -1),
-              value,
-            ),
-          ])
-          setGenreFilter([...genreFilter, value])
-        }
+    }
+    if (type === 'genre') {
+      if (genreFilter.includes(value)) {
+        setGenreFilter(genreFilter.filter((item) => item !== value))
+      } else {
+        setGenreFilter([...genreFilter, value])
       }
     }
   }
@@ -115,32 +54,73 @@ export const MainPage = () => {
     )
     logOut()
   }
-  useEffect(() => {
-    if (filterTracks.length !== 0 && !search) {
-      setPlaylist(filterTracks)
-      setDefaultPlaylist(filterTracks)
-    } 
-    else if (!search && filterTracks.length === 0) {
-      setPlaylist(data)
-      setDefaultPlaylist(data)
-    }
-    else if (search && filterTracks.length !==0) {
-      setPlaylist(searchMusic(filterTracks, search))
-      setDefaultPlaylist(searchMusic(filterTracks, search))
-    }
-   else if (search && filterTracks.length === 0) {
-      setPlaylist(searchMusic(data, search))
-      setDefaultPlaylist(searchMusic(data, search))
-    }
-    else {
-      setPlaylist(data)
-    }
-  }, [search, filterTracks, data])
 
-  
   useEffect(() => {
-    setDefaultPlaylist(data)
-  }, [data])
+    if (!search) {
+      if (authorFilter.length !== 0 && genreFilter.length === 0) {
+        setPlaylist(data.filter(({ author }) => authorFilter.includes(author)))
+        setDefaultPlaylist(
+          data.filter(({ author }) => authorFilter.includes(author)),
+        )
+      } else if (authorFilter.length !== 0 && genreFilter.length !== 0) {
+        setPlaylist(
+          data.filter(({ author, genre }) => {
+            return genreFilter.includes(genre) && authorFilter.includes(author)
+          }),
+        )
+      } else if (genreFilter.length !== 0 && authorFilter.length === 0) {
+        setPlaylist(data.filter(({ genre }) => genreFilter.includes(genre)))
+        setDefaultPlaylist(
+          data.filter(({ genre }) => genreFilter.includes(genre)),
+        )
+      } else {
+        setPlaylist(data)
+        setDefaultPlaylist(data)
+      }
+    } else if (search) {
+      if (authorFilter.length !== 0 && genreFilter.length === 0) {
+        setPlaylist(
+          searchMusic(
+            data.filter(({ author }) => authorFilter.includes(author)),
+            search,
+          ),
+        )
+        setDefaultPlaylist(
+          searchMusic(
+            data.filter(({ author }) => authorFilter.includes(author)),
+            search,
+          ),
+        )
+      } else if (authorFilter.length !== 0 && genreFilter.length !== 0) {
+        setPlaylist(
+          searchMusic(
+            data.filter(({ author, genre }) => {
+              return (
+                genreFilter.includes(genre) && authorFilter.includes(author)
+              )
+            }),
+            search,
+          ),
+        )
+      } else if (genreFilter.length !== 0 && authorFilter.length === 0) {
+        setPlaylist(
+          searchMusic(
+            data.filter(({ genre }) => genreFilter.includes(genre)),
+            search,
+          ),
+        )
+        setDefaultPlaylist(
+          searchMusic(
+            data.filter(({ genre }) => genreFilter.includes(genre)),
+            search,
+          ),
+        )
+      } else {
+        setPlaylist(searchMusic(data, search))
+        setDefaultPlaylist(searchMusic(data, search))
+      }
+    }
+  }, [search, authorFilter, genreFilter, data])
 
   return (
     <>
@@ -152,9 +132,7 @@ export const MainPage = () => {
         <ErrorMessage allTracksError={allTracksError} />
       ) : (
         <>
-          {search &&
-          searchMusic(data, search).length === 0 &&
-          searchMusic(filterTracks, search).length === 0 ? (
+          {search && searchMusic(data, search).length === 0 ? (
             <h2>Ничего не найдено</h2>
           ) : (
             <TrackList tracks={playlist} />

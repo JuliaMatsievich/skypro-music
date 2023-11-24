@@ -28,7 +28,24 @@ export const trackApi = createApi({
               { type: 'Tracks', id: 'LIST' },
             ]
           : [{ type: 'Tracks', id: 'LIST' }],
-          
+      // async onQueryStarted({}, { dispatch, queryFulfilled }) {
+      //   const patchResult = dispatch(
+      //     trackApi.util.updateQueryData('getAllTracks', undefined, (draft) => {
+      //       const updatedTracks = setCurrentPlaylist(
+      //          draft.tracks
+      //       )
+      //       return {
+      //         ...draft,
+      //         tracks: updatedTracks,
+      //       }
+      //     }),
+      //   )
+      //   try {
+      //     await queryFulfilled
+      //   } catch {
+      //     patchResult.undo()
+      //   }
+      // },
     }),
 
     getFavoriteTracks: builder.query({
@@ -123,8 +140,6 @@ export const trackApi = createApi({
         },
       }),
     }),
-
-    
   }),
 })
 
@@ -138,5 +153,5 @@ export const {
   useLogInMutation,
   useGetTokenMutation,
   useSignUpMutation,
-  useRefreshTokenMutation
+  useRefreshTokenMutation,
 } = trackApi

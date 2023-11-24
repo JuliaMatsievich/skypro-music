@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import * as S from './filter.styles'
 import { useGetAllTracksQuery } from '../../services/trackApi'
+import { useDispatch } from 'react-redux'
+import { setFilters } from '../../store/trackSlice'
 
 export const Filter = ({ handleChange, handleSort }) => {
   const { data } = useGetAllTracksQuery()
@@ -27,6 +29,8 @@ export const Filter = ({ handleChange, handleSort }) => {
       setActiveFilter('')
     }
   }
+
+  const dispatch = useDispatch()
 
   const handleFilterChange = (event, type, value) => {
     event.stopPropagation()
