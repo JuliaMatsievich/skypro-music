@@ -16,12 +16,12 @@ export const Layout = () => {
   )
 
   const currentTrack = useSelector((state) => state.audioPlayer.currentTrack)
-  const { theme } = useThemes(lightTheme, darkTheme)
+  // const { theme } = useThemes(lightTheme, darkTheme)
 
-  console.log('theme', theme);
+  // console.log('theme', theme);
 
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
       <S.Wrapper>
         <SM.Container>
           <SM.Main>
@@ -36,6 +36,6 @@ export const Layout = () => {
           <SM.Footer></SM.Footer>
         </SM.Container>
       </S.Wrapper>
-    </ThemeProvider>
+    // </ThemeProvider>
   )
 }

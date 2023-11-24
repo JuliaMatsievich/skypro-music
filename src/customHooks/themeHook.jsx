@@ -1,38 +1,22 @@
-import { useState } from 'react'
-import { lightTheme, darkTheme } from "../constants/themes";
-
-// export const themes = {
-//   light: {
-//     color: '#282c34',
-//     background: '#fff',
-//   },
-//   dark: {
-//     color: '#fff',
-//     background: '#282c34',
-//   },
-// }
-
-// export const ThemeContext = React.createContext({
-//   theme: themes.dark,
-//   toggleTheme: () => {},
-// })
-
-// export const useThemeContext = () => {
-//   const theme = useContext(ThemeContext)
-//   if (!theme) return theme.dark
-//   return theme
-// }
+import { useEffect, useState } from 'react'
 
 export const useThemes = () => {
-	const [theme, setTheme] = useState(darkTheme);
+  const [theme, setTheme] = useState('light')
 
-
-  const handleChangeTheme = () => {
-	setTheme(theme === lightTheme ? darkTheme : lightTheme);
-	// console.log('theme', theme);
+  const setMode = (mode) => {
+    window.localStorage.setItem('theme', mode)
+    setTheme(mode)
   }
 
-  // console.log('theme', theme)
+  const themeToggler = () => {
+    theme === 'light' ? setMode('dark') : setMode('light')
+  }
 
-  return { theme, handleChangeTheme }
+  useEffect(() => {
+    const localTheme = window.localStorage.getItem('theme')
+
+    localTheme && setTheme(localTheme)
+  }, [])
+
+  return [theme, themeToggler]
 }

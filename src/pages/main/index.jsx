@@ -20,7 +20,8 @@ export const MainPage = () => {
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState('')
   const [defaultPlaylist, setDefaultPlaylist] = useState([])
-  const { theme } = useThemes(lightTheme, darkTheme)
+  const [theme] = useThemes()
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
 
 
   const handleChangeFilter = (type, value) => {
@@ -124,7 +125,7 @@ export const MainPage = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themeMode}>
       <HeaderTrackList title={'Треки'} setSearch={setSearch} />
       <Filter handleChange={handleChangeFilter} handleSort={handleSort} />
 

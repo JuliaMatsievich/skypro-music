@@ -3,12 +3,13 @@ import * as S from './navMenu.styles'
 import { UserContext } from '../../App'
 import { useThemes } from '../../customHooks/themeHook'
 import { ThemeProvider } from 'styled-components'
-// import { lightTheme, darkTheme } from './navMenu.styles'
+import { lightTheme, darkTheme } from '../../constants/themes'
 
 export const NavMenu = () => {
   const [isOpenMenu, setOpenMenu] = useState(false)
   const { logOut } = useContext(UserContext)
-  const { theme, handleChangeTheme } = useThemes()
+  const [theme, themeToggler] = useThemes()
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   const handleClickMenu = () => {
     setOpenMenu(!isOpenMenu)
@@ -19,10 +20,10 @@ export const NavMenu = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeMode}>
       <S.MainNav>
         <S.NavLogo>
-          {theme === darkTheme ? (
+          {theme  === 'dark' ? (
             <S.LogoImage src="../img/logo.png" alt="logo" />
           ) : (
             <S.LogoImage src="../img/logo-light.png" alt="logo" />
@@ -52,14 +53,14 @@ export const NavMenu = () => {
             </S.NavMenu>
           </>
         ) : null}
-        <S.ThemeBtn onClick={handleChangeTheme}>
-          {theme === darkTheme ? (
+        <S.ThemeBtn onClick={themeToggler}>
+          {theme === 'dark' ? (
             <img src="../../img/dark-theme.png" />
           ) : (
             <img src="../../img/light-theme.png" />
           )}
         </S.ThemeBtn>
       </S.MainNav>
-    </ThemeProvider>
+     </ThemeProvider>
   )
 }
