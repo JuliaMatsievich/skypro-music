@@ -14,15 +14,15 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route
-        path="/login"
+        path="./login"
         element={<AuthPage isLoginMode={true}></AuthPage>}
       ></Route>
       <Route
-        path="/register"
+        path="./register"
         element={<AuthPage isLoginMode={false}></AuthPage>}
       ></Route>
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<Layout />}>
+        <Route path="./" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="category/:id" element={<Category />} />

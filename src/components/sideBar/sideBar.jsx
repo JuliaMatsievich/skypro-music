@@ -36,7 +36,7 @@ export const SideBar = ({categories}) => {
             {categories.map((category) => {
               return (
                 <S.SidebarItem key={category.id}>
-                  <S.SidebarLink to={`/category/${category.id}`}>
+                  <S.SidebarLink to={`./category/${category.id}`}>
                     <S.SidebarImage src={category.img} alt={category.title} />
                   </S.SidebarLink>
                 </S.SidebarItem>
