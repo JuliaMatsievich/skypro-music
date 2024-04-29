@@ -22,7 +22,7 @@ export const AppRoutes = () => {
         element={<AuthPage isLoginMode={false}></AuthPage>}
       ></Route>
       <Route element={<ProtectedRoute />}>
-        <Route path="/#/" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="category/:id" element={<Category />} />
