@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import * as S from './App.styles'
 import { AppRoutes } from './routes'
 import { createContext, useState } from 'react'
@@ -6,10 +7,11 @@ export const UserContext = createContext(null)
 
 const App = () => {
   const [allTracksError, setAllTracksError] = useState(null)
+  const navigate = useNavigate()
 
   const logOut = () => {
     localStorage.clear()
-    window.location.href='/login'
+    navigate('/login')
   }
 
   return (
