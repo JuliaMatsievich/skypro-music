@@ -44,7 +44,7 @@ export default function AuthPage({ isLoginMode }) {
               localStorage.setItem('access', JSON.stringify(token.access))
               localStorage.setItem('refresh', JSON.stringify(token.refresh))
               dispatch(setToken(token))
-              window.location.href = '/'
+              window.location.href = '/#/'
               // console.log(token.access);
             })
         })
@@ -93,7 +93,7 @@ export default function AuthPage({ isLoginMode }) {
               localStorage.setItem('access', JSON.stringify(token.access))
               localStorage.setItem('refresh', JSON.stringify(token.refresh))
               dispatch(setToken(token))
-              window.location.href = '/'
+              window.location.href = '/#/'
             })
         })
     } catch (error) {
