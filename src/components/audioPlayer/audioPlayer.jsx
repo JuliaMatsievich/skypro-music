@@ -150,7 +150,7 @@ export const Player = () => {
               <S.PlayerControls>
                 <S.PlayerBtnPrev>
                   <S.PlayerBtnPrevSvg alt="prev" onClick={handlePrevTrack}>
-                    <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
+                    <use xlinkHref="./img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerBtnPrevSvg>
                 </S.PlayerBtnPrev>
                 <S.PlayerBtnPlay>
@@ -158,15 +158,15 @@ export const Player = () => {
                     <use
                       xlinkHref={
                         isPlaying
-                          ? '/img/icon/sprite.svg#icon-pause'
-                          : '/img/icon/sprite.svg#icon-play'
+                          ? './img/icon/sprite.svg#icon-pause'
+                          : './img/icon/sprite.svg#icon-play'
                       }
                     ></use>
                   </S.PlayerBtnPlaySvg>
                 </S.PlayerBtnPlay>
                 <S.PlayerBtnNext>
                   <S.PlayerBtnNextSvg alt="next" onClick={handleNextTrack}>
-                    <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
+                    <use xlinkHref="./img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
                 <S.PlayerBtnRepeat className="_btn-icon">
@@ -174,8 +174,8 @@ export const Player = () => {
                     <use
                       xlinkHref={
                         isLoop
-                          ? '/img/icon/sprite.svg#icon-repeatactive'
-                          : '/img/icon/sprite.svg#icon-repeat'
+                          ? './img/icon/sprite.svg#icon-repeatactive'
+                          : './img/icon/sprite.svg#icon-repeat'
                       }
                     ></use>
                   </S.PlayerBtnRepeatSvg>
@@ -185,8 +185,8 @@ export const Player = () => {
                     <use
                       xlinkHref={
                         isShuffled
-                          ? '/img/icon/sprite.svg#icon-shuffleactive'
-                          : '/img/icon/sprite.svg#icon-shuffle'
+                          ? './img/icon/sprite.svg#icon-shuffleactive'
+                          : './img/icon/sprite.svg#icon-shuffle'
                       }
                     ></use>
                   </S.PlayerBtnShuffleSvg>
@@ -204,7 +204,7 @@ export const Player = () => {
                   <S.TrackPlayContain>
                     <S.TrackPlayImage>
                       <S.TrackPlaySvg alt="music">
-                        <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                        <use xlinkHref="./img/icon/sprite.svg#icon-note"></use>
                       </S.TrackPlaySvg>
                     </S.TrackPlayImage>
 
@@ -231,8 +231,8 @@ export const Player = () => {
                       <use
                         xlinkHref={
                           isLike
-                            ? '/img/icon/sprite.svg#icon-likeactive'
-                            : '/img/icon/sprite.svg#icon-like'
+                            ? './img/icon/sprite.svg#icon-likeactive'
+                            : './img/icon/sprite.svg#icon-like'
                         }
                       ></use>
                     </S.TrackPlayLikeSvg>
@@ -245,7 +245,7 @@ export const Player = () => {
               <S.VolumeContent>
                 <S.VolumeImage>
                   <S.VolumeSvg alt="volume">
-                    <use xlinkHref="/img/icon/sprite.svg#icon-volume"></use>
+                    <use xlinkHref="./img/icon/sprite.svg#icon-volume"></use>
                   </S.VolumeSvg>
                 </S.VolumeImage>
                 <S.VolumeProgress className="_btn">

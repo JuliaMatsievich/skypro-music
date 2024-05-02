@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as S from './AuthPage.styles'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from '../../App'
@@ -12,7 +12,7 @@ import {
 
 export default function AuthPage({ isLoginMode }) {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -92,7 +92,7 @@ export default function AuthPage({ isLoginMode }) {
               localStorage.setItem('access', JSON.stringify(token.access))
               localStorage.setItem('refresh', JSON.stringify(token.refresh))
               dispatch(setToken(token))
-              window.location.href = '/'
+              navigate('/')
             })
         })
     } catch (error) {
@@ -123,7 +123,7 @@ export default function AuthPage({ isLoginMode }) {
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
+            <S.ModalLogoImage src="./img/logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (
