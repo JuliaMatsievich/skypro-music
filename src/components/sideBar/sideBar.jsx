@@ -20,7 +20,7 @@ export const SideBar = ({categories}) => {
         <S.SidebarPersonalName>{user.username}</S.SidebarPersonalName>
         <S.SidebarIcon onClick={handleClickLoginOut}>
           <svg alt="logout">
-            <use xlinkHref="./img/icon/sprite.svg#logout"></use>
+            <use xlinkHref="/img/icon/sprite.svg#logout"></use>
           </svg>
         </S.SidebarIcon>
       </S.SidebarPersonal>
@@ -36,7 +36,7 @@ export const SideBar = ({categories}) => {
             {categories.map((category) => {
               return (
                 <S.SidebarItem key={category.id}>
-                  <S.SidebarLink to={`./category/${category.id}`}>
+                  <S.SidebarLink to={`/category/${category.id}`}>
                     <S.SidebarImage src={category.img} alt={category.title} />
                   </S.SidebarLink>
                 </S.SidebarItem>

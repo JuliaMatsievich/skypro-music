@@ -29,7 +29,7 @@ export const TrackItem = ({ track, id, index, trackList }) => {
         <S.TrackTiltle>
           <S.TrackTiltleImage>
             <S.TrackTiltleImageSvg alt="music">
-              <use xlinkHref="./img/icon/sprite.svg#icon-note"></use>
+              <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
             </S.TrackTiltleImageSvg>
             {(Object.keys(currentTrack).length && currentTrack.id === id && isPlaying)
              ? (<S.CurrentTrackIndicateAnimation />)
