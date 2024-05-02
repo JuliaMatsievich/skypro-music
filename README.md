@@ -22,7 +22,11 @@
 - React Router
 - Redux Toolkit
 
-## Как запустить проект
+## Сайт проекта
+
+https://skypro-music-silk.vercel.app/
+
+## Как запустить проект локально
 
 1. Клонировать репозиторий
 
